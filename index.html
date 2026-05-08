@@ -1089,6 +1089,28 @@
       letter-spacing: -0.02em;
       line-height: 1.05;
     }
+    /* CPU Architecture inline decoration */
+    .cpu-arch-svg {
+      display: inline-block;
+      vertical-align: middle;
+      width: 180px;
+      height: 90px;
+      margin-left: 16px;
+      flex-shrink: 0;
+      overflow: visible;
+    }
+    @keyframes cpu-travel { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+    @keyframes cpu-fade   { 0%,100%{opacity:0} 10%,90%{opacity:1} }
+    .cpu-orb-1 { offset-path:path("M 10 20 h 79.5 q 5 0 5 5 v 30");      fill:#60A5FA; animation:cpu-travel 2.4s linear infinite 0s,    cpu-fade 2.4s linear infinite 0s; }
+    .cpu-orb-2 { offset-path:path("M 180 10 h -69.7 q -5 0 -5 5 v 30");  fill:#FCD34D; animation:cpu-travel 2.4s linear infinite -0.3s,  cpu-fade 2.4s linear infinite -0.3s; }
+    .cpu-orb-3 { offset-path:path("M 130 20 v 21.8 q 0 5 -5 5 h -10");   fill:#F472B6; animation:cpu-travel 2.4s linear infinite -0.6s,  cpu-fade 2.4s linear infinite -0.6s; }
+    .cpu-orb-4 { offset-path:path("M 170 80 v -21.8 q 0 -5 -5 -5 h -50"); fill:#ffffff; animation:cpu-travel 2.4s linear infinite -0.9s,  cpu-fade 2.4s linear infinite -0.9s; }
+    .cpu-orb-5 { offset-path:path("M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -20"); fill:#80BA26; animation:cpu-travel 2.4s linear infinite -1.2s, cpu-fade 2.4s linear infinite -1.2s; }
+    .cpu-orb-6 { offset-path:path("M 94.8 95 v -36");                     fill:#FB923C; animation:cpu-travel 2.4s linear infinite -1.5s, cpu-fade 2.4s linear infinite -1.5s; }
+    .cpu-orb-7 { offset-path:path("M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 14"); fill:#22D3EE; animation:cpu-travel 2.4s linear infinite -1.8s, cpu-fade 2.4s linear infinite -1.8s; }
+    .cpu-orb-8 { offset-path:path("M 30 30 h 25 q 5 0 5 5 v 6.5 q 0 5 5 5 h 20"); fill:#FB7185; animation:cpu-travel 2.4s linear infinite -2.1s, cpu-fade 2.4s linear infinite -2.1s; }
+    @media (max-width: 1024px) { .cpu-arch-svg { width: 130px; height: 65px; } }
+    @media (max-width: 640px)  { .cpu-arch-svg { display: none; } }
     .btn-outline-green {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 15px;
@@ -2679,7 +2701,46 @@
         <div class="stats-header">
           <div style="flex:1;min-width:0;">
             <div class="section-tag green">Real World • Impact</div>
-            <h2 class="stats-heading" data-reveal>Real-World Impact from Leading <span class="green-word">Garden Route</span> Businesses</h2>
+            <h2 class="stats-heading" data-reveal>Real-World Impact from Leading <span class="green-word">Garden Route</span><svg class="cpu-arch-svg" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <linearGradient id="cpu-shimmer-grad" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+                    <stop offset="0%" stop-color="#80BA26"/>
+                    <stop offset="48%" stop-color="#ffffff"/>
+                    <stop offset="100%" stop-color="#80BA26"/>
+                    <animateTransform attributeName="gradientTransform" type="translate" values="-1 0;1 0" dur="2s" repeatCount="indefinite"/>
+                  </linearGradient>
+                </defs>
+                <!-- Circuit traces — always visible -->
+                <path d="M 10 20 h 79.5 q 5 0 5 5 v 30"                                             stroke="#60A5FA" stroke-opacity="0.55" stroke-width="1.5" fill="none"/>
+                <path d="M 180 10 h -69.7 q -5 0 -5 5 v 30"                                         stroke="#FCD34D" stroke-opacity="0.55" stroke-width="1.5" fill="none"/>
+                <path d="M 130 20 v 21.8 q 0 5 -5 5 h -10"                                          stroke="#F472B6" stroke-opacity="0.55" stroke-width="1.5" fill="none"/>
+                <path d="M 170 80 v -21.8 q 0 -5 -5 -5 h -50"                                       stroke="#ffffff"  stroke-opacity="0.45" stroke-width="1.5" fill="none"/>
+                <path d="M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -20"      stroke="#80BA26" stroke-opacity="0.55" stroke-width="1.5" fill="none"/>
+                <path d="M 94.8 95 v -36"                                                            stroke="#FB923C" stroke-opacity="0.55" stroke-width="1.5" fill="none"/>
+                <path d="M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 14"    stroke="#22D3EE" stroke-opacity="0.55" stroke-width="1.5" fill="none"/>
+                <path d="M 30 30 h 25 q 5 0 5 5 v 6.5 q 0 5 5 5 h 20"                              stroke="#FB7185" stroke-opacity="0.55" stroke-width="1.5" fill="none"/>
+                <!-- CPU box -->
+                <rect x="85" y="40" width="30" height="20" rx="3" fill="rgba(0,3,33,0.9)" stroke="#80BA26" stroke-width="1.8"/>
+                <text x="100" y="53.5" text-anchor="middle" font-family="monospace" font-size="7" font-weight="bold" fill="url(#cpu-shimmer-grad)">CPU</text>
+                <!-- Endpoint markers (static) -->
+                <circle cx="10"   cy="20" r="2.5" fill="#60A5FA" fill-opacity="0.85"/>
+                <circle cx="180"  cy="10" r="2.5" fill="#FCD34D" fill-opacity="0.85"/>
+                <circle cx="130"  cy="20" r="2.5" fill="#F472B6" fill-opacity="0.85"/>
+                <circle cx="170"  cy="80" r="2.5" fill="#ffffff"  fill-opacity="0.7"/>
+                <circle cx="135"  cy="65" r="2.5" fill="#80BA26" fill-opacity="0.85"/>
+                <circle cx="94"   cy="95" r="2.5" fill="#FB923C" fill-opacity="0.85"/>
+                <circle cx="88"   cy="88" r="2.5" fill="#22D3EE" fill-opacity="0.85"/>
+                <circle cx="30"   cy="30" r="2.5" fill="#FB7185" fill-opacity="0.85"/>
+                <!-- Traveling orbs -->
+                <circle class="cpu-orb-1" r="3.5"/>
+                <circle class="cpu-orb-2" r="3.5"/>
+                <circle class="cpu-orb-3" r="3.5"/>
+                <circle class="cpu-orb-4" r="3.5"/>
+                <circle class="cpu-orb-5" r="3.5"/>
+                <circle class="cpu-orb-6" r="3.5"/>
+                <circle class="cpu-orb-7" r="3.5"/>
+                <circle class="cpu-orb-8" r="3.5"/>
+              </svg> Businesses</h2>
           </div>
         </div>
         <div class="stats-grid">
