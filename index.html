@@ -1,0 +1,3353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outeniqua CCTV & Off-site Monitoring</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #80BA26;
+      --green-dark: #6a9d1e;
+      --green-glow: rgba(128,186,38,0.15);
+      --navy: #000321;
+      --navy-mid: #050b2e;
+      --navy-light: #0a1240;
+      --blue: #0141B2;
+      --slate: #2C3345;
+      --body-ink: #0E182C;
+      --muted: #8893A8;
+      --border: #E5E7EB;
+      --surface: #F6F8F3;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Barlow', sans-serif;
+      font-weight: 400;
+      color: var(--body-ink);
+      background: #fff;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    html { overflow-x: hidden; }
+    h1, h2, h3, h4, h5, .heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    /* GRAIN OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.35;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(128,186,38,0.12);
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .nav-logo img { height: 44px; width: auto; display: block; border-radius: 6px; background: white; padding: 3px 8px; }
+    .nav-badge {
+      font-family: 'Barlow', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: rgba(128,186,38,0.1);
+      border: 1px solid rgba(128,186,38,0.25);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-left: auto;
+    }
+    .nav-links a {
+      font-family: 'Barlow', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .btn-nav {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: var(--green);
+      color: #000321;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+    .btn-nav:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+    /* COOKIE BANNER */
+    .cookie-banner {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 1000;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      max-width: 320px;
+      box-shadow: 0 20px 60px rgba(0,3,33,0.18), 0 4px 16px rgba(0,3,33,0.08);
+    }
+    .cookie-banner h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--body-ink);
+      margin: 0 0 8px;
+    }
+    .cookie-banner p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0 0 16px;
+    }
+    .cookie-btns { display: flex; gap: 8px; }
+    .btn-cookie-accept {
+      flex: 1;
+      background: var(--green);
+      color: var(--navy);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-cookie-accept:hover { background: var(--green-dark); }
+    .btn-cookie-decline {
+      flex: 1;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .btn-cookie-decline:hover { border-color: var(--muted); }
+
+    /* HERO */
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 0.65;
+    }
+    .hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,3,33,0.9) 0%, rgba(0,3,33,0.75) 20%, rgba(0,3,33,0.05) 38%, rgba(0,3,33,0.05) 62%, rgba(0,3,33,0.75) 80%, rgba(0,3,33,0.9) 100%);
+      z-index: 1;
+    }
+    .hero {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+      min-height: calc(100vh - 64px);
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(ellipse at center, rgba(128,186,38,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: -100px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse at center, rgba(1,65,178,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      width: 100%;
+      padding: 0 3rem;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+      gap: 2rem;
+    }
+    .hero-left {
+      flex-shrink: 0;
+    }
+    .hero-right {
+      max-width: 400px;
+      flex-shrink: 0;
+      text-align: left;
+    }
+    .hero-label {
+      font-family: 'Barlow', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(72px, 8.5vw, 122px);
+      font-weight: 800;
+      line-height: 0.93;
+      color: #fff;
+      margin: 0;
+      letter-spacing: -0.03em;
+      text-align: left;
+    }
+    .hero h1 span { color: var(--green); }
+    .hero-sub {
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.6);
+      margin: 0 0 36px;
+      max-width: 480px;
+    }
+    .hero-ctas { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .hero-sub { margin-left: 0; margin-right: 0; }
+    .btn-primary {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--green);
+      color: var(--navy);
+      border: none;
+      padding: 14px 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .btn-secondary {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: transparent;
+      color: rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 14px 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.5); color: #fff; transform: translateY(-1px); }
+    .hero-image {
+      position: relative;
+    }
+    .hero-image img {
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+      filter: brightness(0.85);
+    }
+    .hero-card {
+      position: absolute;
+      bottom: -20px;
+      left: -30px;
+      background: rgba(0,3,33,0.9);
+      border: 1px solid rgba(128,186,38,0.3);
+      border-radius: 10px;
+      padding: 14px 18px;
+      backdrop-filter: blur(10px);
+    }
+    .hero-card .label { font-size: 10px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+    .hero-card .name { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 700; color: #fff; }
+    .hero-card .stars { color: var(--green); font-size: 12px; letter-spacing: 2px; margin-top: 2px; }
+
+    /* CARD REVEAL ANIMATION */
+    [data-card-reveal] {
+      opacity: 0;
+      transform: translateY(64px) scale(0.96);
+      transition: opacity 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform, opacity;
+    }
+    [data-card-reveal].revealed {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    /* Directional override — slide in from left */
+    [data-card-reveal="left"] {
+      opacity: 0;
+      transform: translateX(-110%);
+      transition: opacity 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform, opacity;
+    }
+    [data-card-reveal="left"].revealed {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    /* Platform reveal lock — override base 0.5s hover transition during reveal */
+    .platform-main[data-card-reveal="left"],
+    .platform-card[data-card-reveal="left"] {
+      transition: opacity 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    /* Stagger: 24/7 + visual panel together, then bottom cards */
+    .platform-main[data-card-reveal="left"]              { transition-delay: 0s; }
+    .platform-card:nth-child(2)[data-card-reveal="left"] { transition-delay: 0.22s; }
+    .platform-card:nth-child(1)[data-card-reveal="left"] { transition-delay: 0.44s; }
+
+    /* Reveal lock — override the base 0.5s hover transition during reveal */
+    .platform-sub-card[data-card-reveal="right"],
+    .unlock-text-card[data-card-reveal="left"],
+    .unlock-image[data-card-reveal="right"] {
+      transition: opacity 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition-delay: 0s;
+    }
+
+    /* Unlock bottom cards — stagger left-to-right reveal */
+    .unlock-card[data-card-reveal="left"] {
+      transition: opacity 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .unlock-card:nth-child(1)[data-card-reveal="left"] { transition-delay: 0s; }
+    .unlock-card:nth-child(2)[data-card-reveal="left"] { transition-delay: 0.22s; }
+    .unlock-card:nth-child(3)[data-card-reveal="left"] { transition-delay: 0.44s; }
+
+    /* Stat cards — stagger right-to-left reveal */
+    .stat-item:nth-child(1)[data-card-reveal="right"] { transition-delay: 0s; }
+    .stat-item:nth-child(2)[data-card-reveal="right"] { transition-delay: 0.22s; }
+    .stat-item:nth-child(3)[data-card-reveal="right"] { transition-delay: 0.44s; }
+    .stat-item:nth-child(4)[data-card-reveal="right"] { transition-delay: 0.66s; }
+
+    /* Stat cards — high-specificity easing lock */
+    .stat-item[data-card-reveal="right"] {
+      transition: opacity 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* Review cards — stagger left-to-right reveal */
+    .review-card[data-card-reveal="left"] {
+      transition: opacity 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .review-card:nth-child(1)[data-card-reveal="left"] { transition-delay: 0s; }
+    .review-card:nth-child(2)[data-card-reveal="left"] { transition-delay: 0.22s; }
+    .review-card:nth-child(3)[data-card-reveal="left"] { transition-delay: 0.44s; }
+    .review-card:nth-child(4)[data-card-reveal="left"] { transition-delay: 0.66s; }
+
+    /* Why left card — slide from left */
+    .why-left-card[data-card-reveal="left"] {
+      transition: opacity 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition-delay: 0s;
+    }
+
+    /* Why cards — stagger right-to-left reveal */
+    .why-card[data-card-reveal="right"] {
+      transition: opacity 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .why-card:nth-child(1)[data-card-reveal="right"] { transition-delay: 0s; }
+    .why-card:nth-child(2)[data-card-reveal="right"] { transition-delay: 0.22s; }
+    .why-card:nth-child(3)[data-card-reveal="right"] { transition-delay: 0.44s; }
+    .why-card:nth-child(4)[data-card-reveal="right"] { transition-delay: 0.66s; }
+    .why-card:nth-child(5)[data-card-reveal="right"] { transition-delay: 0.88s; }
+    .why-card:nth-child(6)[data-card-reveal="right"] { transition-delay: 1.10s; }
+    .why-card:nth-child(7)[data-card-reveal="right"] { transition-delay: 1.32s; }
+    .why-card:nth-child(8)[data-card-reveal="right"] { transition-delay: 1.54s; }
+
+    /* Insight cards — explicit high-specificity override to guarantee correct easing */
+    .insight-card[data-card-reveal="left"],
+    .insight-card[data-card-reveal="right"] {
+      transition: opacity 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition-delay: 0s;
+    }
+
+    /* Directional override — slide in from right */
+    [data-card-reveal="right"] {
+      opacity: 0;
+      transform: translateX(110%);
+      transition: opacity 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform, opacity;
+    }
+    [data-card-reveal="right"].revealed {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* TRUST BAR */
+    .trust-bar {
+      background: #030820;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 28px 0;
+      overflow: hidden;
+    }
+    .trust-inner {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      padding: 0 2rem;
+    }
+    .trust-label {
+      font-family: 'Barlow', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .trust-marquee-wrap {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+    .trust-track {
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+      width: max-content;
+      animation: trust-scroll 22s linear infinite;
+    }
+    .trust-track:hover { animation-play-state: paused; }
+    .trust-track span {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .trust-dot {
+      color: var(--green) !important;
+      font-size: 22px;
+      opacity: 0.4;
+    }
+    .trust-blur-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .trust-blur-layer::before,
+    .trust-blur-layer::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 340px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .trust-blur-layer::before {
+      left: 0;
+      background: linear-gradient(to right, #030820 0%, #030820 28%, rgba(3,8,32,0.55) 65%, transparent 100%);
+    }
+    .trust-blur-layer::after {
+      right: 0;
+      background: linear-gradient(to left, #030820 0%, #030820 28%, rgba(3,8,32,0.55) 65%, transparent 100%);
+    }
+    @keyframes trust-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(var(--trust-shift, -50%)); }
+    }
+
+    /* SECTION TAG */
+    .section-tag {
+      font-family: 'Barlow', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-tag::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--muted);
+      flex-shrink: 0;
+    }
+    .section-tag.green { color: var(--green); }
+    .section-tag.green::before { background: var(--green); }
+
+    /* UNLOCK SECTION (LIGHT) */
+    .unlock-section {
+      background: var(--navy-mid);
+      padding: 100px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .unlock-paths-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      -webkit-mask-image:
+        linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%);
+      mask-image:
+        linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%);
+    }
+    .unlock-paths {
+      position: absolute;
+      inset: 0;
+    }
+    .unlock-paths svg {
+      width: 100%;
+      height: 100%;
+    }
+    .unlock-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .unlock-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: stretch;
+      margin-bottom: 20px;
+    }
+    .unlock-text-card {
+      background: rgba(5, 11, 46, 0.72);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 2px solid var(--green);
+      border-radius: 14px;
+      box-shadow: 0 -2px 10px rgba(128,186,38,0.18), 0 -4px 24px rgba(128,186,38,0.07), inset 0 1px 0 rgba(128,186,38,0.14);
+      padding: 40px 44px;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out, backdrop-filter 0.6s ease, -webkit-backdrop-filter 0.6s ease;
+    }
+    .unlock-text-card:not([data-card-reveal]) {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .unlock-text-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 60px -15px rgba(128,186,38,0.3), 0 -2px 14px rgba(128,186,38,0.35), 0 -4px 30px rgba(128,186,38,0.15), inset 0 1px 0 rgba(128,186,38,0.3);
+    }
+    .unlock-image {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    }
+    .unlock-image:hover { transform: scale(1.03); box-shadow: 0 0 60px -15px rgba(128,186,38,0.5); }
+    .unlock-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease-in-out;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+    }
+    .unlock-image:hover img { transform: scale(1.1); }
+    .unlock-heading {
+      font-size: clamp(48px, 5vw, 72px);
+      font-weight: 800;
+      line-height: 1.0;
+      color: #fff;
+      margin: 0 0 24px;
+      letter-spacing: -0.02em;
+    }
+    .unlock-heading span:not(.reveal-word) { color: var(--green); }
+    .unlock-sub {
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.5);
+      max-width: 440px;
+    }
+    .unlock-image { position: relative; border-radius: 12px; overflow: hidden; }
+    .unlock-image img {
+      width: 100%;
+      border-radius: 12px;
+      display: block;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+    }
+    .unlock-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,3,33,0.5) 100%);
+      border-radius: 12px;
+      pointer-events: none;
+    }
+    .unlock-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .unlock-card {
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: 2px solid var(--green);
+      transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+      border-radius: 10px;
+      padding: 28px;
+      background: var(--navy-mid);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      box-shadow: 0 -2px 10px rgba(128,186,38,0.22), 0 -6px 32px rgba(128,186,38,0.1), inset 0 1px 0 rgba(128,186,38,0.18);
+      transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    }
+    .unlock-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 60px -15px rgba(128,186,38,0.3), 0 -2px 14px rgba(128,186,38,0.35), 0 -4px 30px rgba(128,186,38,0.15), inset 0 1px 0 rgba(128,186,38,0.3);
+    }
+    .unlock-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      background: rgba(128,186,38,0.1);
+      border: 1px solid rgba(128,186,38,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-icon svg { color: var(--green); }
+    .unlock-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .unlock-card p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.55);
+      margin: 0;
+    }
+
+    /* PLATFORM SECTION (DARK) */
+    .platform-section {
+      background: var(--navy);
+      padding: 100px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .platform-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -200px;
+      transform: translateY(-50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(ellipse, rgba(128,186,38,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .platform-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .platform-top {
+      margin-bottom: 36px;
+    }
+    .platform-heading {
+      font-size: clamp(48px, 5vw, 72px);
+      font-weight: 800;
+      line-height: 1.02;
+      color: #fff;
+      margin: 0 0 0;
+      letter-spacing: -0.03em;
+    }
+    .platform-sub {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.55);
+      margin: 0;
+    }
+    .platform-sub-card {
+      background: var(--navy);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: 2px solid var(--green);
+      border-radius: 10px;
+      padding: 22px 26px;
+      box-shadow: 0 -2px 10px rgba(128,186,38,0.18), 0 -4px 24px rgba(128,186,38,0.07), inset 0 1px 0 rgba(128,186,38,0.14);
+    }
+    .platform-visual {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 420px;
+    }
+    .platform-radar-wrap {
+      flex: 1;
+      position: relative;
+      min-height: 280px;
+      overflow: hidden;
+    }
+    .radar-frost {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0, 3, 33, 0.18);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(128,186,38,0.08);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .platform-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 20px;
+    }
+    .platform-main {
+      grid-column: 1;
+      grid-row: 1;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: 2px solid var(--green);
+      border-radius: 10px;
+      padding: 36px;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 -2px 10px rgba(128,186,38,0.22), 0 -6px 32px rgba(128,186,38,0.1), inset 0 1px 0 rgba(128,186,38,0.18);
+      transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    }
+    .platform-main:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 60px -15px rgba(128,186,38,0.3), 0 -2px 14px rgba(128,186,38,0.35), 0 -4px 30px rgba(128,186,38,0.15), inset 0 1px 0 rgba(128,186,38,0.3);
+    }
+    #platform-radar {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .platform-paths-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      -webkit-mask-image:
+        linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%),
+        linear-gradient(to right, black 0%, black 68%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-image:
+        linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%),
+        linear-gradient(to right, black 0%, black 68%, transparent 100%);
+      mask-composite: intersect;
+    }
+    .platform-paths {
+      position: absolute;
+      inset: 0;
+    }
+    .platform-paths svg {
+      width: 100%;
+      height: 100%;
+    }
+    .platform-card {
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: 2px solid var(--green);
+      border-radius: 10px;
+      padding: 28px;
+      background: var(--navy);
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 -2px 10px rgba(128,186,38,0.22), 0 -6px 32px rgba(128,186,38,0.1), inset 0 1px 0 rgba(128,186,38,0.18);
+      transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    }
+    .platform-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 60px -15px rgba(128,186,38,0.3), 0 -2px 14px rgba(128,186,38,0.35), 0 -4px 30px rgba(128,186,38,0.15), inset 0 1px 0 rgba(128,186,38,0.3);
+    }
+    .platform-bottom-cards {
+      grid-column: 1;
+      grid-row: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .platform-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .card-metric {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+      text-shadow: 0 0 24px rgba(128,186,38,0.5);
+    }
+    .platform-main h3, .platform-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+    }
+    .platform-main p, .platform-card p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.55);
+      margin: 0;
+    }
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 14px;
+    }
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px rgba(128,186,38,0.8);
+      animation: livepulse 1.6s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes livepulse {
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 6px rgba(128,186,38,0.8); }
+      50% { opacity: 0.6; transform: scale(0.75); box-shadow: 0 0 2px rgba(128,186,38,0.4); }
+    }
+    .learn-more {
+      font-family: 'Barlow', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--green);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+    .learn-more:hover { gap: 10px; }
+
+    /* INSIGHTS SECTION (LIGHT) */
+    .insights-section {
+      background: var(--navy-mid);
+      padding: 100px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .insights-paths-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%);
+    }
+    .insights-paths {
+      position: absolute;
+      inset: 0;
+    }
+    .insights-paths svg {
+      width: 100%;
+      height: 100%;
+    }
+    .insights-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .insights-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+    .insights-heading {
+      font-size: clamp(42px, 4.5vw, 64px);
+      font-weight: 800;
+      color: #fff;
+      margin: 0;
+      letter-spacing: -0.02em;
+      line-height: 1.0;
+    }
+    .green-word { color: var(--green); }
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .insight-card img {
+      transition: transform 0.5s ease-in-out;
+    }
+    .insight-card:hover img { transform: scale(1.1); }
+    .insight-card {
+      background: var(--navy-mid);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: 2px solid var(--green);
+      box-shadow: 0 -2px 10px rgba(128,186,38,0.22), 0 -6px 32px rgba(128,186,38,0.1), inset 0 1px 0 rgba(128,186,38,0.18);
+      transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    }
+    .insight-card:hover {
+      box-shadow: 0 0 60px -15px rgba(128,186,38,0.3), 0 -2px 14px rgba(128,186,38,0.35), 0 -4px 30px rgba(128,186,38,0.15), inset 0 1px 0 rgba(128,186,38,0.3);
+      transform: scale(1.05);
+    }
+    .insight-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.75) saturate(0.9);
+    }
+    .insight-body { padding: 24px; }
+    .insight-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+    .insight-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 10px;
+      line-height: 1.2;
+    }
+    .insight-card p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.65;
+      margin: 0 0 16px;
+    }
+    .insight-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .insight-date { font-size: 11px; color: rgba(255,255,255,0.35); }
+    .read-more {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s;
+    }
+    .read-more:hover { gap: 8px; }
+
+    /* STATS SECTION (DARK) */
+    .stats-section {
+      background: var(--navy-mid);
+      padding: 100px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .stats-section::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(128,186,38,0.06) 0%, transparent 70%);
+    }
+    .stats-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .stats-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 60px;
+      gap: 3rem;
+    }
+    .stats-heading {
+      font-size: clamp(36px, 4.5vw, 60px);
+      font-weight: 800;
+      color: #fff;
+      margin: 0;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+    .btn-outline-green {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--green);
+      border: 1px solid var(--green);
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+      flex-shrink: 0;
+      align-self: flex-start;
+      margin-top: 8px;
+    }
+    .btn-outline-green:hover { background: var(--green); color: var(--navy); transform: translateY(-1px); }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .stat-item {
+      padding: 40px 32px;
+      background: rgba(0,3,33,0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 2px solid var(--green);
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+      box-shadow: 0 -2px 10px rgba(128,186,38,0.18), 0 -4px 24px rgba(128,186,38,0.07), inset 0 1px 0 rgba(128,186,38,0.14);
+    }
+    .stat-item:hover { transform: scale(1.05); box-shadow: 0 0 60px -15px rgba(128,186,38,0.3), 0 -2px 14px rgba(128,186,38,0.35), 0 -4px 30px rgba(128,186,38,0.15), inset 0 1px 0 rgba(128,186,38,0.3); }
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 56px;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .stat-label {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.75;
+    }
+
+    /* SERVICES SECTION */
+    .services-section-wrap {
+      background: var(--navy);
+      padding: 60px 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .services-wrap-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .services-heading-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 32px;
+      margin-bottom: 0;
+      gap: 2rem;
+    }
+    .services-main-heading {
+      font-size: clamp(36px, 4.5vw, 60px);
+      font-weight: 800;
+      color: #fff;
+      margin: 8px 0 0;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .services-count-badge {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      flex-shrink: 0;
+      padding-bottom: 6px;
+    }
+    .svc-list { }
+    .svc-row {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 560px) auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      cursor: pointer;
+      transition: background 0.25s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .svc-row--hovered { background: rgba(128,186,38,0.04); }
+    .svc-row--hovered .svc-num { color: var(--green); opacity: 1; }
+    .svc-row--hovered .svc-name { color: var(--green); }
+    .svc-row--hovered .svc-arrow { color: var(--green); transform: translateX(4px); }
+    .svc-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--green);
+      transition: color 0.25s;
+    }
+    .svc-body {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .svc-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(20px, 2vw, 26px);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+      transition: color 0.25s;
+    }
+    .svc-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.6;
+      max-width: 560px;
+    }
+    .svc-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: rgba(128,186,38,0.1);
+      border: 1px solid rgba(128,186,38,0.2);
+      padding: 4px 12px;
+      border-radius: 100px;
+      justify-self: end;
+    }
+    .svc-arrow {
+      font-size: 18px;
+      color: rgba(255,255,255,0.15);
+      transition: color 0.25s, transform 0.25s;
+      justify-self: center;
+    }
+
+    /* REVIEWS SECTION */
+    .reviews-section {
+      background: var(--navy-mid);
+      padding: 80px 0 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .reviews-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .reviews-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 60px;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .reviews-heading {
+      font-size: clamp(36px, 4.5vw, 60px);
+      font-weight: 800;
+      color: #fff;
+      margin: 8px 0 0;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .reviews-rating-block {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    .reviews-score {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 56px;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+    }
+    .reviews-stars {
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: var(--green);
+    }
+    .reviews-count {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .review-card {
+      background: rgba(0,3,33,0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 2px solid var(--green);
+      border-radius: 10px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+      box-shadow: 0 -2px 10px rgba(128,186,38,0.18), 0 -4px 24px rgba(128,186,38,0.07), inset 0 1px 0 rgba(128,186,38,0.14);
+    }
+    .review-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(600px circle at var(--sx,-999px) var(--sy,-999px), rgba(128,186,38,0.1), transparent 40%);
+      pointer-events: none;
+      z-index: 10;
+      border-radius: inherit;
+    }
+    .review-card:hover { transform: scale(1.05); box-shadow: 0 0 60px -15px rgba(128,186,38,0.3), 0 -2px 14px rgba(128,186,38,0.35), 0 -4px 30px rgba(128,186,38,0.15), inset 0 1px 0 rgba(128,186,38,0.3); }
+    .review-stars {
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: var(--green);
+    }
+    .review-quote {
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.55);
+      margin: 0;
+      flex: 1;
+    }
+    .review-author {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .review-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.01em;
+    }
+    .review-date {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* SERVICES PATHS ANIMATION */
+    .services-paths-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      -webkit-mask-image:
+        linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%),
+        linear-gradient(to right, black 0%, black 68%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-image:
+        linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%),
+        linear-gradient(to right, black 0%, black 68%, transparent 100%);
+      mask-composite: intersect;
+    }
+    .services-paths {
+      position: absolute;
+      inset: 0;
+    }
+    .services-paths svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* STATS PATHS ANIMATION */
+    .stats-paths-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      -webkit-mask-image:
+        linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%),
+        linear-gradient(to right, black 0%, black 68%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-image:
+        linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%),
+        linear-gradient(to right, black 0%, black 68%, transparent 100%);
+      mask-composite: intersect;
+    }
+    .stats-paths { position: absolute; inset: 0; }
+    .stats-paths svg { width: 100%; height: 100%; }
+
+    /* WHY CHOOSE US SECTION */
+    .why-paths-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .why-paths { position: absolute; inset: 0; }
+    .why-paths svg { width: 100%; height: 100%; }
+    .why-left-card { display: contents; }
+    .why-section {
+      background: var(--navy);
+      padding: 100px 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .why-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+    .why-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: end;
+    }
+    .why-left { display: flex; flex-direction: column; }
+    .why-heading {
+      font-size: clamp(52px, 6vw, 88px);
+      font-weight: 800;
+      color: #fff;
+      margin: 12px 0 0;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+    }
+    .why-right-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+      background: rgba(0,3,33,0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 2px solid var(--green);
+      border-radius: 12px;
+      padding: 14px 18px;
+      box-shadow: 0 -2px 10px rgba(128,186,38,0.18), 0 -4px 24px rgba(128,186,38,0.06), inset 0 1px 0 rgba(128,186,38,0.12);
+    }
+    .why-sub {
+      font-size: 18px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.75);
+      margin: 0;
+    }
+    .why-stat-row {
+      display: flex;
+      gap: 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .why-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 24px 28px 24px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex: 1;
+    }
+    .why-stat + .why-stat {
+      padding-left: 28px;
+      padding-right: 28px;
+      border-left: 1px solid rgba(255,255,255,0.08);
+    }
+    .why-stat:last-child { padding-right: 0; }
+    .why-stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 52px;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+      text-shadow: 0 0 24px rgba(128,186,38,0.5);
+    }
+    .why-stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .why-stat-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+      margin-top: 2px;
+    }
+    .why-risk-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 32px;
+    }
+    .why-risk-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(52px, 6vw, 88px);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.03em;
+      line-height: 0.92;
+      flex-shrink: 0;
+    }
+    .why-inline-stats {
+      display: flex;
+      align-items: flex-end;
+      gap: 0;
+      padding-bottom: 6px;
+    }
+    .why-inline-stats .why-stat {
+      padding: 0 24px 0 0;
+      border-bottom: none;
+      flex: 0 0 auto;
+    }
+    .why-inline-stats .why-stat + .why-stat {
+      padding-left: 24px;
+      padding-right: 0;
+      border-left: 1px solid rgba(255,255,255,0.15);
+    }
+    .why-inline-stats .why-stat:last-child { padding-right: 0; }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .why-card {
+      background: rgba(0,3,33,0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: 2px solid var(--green);
+      border-radius: 10px;
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+      box-shadow: 0 -2px 10px rgba(128,186,38,0.18), 0 -4px 24px rgba(128,186,38,0.06), inset 0 1px 0 rgba(128,186,38,0.12);
+    }
+    .why-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(600px circle at var(--sx,-999px) var(--sy,-999px), rgba(128,186,38,0.1), transparent 40%);
+      pointer-events: none;
+      z-index: 10;
+      border-radius: inherit;
+    }
+    .why-card:hover { transform: scale(1.05); box-shadow: 0 0 60px -15px rgba(128,186,38,0.3), 0 -2px 14px rgba(128,186,38,0.35), 0 -4px 30px rgba(128,186,38,0.15), inset 0 1px 0 rgba(128,186,38,0.3); }
+    .why-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .why-card-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(128,186,38,0.12);
+      border: 1px solid rgba(128,186,38,0.25);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--green);
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .why-card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    .why-card-desc {
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.55);
+      margin: 0;
+    }
+
+    /* CONTACT SECTION */
+    .contact-section {
+      background: var(--navy-mid);
+      padding: 100px 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 80px;
+      align-items: stretch;
+    }
+    .contact-left {
+      display: flex;
+      flex-direction: column;
+    }
+    .contact-heading {
+      font-size: clamp(44px, 5.2vw, 72px);
+      font-weight: 800;
+      color: #fff;
+      margin: 8px 0 20px;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+    .contact-sub {
+      font-size: 17px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 40px;
+    }
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+    .contact-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .contact-detail-item:last-child { border-bottom: none; }
+    .contact-detail-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(128,186,38,0.1);
+      border: 1px solid rgba(128,186,38,0.25);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--green);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .contact-detail-body { display: flex; flex-direction: column; gap: 4px; }
+    .contact-detail-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--green);
+    }
+    .contact-detail-value {
+      font-size: 17px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.5;
+    }
+    .contact-detail-value a { color: rgba(255,255,255,0.75); text-decoration: none; }
+    .contact-detail-value a:hover { color: var(--green); }
+    .contact-form-wrap {
+      background: rgba(5,11,46,0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 44px 40px;
+    }
+    .contact-form-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 28px;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.4);
+    }
+    .form-input, .form-select, .form-textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--green);
+      background: rgba(128,186,38,0.04);
+    }
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2380BA26' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      cursor: pointer;
+    }
+    .form-select option { background: var(--navy); color: #fff; }
+    .form-textarea { resize: vertical; min-height: 110px; }
+    .form-submit {
+      width: 100%;
+      background: var(--green);
+      color: var(--navy);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s, transform 0.15s cubic-bezier(0.22,1,0.36,1);
+    }
+    .form-submit:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .form-submit:active { transform: translateY(0); }
+
+    /* FINAL SECTION */
+    .final-section {
+      position: relative;
+      min-height: 720px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 140px 2rem;
+    }
+    .final-section-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      filter: brightness(0.25) saturate(0.55);
+    }
+    .final-section-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, var(--navy-mid) 0%, rgba(5,11,46,0.3) 25%, rgba(5,11,46,0.3) 75%, var(--navy) 100%),
+        radial-gradient(ellipse at 50% 110%, rgba(128,186,38,0.12) 0%, transparent 55%);
+    }
+    .final-section-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 960px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+    }
+    .final-section-tag {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .final-section-tag::before, .final-section-tag::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1.5px;
+      background: var(--green);
+    }
+    .final-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(72px, 10vw, 128px);
+      font-weight: 800;
+      color: #fff;
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+    .final-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(22px, 2.8vw, 36px);
+      font-weight: 700;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .final-desc {
+      font-size: 17px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.5);
+      max-width: 520px;
+      margin: 0;
+    }
+    .final-cta-btn {
+      font-size: 16px;
+      padding: 18px 56px;
+      margin-top: 12px;
+      letter-spacing: 0.06em;
+    }
+
+    /* VISUAL SECTION */
+    .visual-section {
+      position: relative;
+      height: 520px;
+      overflow: hidden;
+    }
+    .visual-section img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .visual-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0,3,33,0.92) 0%, rgba(0,3,33,0.65) 50%, rgba(0,3,33,0.88) 100%);
+      display: flex;
+      align-items: center;
+    }
+    .visual-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .visual-text-left h2 {
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 800;
+      color: #fff;
+      margin: 0;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .visual-text-right h2 {
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 800;
+      color: var(--green);
+      margin: 0;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-align: right;
+    }
+
+    /* AWARDS BAR */
+    .awards-bar {
+      background: #000;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 28px 0;
+    }
+    .awards-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4rem;
+    }
+    .award-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .award-item .award-type {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .award-item .award-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+    }
+    .award-item .award-year {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    /* TESTIMONIAL */
+    .testimonial-section {
+      background: var(--navy);
+      padding: 80px 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .testimonial-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 4rem;
+      align-items: center;
+    }
+    .testimonial-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .testimonial-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(128,186,38,0.3);
+    }
+    .testimonial-meta .name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .testimonial-meta .role { font-size: 12px; color: var(--muted); }
+    .testimonial-quote {
+      font-size: 18px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.7);
+      font-style: italic;
+      margin: 0;
+      position: relative;
+      padding-left: 24px;
+    }
+    .testimonial-quote::before {
+      content: '"';
+      position: absolute;
+      left: 0;
+      top: -10px;
+      font-size: 60px;
+      color: var(--green);
+      font-family: 'Barlow Condensed', sans-serif;
+      line-height: 1;
+      opacity: 0.5;
+    }
+    .testimonial-logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+    .testimonial-company {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.05em;
+    }
+
+    /* CTA SECTION */
+    .cta-section {
+      background: var(--navy-light);
+      padding: 100px 0;
+      border-top: 1px solid rgba(128,186,38,0.1);
+    }
+    .cta-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .cta-heading {
+      font-size: clamp(36px, 3.5vw, 54px);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+    .cta-heading span:not(.reveal-word) { color: var(--green); }
+    .cta-sub {
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.45);
+      margin: 0 0 32px;
+    }
+    .cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .cta-image img {
+      width: 100%;
+      border-radius: 10px;
+      display: block;
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #000;
+      padding: 60px 0 32px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 220px repeat(4, 1fr);
+      gap: 3rem;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 32px;
+    }
+    .footer-brand img { height: 36px; margin-bottom: 16px; display: block; border-radius: 4px; background: white; padding: 2px 6px; }
+    .footer-brand p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      line-height: 1.7;
+      margin: 0;
+    }
+    .footer-col h4 {
+      font-family: 'Barlow', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin: 0 0 16px;
+    }
+    .footer-col ul { list-style: none; margin: 0; padding: 0; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--green); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.5); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.7s ease forwards; }
+    .fade-up-1 { animation-delay: 0.1s; opacity: 0; }
+    .fade-up-2 { animation-delay: 0.2s; opacity: 0; }
+    .fade-up-3 { animation-delay: 0.35s; opacity: 0; }
+    .fade-up-4 { animation-delay: 0.5s; opacity: 0; }
+
+    /* WORD REVEAL ANIMATION */
+    .reveal-word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    [data-reveal].in-view .reveal-word {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* CARD SPOTLIGHT EFFECT */
+    .platform-main,
+    .platform-card,
+    .insight-card,
+    .stat-item,
+    .unlock-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .platform-main::after,
+    .platform-card::after,
+    .insight-card::after,
+    .stat-item::after,
+    .unlock-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        600px circle at var(--sx, -999px) var(--sy, -999px),
+        rgba(128, 186, 38, 0.13),
+        transparent 40%
+      );
+      pointer-events: none;
+      z-index: 10;
+      transition: opacity 0.3s;
+      border-radius: inherit;
+    }
+
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE — must stay last in stylesheet
+       ═══════════════════════════════════════ */
+
+    /* Tablet ≤1024px */
+    @media (max-width: 1024px) {
+      .why-inner       { grid-template-columns: 1fr; gap: 48px; }
+      .why-left        { position: static; }
+      .why-grid        { grid-template-columns: repeat(2, 1fr); }
+      .contact-inner   { grid-template-columns: 1fr; gap: 48px; }
+      .platform-grid   { grid-template-columns: 1fr; }
+      .platform-visual { display: none; }
+      .unlock-top      { grid-template-columns: 1fr; }
+      .unlock-image    { display: none; }
+      .cta-inner       { grid-template-columns: 1fr; }
+      .cta-image       { display: none; }
+      .reviews-grid    { grid-template-columns: repeat(2, 1fr); }
+      .insights-grid   { grid-template-columns: 1fr; }
+    }
+
+    /* Mobile ≤640px */
+    @media (max-width: 640px) {
+      /* Sections padding */
+      section,
+      .services-section-wrap, .why-section, .contact-section,
+      .reviews-section, .stats-section, .cta-section { padding: 64px 1.25rem; }
+
+      /* Nav */
+      .nav-links  { display: none; }
+      .nav-badge  { display: none; }
+      .nav-inner  { padding: 0 1.25rem; }
+
+      /* Hero — stack vertically */
+      .hero-inner       { flex-direction: column; align-items: flex-start; padding: 0 1.25rem; gap: 32px; }
+      .hero-right       { display: none; }
+      .hero-headline    { font-size: clamp(42px, 11vw, 64px); }
+      .hero-cta         { flex-direction: column; gap: 10px; }
+
+      /* Unlock */
+      .unlock-section   { padding: 64px 1.25rem; }
+      .unlock-top       { grid-template-columns: 1fr; }
+      .unlock-image     { display: none; }
+      .unlock-text-card { padding: 28px 24px; }
+      .unlock-cards     { grid-template-columns: 1fr; }
+
+      /* Platform */
+      .platform-section       { padding: 64px 1.25rem; }
+      .platform-bottom-cards  { grid-template-columns: 1fr; }
+      .platform-visual        { display: none; }
+
+      /* Insights */
+      .insights-section { padding: 64px 1.25rem; }
+      .insights-grid    { grid-template-columns: 1fr; }
+
+      /* Stats */
+      .stats-section  { padding: 64px 1.25rem; }
+      .stats-grid     { grid-template-columns: 1fr 1fr; }
+      .stats-header   { flex-direction: column; align-items: flex-start; gap: 16px; }
+
+      /* Services */
+      .services-section-wrap  { padding: 64px 1.25rem; }
+      .services-heading-row   { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .svc-row                { grid-template-columns: 48px 1fr; gap: 16px; }
+      .svc-body               { min-width: 0; }
+      .svc-tag, .svc-arrow    { display: none; }
+
+      /* Reviews */
+      .reviews-grid   { grid-template-columns: 1fr; }
+      .reviews-header { flex-direction: column; align-items: flex-start; gap: 24px; }
+
+      /* Why Choose Us */
+      .why-inner      { grid-template-columns: 1fr; gap: 40px; }
+      .why-left       { position: static; }
+      .why-header     { display: flex; flex-direction: column; gap: 32px; }
+      .why-right-col  { width: 100%; box-sizing: border-box; }
+      .why-grid       { grid-template-columns: 1fr; }
+      .why-stat-row   { gap: 24px; }
+      .why-heading    { font-size: clamp(32px, 8vw, 48px); margin-bottom: 6px; }
+      .why-risk-text  { font-size: clamp(32px, 8vw, 48px); }
+      .why-risk-row   { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .why-stat-num   { font-size: 36px; }
+      .why-inline-stats .why-stat { flex: 1 1 0; min-width: 0; padding: 0 12px 0 0; }
+      .why-inline-stats .why-stat + .why-stat { padding: 0 0 0 12px; }
+
+      /* Contact */
+      .contact-form-wrap  { padding: 28px 20px; }
+      .form-row           { grid-template-columns: 1fr; }
+
+      /* Visual */
+      .visual-section     { height: 340px; }
+      .visual-inner       { flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 1.25rem; }
+      .visual-text-left h2,
+      .visual-text-right h2 { font-size: clamp(30px, 9vw, 52px); }
+
+      /* Final section */
+      .final-section-tag::before,
+      .final-section-tag::after { display: none; }
+
+      /* Awards */
+      .awards-inner { flex-direction: column; align-items: center; gap: 20px; text-align: center; }
+
+      /* CTA */
+      .cta-inner    { grid-template-columns: 1fr; }
+      .cta-image    { display: none; }
+      .cta-heading  { font-size: clamp(28px, 7vw, 48px); }
+
+      /* Footer */
+      .footer-top   { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+
+    /* Small mobile ≤420px */
+    @media (max-width: 420px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .why-stat-row { flex-wrap: wrap; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ANNOUNCEMENT BAR -->
+  <div style="background:var(--green);padding:8px 0;text-align:center;">
+    <span style="font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--navy);">
+      24/7 SOC Monitoring Now Available for Residential Estates & Industrial Sites —
+      <a href="#" style="color:var(--navy);text-decoration:underline;margin-left:6px;">Learn more →</a>
+    </span>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV">
+      </a>
+      <span class="nav-badge">24/7 Monitoring — George, Garden Route</span>
+      <div class="nav-links">
+        <a href="#">Platform</a>
+        <a href="#">Solutions</a>
+        <a href="#">Industries</a>
+        <a href="#">Resources</a>
+        <a href="#contact">Contact</a>
+        <a href="#contact" class="btn-nav" style="margin-left:12px">Get Protected</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- COOKIE BANNER -->
+  <div class="cookie-banner" id="cookieBanner">
+    <h4>Cookie Settings</h4>
+    <p>We use cookies to enhance your experience, analyse site traffic, and personalise content. Read our <a href="#" style="color:var(--green)">Privacy Policy</a>.</p>
+    <div class="cookie-btns">
+      <button class="btn-cookie-decline" onclick="document.getElementById('cookieBanner').remove()">Decline</button>
+      <button class="btn-cookie-accept" onclick="document.getElementById('cookieBanner').remove()">Accept all</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="hero-video.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-label fade-up fade-up-1">Trusted Security Partner — Garden Route</div>
+        <h1 class="fade-up fade-up-2">Redefine<br>How You<br><span>Protect</span><br>Your Property</h1>
+      </div>
+      <div class="hero-right fade-up fade-up-3">
+        <p class="hero-sub">Outeniqua CCTV delivers 24/7 remote surveillance and real-time threat monitoring — connecting your cameras, alarms, and response teams so security managers can detect threats in under 60 seconds, reduce incident costs, and operate with complete confidence.</p>
+        <div class="hero-ctas fade-up fade-up-4">
+          <a href="#contact" class="btn-primary">
+            Explore Our Platform
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-inner">
+      <span class="trust-label">Trusted by</span>
+      <div class="trust-marquee-wrap">
+        <div class="trust-blur-layer"></div>
+        <!-- Scrolling track — all items flat, duplicated for seamless loop -->
+        <div class="trust-track">
+          <span>Builders Warehouse</span>
+          <span class="trust-dot">·</span>
+          <span>Garden Route Mall</span>
+          <span class="trust-dot">·</span>
+          <span>Spar Group</span>
+          <span class="trust-dot">·</span>
+          <span>WaterCare</span>
+          <span class="trust-dot">·</span>
+          <span aria-hidden="true">Builders Warehouse</span>
+          <span class="trust-dot" aria-hidden="true">·</span>
+          <span aria-hidden="true">Garden Route Mall</span>
+          <span class="trust-dot" aria-hidden="true">·</span>
+          <span aria-hidden="true">Spar Group</span>
+          <span class="trust-dot" aria-hidden="true">·</span>
+          <span aria-hidden="true">WaterCare</span>
+          <span class="trust-dot" aria-hidden="true">·</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- UNLOCK SECTION -->
+  <section class="unlock-section">
+    <div class="unlock-paths-bg">
+      <div class="unlock-paths" id="unlock-paths-1"></div>
+      <div class="unlock-paths" id="unlock-paths-2"></div>
+    </div>
+    <div class="unlock-inner">
+      <div class="unlock-top">
+        <div class="unlock-text-card" data-card-reveal="left">
+          <div class="section-tag">Full Site Protection</div>
+          <h2 class="unlock-heading" data-reveal data-reveal-deferred>Unlock Operational <span>Awareness</span>, Resilience, and Productivity at Scale</h2>
+          <p class="unlock-sub">From growing retail theft to industrial sabotage — slow response times and blind spots cost businesses millions. Outeniqua CCTV gives you the eyes, the data, and the response speed you need to stay ahead.</p>
+        </div>
+        <div class="unlock-image" data-card-reveal="right">
+          <img src="control-room.png" alt="Monitoring dashboard interface">
+        </div>
+      </div>
+      <div class="unlock-cards">
+        <div class="unlock-card" data-card-reveal="left">
+          <div class="unlock-card-top">
+            <h3>Improve Operational Awareness</h3>
+            <div class="card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="var(--green)"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+          </div>
+          <p>Real-time CCTV feeds and AI-assisted monitoring cut your Mean Time to Awareness (MTTA) by up to 80%, with centralised dashboards giving operators total site visibility across all locations simultaneously.</p>
+        </div>
+        <div class="unlock-card" data-card-reveal="left">
+          <div class="unlock-card-top">
+            <h3>Strengthen Physical Security</h3>
+            <div class="card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="var(--green)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+          </div>
+          <p>Deter threats before they escalate. Outeniqua CCTV's integrated alarm response system deploys security teams dynamically based on verified camera alerts — eliminating false responses and prioritising real incidents.</p>
+        </div>
+        <div class="unlock-card" data-card-reveal="left">
+          <div class="unlock-card-top">
+            <h3>Boost Business Productivity</h3>
+            <div class="card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="var(--green)"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+          </div>
+          <p>Leverage surveillance data to streamline operations. Footfall analytics, staff movement insights, and incident reporting tools help managers make confident decisions and simplify compliance with audit-ready footage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM SECTION -->
+  <section class="platform-section">
+    <div class="platform-paths-bg">
+      <div class="platform-paths" id="platform-paths-1"></div>
+      <div class="platform-paths" id="platform-paths-2"></div>
+    </div>
+    <div class="platform-inner">
+      <div class="platform-top">
+        <div class="platform-top-left">
+          <div class="section-tag green">Platform • Off-site Monitoring</div>
+          <h2 class="platform-heading" data-reveal>One platform. Built for real-time <span style="color:var(--green)">surveillance</span>, scale, and security.</h2>
+        </div>
+      </div>
+      <div class="platform-grid">
+        <div class="platform-main" data-card-reveal="left">
+          <div class="platform-card-top">
+            <h3>Off-site Monitoring</h3>
+            <div class="card-metric">24/7</div>
+          </div>
+          <p>Security operators remotely monitor your cameras around the clock — verifying alarms, dispatching response teams, and maintaining your site's security posture at all times without on-site guard costs.</p>
+        </div>
+        <div class="platform-visual">
+          <div class="platform-sub-card" data-card-reveal="right">
+            <p class="platform-sub">The Outeniqua Zero Trust monitoring engine standardises your CCTV feeds, alarms, and access control systems across every site — helping security managers detect threats faster, streamline operations, and unify response protocols across your entire property footprint.</p>
+          </div>
+          <div class="platform-radar-wrap">
+            <div class="radar-frost"></div>
+            <div class="live-badge" style="position:absolute;top:18px;right:20px;z-index:3;white-space:nowrap;">
+              <span class="live-dot"></span>
+              Live Monitoring Active
+            </div>
+            <canvas id="platform-radar"></canvas>
+          </div>
+        </div>
+        <div class="platform-bottom-cards">
+          <div class="platform-card" data-card-reveal="left">
+            <div class="platform-card-top">
+              <h3>Alarm Response Integration</h3>
+              <div class="card-metric">&lt;60s</div>
+            </div>
+            <p>Real-time alarm verification and automated escalation protocols route verified threats to the nearest armed response unit — dramatically cutting response times.</p>
+          </div>
+          <div class="platform-card" data-card-reveal="left">
+            <div class="platform-card-top">
+              <h3>Access Control & Gates</h3>
+              <div class="card-metric">100%</div>
+            </div>
+            <p>Integrate CCTV with your access control systems across your entire footprint — remotely manage gates, doors, and entry points with full audit trails.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSIGHTS SECTION -->
+  <section class="insights-section">
+    <div class="insights-paths-bg">
+      <div class="insights-paths" id="insights-paths-1"></div>
+      <div class="insights-paths" id="insights-paths-2"></div>
+    </div>
+    <div class="insights-inner">
+      <div class="insights-header">
+        <div>
+          <div class="section-tag">Latest • Updates</div>
+          <h2 class="insights-heading" data-reveal>CCTV <span class="green-word">Security</span> Insights & Updates</h2>
+        </div>
+        <a href="#contact" class="btn-outline-green">View all articles →</a>
+      </div>
+      <div class="insights-grid">
+        <div class="insight-card" data-card-reveal="left">
+          <img src="cctv-offline-2.png" alt="Reducing Operational Risk">
+          <div class="insight-body">
+            <h3>Reducing Operational Risk: Why Off-site Monitoring Outperforms On-site Guards</h3>
+            <p>A data-driven analysis comparing the cost, response times, and deterrence effectiveness of professional off-site CCTV monitoring versus traditional on-site security personnel in Garden Route businesses.</p>
+          </div>
+        </div>
+        <div class="insight-card" data-card-reveal="right">
+          <img src="cctv-offline.png" alt="CCTV Offline - The Workaround Problem">
+          <div class="insight-body">
+            <h3>The Workaround Problem: Why CCTV Security Friction Costs Industrial Businesses Millions</h3>
+            <p>When cameras go offline, blind spots form and operators work around broken systems. We explore how integrated monitoring eliminates the workarounds that leave your site exposed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION -->
+  <section class="services-section-wrap" style="position:relative;">
+    <div class="services-paths-bg">
+      <div class="services-paths" id="services-paths-1"></div>
+      <div class="services-paths" id="services-paths-2"></div>
+    </div>
+    <div class="services-wrap-inner" style="position:relative;z-index:1;background:rgba(0,3,33,0.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:16px;padding:32px 48px;width:fit-content;min-width:600px;border:1px solid rgba(255,255,255,0.06);border-top:2px solid var(--green);box-shadow:0 -2px 10px rgba(128,186,38,0.4),0 -4px 24px rgba(128,186,38,0.15),inset 0 1px 0 rgba(128,186,38,0.3);">
+      <div class="services-heading-row">
+        <div>
+          <div class="section-tag green">Full Capability</div>
+          <h2 class="services-main-heading" data-reveal><span class="green-word">Everything</span> you need. One provider.</h2>
+        </div>
+        <div class="services-count-badge">08 SERVICES</div>
+      </div>
+      <div class="svc-list">
+        <a href="#contact" class="svc-row">
+          <span class="svc-num">01</span>
+          <div class="svc-body">
+            <span class="svc-name"><span class="green-word">CCTV</span> Camera Installation</span>
+            <span class="svc-desc">Customised CCTV systems tailored to your site — linked to cellphone, laptop &amp; TV. Residential and commercial.</span>
+          </div>
+          <span class="svc-tag">Installation</span>
+        </a>
+        <a href="#contact" class="svc-row">
+          <span class="svc-num">02</span>
+          <div class="svc-body">
+            <span class="svc-name"><span class="green-word">24-Hour</span> Off-site Monitoring</span>
+            <span class="svc-desc">State-of-the-art control room providing round-the-clock surveillance, alarm verification, and response dispatch.</span>
+          </div>
+          <span class="svc-tag">Monitoring</span>
+        </a>
+        <a href="#contact" class="svc-row">
+          <span class="svc-num">03</span>
+          <div class="svc-body">
+            <span class="svc-name"><span class="green-word">Control</span> Room Design &amp; Setup</span>
+            <span class="svc-desc">Custom design and build of your own professional off-site monitoring control room — fully integrated and operational.</span>
+          </div>
+          <span class="svc-tag">Infrastructure</span>
+        </a>
+        <a href="#contact" class="svc-row">
+          <span class="svc-num">04</span>
+          <div class="svc-body">
+            <span class="svc-name"><span class="green-word">Solar</span> Power for CCTV</span>
+            <span class="svc-desc">Keep your cameras live through load-shedding and power outages with integrated solar energy solutions.</span>
+          </div>
+          <span class="svc-tag">Energy</span>
+        </a>
+        <a href="#contact" class="svc-row">
+          <span class="svc-num">05</span>
+          <div class="svc-body">
+            <span class="svc-name"><span class="green-word">ClearVu</span> High-Security Fencing</span>
+            <span class="svc-desc">Robust, climb-resistant perimeter fencing that provides a visible and effective security boundary for any property.</span>
+          </div>
+          <span class="svc-tag">Perimeter</span>
+        </a>
+        <a href="#contact" class="svc-row">
+          <span class="svc-num">06</span>
+          <div class="svc-body">
+            <span class="svc-name"><span class="green-word">Access</span> Control</span>
+            <span class="svc-desc">Secure, seamless access solutions for homes and businesses — keypads, biometrics, intercoms and more.</span>
+          </div>
+          <span class="svc-tag">Access</span>
+        </a>
+        <a href="#contact" class="svc-row">
+          <span class="svc-num">07</span>
+          <div class="svc-body">
+            <span class="svc-name"><span class="green-word">Boomgate</span> Systems</span>
+            <span class="svc-desc">Supplied and installed automated boomgates for controlled vehicle access to residential estates and business premises.</span>
+          </div>
+          <span class="svc-tag">Vehicle</span>
+        </a>
+        <a href="#contact" class="svc-row">
+          <span class="svc-num">08</span>
+          <div class="svc-body">
+            <span class="svc-name"><span class="green-word">Electric</span> Fencing</span>
+            <span class="svc-desc">Additional perimeter deterrent with electric fencing — supplied, installed, and maintained for residential and commercial sites.</span>
+          </div>
+          <span class="svc-tag">Perimeter</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US SECTION -->
+  <section class="why-section">
+    <div class="why-paths-bg">
+      <div class="why-paths" id="why-paths-1"></div>
+      <div class="why-paths" id="why-paths-2"></div>
+    </div>
+    <div class="why-inner" style="position:relative;z-index:1;">
+
+      <!-- Header row: big heading left, body + stats right -->
+      <div class="why-header">
+        <div class="why-left">
+          <div class="section-tag green">Why Choose Us</div>
+          <h2 class="why-heading" data-reveal><span class="green-word">More</span> value. Less</h2>
+          <div class="why-risk-row">
+            <span class="why-risk-text">risk.</span>
+            <div class="why-inline-stats">
+              <div class="why-stat">
+                <span class="why-stat-num">15+</span>
+                <span class="why-stat-label">Years Experience</span>
+                <span class="why-stat-desc">15 years of local security expertise</span>
+              </div>
+              <div class="why-stat">
+                <span class="why-stat-num">50%</span>
+                <span class="why-stat-label">Buyback Guarantee</span>
+                <span class="why-stat-desc">Fair market value on every upgrade</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="why-right-col" data-card-reveal="right">
+          <p class="why-sub">We don't just install cameras — we deliver a complete security partnership built on transparency, flexibility, and results that last. Every system is backed by real operators, real response times, and a team that's been protecting the Garden Route for over a decade.</p>
+        </div>
+      </div>
+
+      <!-- 4-column card grid -->
+      <div class="why-grid">
+        <div class="why-card" data-card-reveal="right">
+          <div class="why-card-top">
+            <div class="why-card-title">Market-Related Buyback</div>
+            <div class="why-card-icon">↩</div>
+          </div>
+          <p class="why-card-desc">We buy back your existing equipment at fair market value — so upgrades never cost more than they should.</p>
+        </div>
+        <div class="why-card" data-card-reveal="right">
+          <div class="why-card-top">
+            <div class="why-card-title">Immediate Ownership</div>
+            <div class="why-card-icon">✓</div>
+          </div>
+          <p class="why-card-desc">Equipment is yours from day one. No lock-in, no hidden clauses — flexible rent-to-own available.</p>
+        </div>
+        <div class="why-card" data-card-reveal="right">
+          <div class="why-card-top">
+            <div class="why-card-title">Flexible Financing</div>
+            <div class="why-card-icon">◈</div>
+          </div>
+          <p class="why-card-desc">Customised payment solutions built around your budget — world-class security always within reach.</p>
+        </div>
+        <div class="why-card" data-card-reveal="right">
+          <div class="why-card-top">
+            <div class="why-card-title">50% Buyback Guarantee</div>
+            <div class="why-card-icon">½</div>
+          </div>
+          <p class="why-card-desc">Selected equipment carries a 50% buyback — protecting your investment and cutting long-term costs.</p>
+        </div>
+        <div class="why-card" data-card-reveal="right">
+          <div class="why-card-top">
+            <div class="why-card-title">Service & Maintenance</div>
+            <div class="why-card-icon">⚙</div>
+          </div>
+          <p class="why-card-desc">Ongoing service keeps your systems at peak performance long after installation day.</p>
+        </div>
+        <div class="why-card" data-card-reveal="right">
+          <div class="why-card-top">
+            <div class="why-card-title">Free Site Inspections</div>
+            <div class="why-card-icon">◎</div>
+          </div>
+          <p class="why-card-desc">No-obligation inspections and detailed quotes — we assess your needs before you spend a cent.</p>
+        </div>
+        <div class="why-card" data-card-reveal="right">
+          <div class="why-card-top">
+            <div class="why-card-title">Manufacturer Warranties</div>
+            <div class="why-card-icon">▣</div>
+          </div>
+          <p class="why-card-desc">Full manufacturer warranties plus our own workmanship guarantee on every installation.</p>
+        </div>
+        <div class="why-card" data-card-reveal="right">
+          <div class="why-card-top">
+            <div class="why-card-title">Same-Day Installation</div>
+            <div class="why-card-icon">⚡</div>
+          </div>
+          <p class="why-card-desc">Fast deployment when you need it — the owner personally follows up after every job.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STATS + REVIEWS WRAPPER (shared animation) -->
+  <div style="position:relative;background:var(--navy-mid);isolation:isolate;">
+    <div class="stats-paths-bg">
+      <div class="stats-paths" id="stats-paths-1"></div>
+      <div class="stats-paths" id="stats-paths-2"></div>
+    </div>
+
+    <!-- STATS SECTION -->
+    <section class="stats-section" style="position:relative;z-index:1;background:transparent;overflow:visible;">
+      <div class="stats-inner">
+        <div class="stats-header">
+          <div style="flex:1;min-width:0;">
+            <div class="section-tag green">Real World • Impact</div>
+            <h2 class="stats-heading" data-reveal>Real-World Impact from Leading <span class="green-word">Garden Route</span> Businesses</h2>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item" data-card-reveal="right">
+            <div class="stat-num">500+</div>
+            <div class="stat-label">Cameras actively monitored across the Garden Route — 24 hours a day, 7 days a week.</div>
+          </div>
+          <div class="stat-item" data-card-reveal="right">
+            <div class="stat-num">23K</div>
+            <div class="stat-label">Security incidents verified and responded to through our off-site monitoring platform.</div>
+          </div>
+          <div class="stat-item" data-card-reveal="right">
+            <div class="stat-num">&lt;60s</div>
+            <div class="stat-label">Industry-leading alarm verification speed keeps your business one step ahead of every threat.</div>
+          </div>
+          <div class="stat-item" data-card-reveal="right">
+            <div class="stat-num">R42M</div>
+            <div class="stat-label">Estimated losses prevented for clients through early detection and rapid response coordination.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS SECTION -->
+    <section class="reviews-section" style="position:relative;z-index:1;background:transparent;overflow:visible;">
+    <div class="reviews-inner">
+      <div class="reviews-header">
+        <div>
+          <div class="section-tag green">What Clients Say</div>
+          <h2 class="reviews-heading" data-reveal><span class="green-word">Trusted</span> by the Garden Route.</h2>
+        </div>
+        <div class="reviews-rating-block">
+          <div class="reviews-score">5.0</div>
+          <div class="reviews-stars-col">
+            <div class="reviews-stars">★★★★★</div>
+            <div class="reviews-count">23 Google Reviews</div>
+          </div>
+        </div>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card" data-card-reveal="left">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-quote">"Same-day installation — owner phoned within 30 minutes. Totally professional all over and hence not surprised why so many companies in this area use Outeniqua CCTV."</p>
+          <div class="review-author">
+            <div class="review-name">Craig Austin</div>
+            <div class="review-date">Feb 2026</div>
+          </div>
+        </div>
+        <div class="review-card" data-card-reveal="left">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-quote">"If you need a company that goes above and beyond your wildest expectations — THIS IS IT!! Connected and sorted even during the festive season."</p>
+          <div class="review-author">
+            <div class="review-name">Estienne Bruere</div>
+            <div class="review-date">Jan 2026</div>
+          </div>
+        </div>
+        <div class="review-card" data-card-reveal="left">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-quote">"Thanks to Malcolm for helping after hours and being so quick and considerate about my situation. Very good and efficient service."</p>
+          <div class="review-author">
+            <div class="review-name">Luske Theron</div>
+            <div class="review-date">Feb 2026</div>
+          </div>
+        </div>
+        <div class="review-card" data-card-reveal="left">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-quote">"Fast, efficient and professional. Industry knowledge on expert level, accompanied with friendly service."</p>
+          <div class="review-author">
+            <div class="review-name">Werner Loftus</div>
+            <div class="review-date">Jan 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+  </div><!-- end stats-reviews-wrapper -->
+
+  <!-- CONTACT SECTION -->
+  <section class="contact-section" id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <div class="section-tag green">Get In Touch</div>
+        <h2 class="contact-heading" data-reveal>Ready to <span class="green-word">secure</span> your property?</h2>
+        <p class="contact-sub">Book a free, no-obligation site inspection. We'll assess your needs and provide a detailed quote — same-day availability when required.</p>
+        <div class="contact-details">
+          <div class="contact-detail-item">
+            <div class="contact-detail-icon">✆</div>
+            <div class="contact-detail-body">
+              <span class="contact-detail-label">Phone</span>
+              <span class="contact-detail-value">
+                <a href="tel:0606362700">060 636 2700</a> &nbsp;/&nbsp; <a href="tel:+27767673264">+27 76 767 3264</a>
+              </span>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <div class="contact-detail-icon">◎</div>
+            <div class="contact-detail-body">
+              <span class="contact-detail-label">Address</span>
+              <span class="contact-detail-value">91 York St, Dormehls Drift<br>George, Western Cape, 6529</span>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <div class="contact-detail-icon">◷</div>
+            <div class="contact-detail-body">
+              <span class="contact-detail-label">Operating Hours</span>
+              <span class="contact-detail-value">Mon – Fri: 08:00 – 17:00<br>Emergency monitoring: 24 / 7</span>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <div class="contact-detail-icon">@</div>
+            <div class="contact-detail-body">
+              <span class="contact-detail-label">Service Area</span>
+              <span class="contact-detail-value">George · Garden Route &amp; surrounding areas</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-wrap">
+        <h3 class="contact-form-title">Book a <span class="green-word">Free</span> Site Inspection</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input class="form-input" type="text" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone / WhatsApp</label>
+            <input class="form-input" type="tel" placeholder="060 000 0000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Service Required</label>
+          <select class="form-select">
+            <option value="" disabled selected>Select a service…</option>
+            <option>CCTV Camera Installation</option>
+            <option>24-Hour Off-site Monitoring</option>
+            <option>Control Room Design & Setup</option>
+            <option>Solar Power for CCTV</option>
+            <option>ClearVu High-Security Fencing</option>
+            <option>Access Control</option>
+            <option>Boomgate Systems</option>
+            <option>Electric Fencing</option>
+            <option>Not sure — need advice</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message (optional)</label>
+          <textarea class="form-textarea" placeholder="Tell us about your site or any specific requirements…"></textarea>
+        </div>
+        <button class="form-submit">Request Free Inspection →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL SECTION -->
+  <div class="final-section">
+    <img src="control-room.png" alt="Outeniqua CCTV Control Room" class="final-section-bg">
+    <div class="final-section-overlay"></div>
+    <div class="final-section-inner">
+      <span class="final-section-tag">Outeniqua CCTV &amp; Off-site Monitoring</span>
+      <h2 class="final-heading" data-reveal>Total control.<br><span class="green-word">At your fingertips.</span></h2>
+      <p class="final-sub">Secure your property. Cut downtime. Move faster.</p>
+      <p class="final-desc">24/7 off-site monitoring, rapid alarm response, and world-class CCTV — protecting the Garden Route for over 15 years.</p>
+      <a href="#contact" class="btn-primary final-cta-btn">Book Your Free Site Inspection →</a>
+    </div>
+  </div>
+
+  <!-- AWARDS BAR -->
+  <div class="awards-bar">
+    <div class="awards-inner">
+      <div class="award-item">
+        <span class="award-type">Crime Stop Award</span>
+        <span class="award-name">Best Security Partner</span>
+        <span class="award-year">Garden Route 2025</span>
+      </div>
+      <div style="width:1px;height:40px;background:rgba(255,255,255,0.08)"></div>
+      <div class="award-item">
+        <span class="award-type">Community Excellence</span>
+        <span class="award-name">Fastest Growing</span>
+        <span class="award-year">Independently Certified</span>
+      </div>
+      <div style="width:1px;height:40px;background:rgba(255,255,255,0.08)"></div>
+      <div class="award-item">
+        <span class="award-type">Zero Trust Rated</span>
+        <span class="award-name">Monitoring Platform</span>
+        <span class="award-year">Our Company</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV">
+          <p>Professional CCTV & Off-site Monitoring — George, Garden Route, South Africa.</p>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
+            <a href="tel:0606362700" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ 060 636 2700</a>
+            <a href="tel:+27767673264" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ +27 76 767 3264</a>
+            <span style="font-size:13px;color:rgba(255,255,255,0.3);line-height:1.5;">91 York St, Dormehls Drift<br>George, Western Cape, 6529</span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="#">Outeniqua Trust Engine</a></li>
+            <li><a href="#">Remote Monitoring</a></li>
+            <li><a href="#">Alarm Response</a></li>
+            <li><a href="#">Access Control</a></li>
+            <li><a href="#">Analytics</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Solutions</h4>
+          <ul>
+            <li><a href="#">Retail Security</a></li>
+            <li><a href="#">Industrial Sites</a></li>
+            <li><a href="#">Residential Estates</a></li>
+            <li><a href="#">Healthcare Facilities</a></li>
+            <li><a href="#">Construction Sites</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Whitepapers</a></li>
+            <li><a href="#">Case Studies</a></li>
+            <li><a href="#">Security Blog</a></li>
+            <li><a href="#">Support Centre</a></li>
+            <li><a href="#">Documentation</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal & Compliance</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">POPIA Compliance</a></li>
+            <li><a href="#">PSIRA Registration</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2016 – 2026 Outeniqua CCTV & Off-site Monitoring | George, Garden Route</span>
+        <div class="footer-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">POPIA</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var GREEN = "128,186,38";
+
+      function buildPath(position, i) {
+        var p = position;
+        return "M-" + (380 - i*5*p) + " -" + (189 + i*6) +
+               "C-" + (380 - i*5*p) + " -" + (189 + i*6) +
+               " -" + (312 - i*5*p) + " " + (216 - i*6) +
+               " " + (152 - i*5*p) + " " + (343 - i*6) +
+               "C" + (616 - i*5*p) + " " + (470 - i*6) +
+               " " + (684 - i*5*p) + " " + (875 - i*6) +
+               " " + (684 - i*5*p) + " " + (875 - i*6);
+      }
+
+      function init() {
+        var allPaths = [];
+
+        var pathConfigs = [
+          { id: "platform-paths-1",  pos: 1,  mirror: false },
+          { id: "platform-paths-2",  pos: -1, mirror: false },
+          { id: "unlock-paths-1",    pos: 1,  mirror: true  },
+          { id: "unlock-paths-2",    pos: -1, mirror: true  },
+          { id: "insights-paths-1",  pos: 1,  mirror: true  },
+          { id: "insights-paths-2",  pos: -1, mirror: true  },
+          { id: "services-paths-1",  pos: 1,  mirror: false },
+          { id: "services-paths-2",  pos: -1, mirror: false },
+          { id: "stats-paths-1",     pos: 1,  mirror: false },
+          { id: "stats-paths-2",     pos: -1, mirror: false },
+          { id: "why-paths-1",       pos: 1,  mirror: true  },
+          { id: "why-paths-2",       pos: -1, mirror: true  }
+        ];
+
+        pathConfigs.forEach(function (pair) {
+          var container = document.getElementById(pair.id);
+          if (!container) return;
+          var pos = pair.pos;
+
+          var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          svg.setAttribute("viewBox", "-300 -150 1200 1100");
+          svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
+          svg.setAttribute("fill", "none");
+          svg.setAttribute("pointer-events", "none");
+          var base = "position:absolute;inset:0;width:100%;height:100%;";
+          svg.style.cssText = pair.mirror ? base + "transform:scaleX(-1);" : base;
+          container.appendChild(svg);
+
+          for (var i = 0; i < 36; i++) {
+            var el = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            el.setAttribute("d", buildPath(pos, i));
+            el.setAttribute("fill", "none");
+            el.setAttribute("stroke", "rgb(" + GREEN + ")");
+            el.setAttribute("stroke-width", String(0.5 + i * 0.04));
+            svg.appendChild(el);
+
+            var totalLen = el.getTotalLength();
+            if (!totalLen) continue;
+            var dashLen = totalLen * 0.35;
+            var maxOpacity = Math.min(0.12 + i * 0.025, 0.85);
+            var duration = 22000 + Math.random() * 12000;
+            var phase = Math.random() * duration;
+
+            el.setAttribute("stroke-dasharray", dashLen + " " + totalLen);
+
+            allPaths.push({
+              el: el,
+              totalLen: totalLen,
+              dashLen: dashLen,
+              maxOpacity: maxOpacity,
+              duration: duration,
+              phase: phase
+            });
+          }
+        });
+
+        function tick(ts) {
+          for (var k = 0; k < allPaths.length; k++) {
+            var info = allPaths[k];
+            var t = ((ts + info.phase) % info.duration) / info.duration;
+            var offset = -(t * (info.totalLen + info.dashLen));
+            var opacity = info.maxOpacity * (0.25 + 0.75 * Math.sin(t * Math.PI));
+            info.el.setAttribute("stroke-dashoffset", String(offset));
+            info.el.setAttribute("stroke-opacity", String(opacity));
+          }
+          requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+    })();
+
+    /* Word reveal — splits headings into per-word spans, animates on scroll */
+    (function () {
+      function splitHeading(el) {
+        var children = Array.from(el.childNodes);
+        var rebuilt = [];
+
+        children.forEach(function (node) {
+          if (node.nodeType === 3) {
+            var text = node.textContent;
+            var leading = /^\s/.test(text) && rebuilt.length > 0;
+            var trailing = /\s$/.test(text);
+            var words = text.trim().split(/\s+/).filter(Boolean);
+            if (leading) rebuilt.push(document.createTextNode(' '));
+            words.forEach(function (w, i) {
+              if (i > 0) rebuilt.push(document.createTextNode(' '));
+              var s = document.createElement('span');
+              s.className = 'reveal-word';
+              s.textContent = w;
+              rebuilt.push(s);
+            });
+            if (trailing) rebuilt.push(document.createTextNode(' '));
+          } else if (node.nodeType === 1 && node.tagName === 'BR') {
+            rebuilt.push(document.createElement('br'));
+          } else if (node.nodeType === 1) {
+            var wrap = document.createElement('span');
+            wrap.className = 'reveal-word';
+            wrap.appendChild(node.cloneNode(true));
+            rebuilt.push(wrap);
+          }
+        });
+
+        el.innerHTML = '';
+        rebuilt.forEach(function (n) { el.appendChild(n); });
+
+        el.querySelectorAll('.reveal-word').forEach(function (s, i) {
+          s.style.transitionDelay = (i * 80) + 'ms';
+        });
+      }
+
+      function initReveal() {
+        var headings = document.querySelectorAll('[data-reveal]');
+        headings.forEach(splitHeading);
+
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              // Skip deferred headings — card-reveal transitionend will trigger them
+              if (entry.target.hasAttribute('data-reveal-deferred')) {
+                observer.unobserve(entry.target);
+                return;
+              }
+              entry.target.classList.add('in-view');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: '-80px 0px', threshold: 0 });
+
+        headings.forEach(function (h) { observer.observe(h); });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initReveal);
+      } else {
+        initReveal();
+      }
+    })();
+
+    /* Card spotlight — tracks cursor per card */
+    (function () {
+      function attachSpotlight(selector) {
+        document.querySelectorAll(selector).forEach(function (card) {
+          card.addEventListener("mousemove", function (e) {
+            var r = card.getBoundingClientRect();
+            card.style.setProperty("--sx", (e.clientX - r.left) + "px");
+            card.style.setProperty("--sy", (e.clientY - r.top) + "px");
+          });
+          card.addEventListener("mouseleave", function () {
+            card.style.setProperty("--sx", "-999px");
+            card.style.setProperty("--sy", "-999px");
+          });
+        });
+      }
+
+      var selectors = ".platform-main, .platform-card, .insight-card, .stat-item, .unlock-card, .review-card, .why-card";
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", function () { attachSpotlight(selectors); });
+      } else {
+        attachSpotlight(selectors);
+      }
+    })();
+
+    // ── Card reveal ────────────────────────────────────────────────────────
+    (function initCardReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            el.classList.add('revealed');
+            // Deferred word reveals: override span delays so words start at T=500ms
+            // (card GPU layer is stable by then). 9 words × 50ms stagger + 400ms duration
+            // = last word completes at 500+400+400=1300ms — exact card landing time.
+            el.querySelectorAll('[data-reveal-deferred]').forEach(h => {
+              h.querySelectorAll('.reveal-word').forEach((span, i) => {
+                // No translateY — opacity only avoids per-span GPU layer promotion
+                // which causes stutter inside a composited parent on cached loads
+                span.style.transform = 'translateY(0)';
+                span.style.transitionDelay = (500 + i * 50) + 'ms';
+                span.style.transitionDuration = '400ms';
+              });
+              h.classList.add('in-view');
+            });
+            el.addEventListener('transitionend', function onDone(e) {
+              if (e.propertyName === 'transform') {
+                el.removeAttribute('data-card-reveal');
+                el.removeEventListener('transitionend', onDone);
+              }
+            });
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.02, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('[data-card-reveal]').forEach(el => observer.observe(el));
+    })();
+
+    // ── Service row hover (delegated to bypass backdrop-filter stacking issues) ──
+    (function initSvcHover() {
+      const list = document.querySelector('.svc-list');
+      if (!list) return;
+      let current = null;
+      list.addEventListener('mouseover', (e) => {
+        const row = e.target.closest('.svc-row');
+        if (row === current) return;
+        if (current) current.classList.remove('svc-row--hovered');
+        current = row;
+        if (current) current.classList.add('svc-row--hovered');
+      });
+      list.addEventListener('mouseleave', () => {
+        if (current) current.classList.remove('svc-row--hovered');
+        current = null;
+      });
+    })();
+
+    // ── Platform radar ────────────────────────────────────────────────────
+    (function initRadar() {
+      const canvas = document.getElementById('platform-radar');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const container = canvas.parentElement;
+      const frostCircle = container.querySelector('.radar-frost');
+      const G = [128, 186, 38];
+      const gc = (a) => `rgba(${G[0]},${G[1]},${G[2]},${a})`;
+
+      let mouseX = null, mouseY = null;
+      let sweepAngle = -Math.PI / 2;
+      const blips = [];
+
+      function updateSize() {
+        canvas.width  = container.offsetWidth;
+        canvas.height = container.offsetHeight;
+        const W = canvas.width, H = canvas.height;
+        const R = Math.min(W, H) * 0.47;
+        const d = R * 2;
+        const cx = W / 2, cy = H / 2;
+        // Frost circle — exactly matches radar circle
+        frostCircle.style.width  = d + 'px';
+        frostCircle.style.height = d + 'px';
+        frostCircle.style.top    = (cy - R) + 'px';
+        frostCircle.style.left   = (cx - R) + 'px';
+      }
+      updateSize();
+      window.addEventListener('resize', updateSize);
+
+      window.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        mouseX = (x >= 0 && x <= canvas.width  && y >= 0 && y <= canvas.height) ? x : null;
+        mouseY = (x >= 0 && x <= canvas.width  && y >= 0 && y <= canvas.height) ? y : null;
+      });
+
+      function draw() {
+        const W  = canvas.width, H = canvas.height;
+        const cx = W / 2,       cy = H / 2;
+        const R  = Math.min(W, H) * 0.47;
+
+        ctx.clearRect(0, 0, W, H);
+
+        // Clip everything to the outer radar circle
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, Math.PI * 2);
+        ctx.clip();
+
+        // Dark fill inside circle — subdues the path animation behind
+        ctx.fillStyle = 'rgba(0, 3, 33, 0.45)';
+        ctx.fillRect(0, 0, W, H);
+
+        // Concentric rings — bolder
+        [1, 0.66, 0.33].forEach((f) => {
+          ctx.beginPath();
+          ctx.arc(cx, cy, R * f, 0, Math.PI * 2);
+          ctx.strokeStyle = gc(f === 1 ? 0.8 : 0.35);
+          ctx.lineWidth   = f === 1 ? 2.5 : 1.5;
+          ctx.stroke();
+        });
+
+        // Crosshairs
+        ctx.strokeStyle = gc(0.22);
+        ctx.lineWidth   = 1;
+        ctx.beginPath();
+        ctx.moveTo(cx - R, cy); ctx.lineTo(cx + R, cy);
+        ctx.moveTo(cx, cy - R); ctx.lineTo(cx, cy + R);
+        ctx.stroke();
+
+        // Sweep fan — 36 lines fanning back
+        for (let i = 36; i >= 0; i--) {
+          const a     = sweepAngle - i * 0.045;
+          const alpha = ((36 - i) / 36) * 0.7;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx + Math.cos(a) * R, cy + Math.sin(a) * R);
+          ctx.strokeStyle = gc(alpha);
+          ctx.lineWidth   = i === 36 ? 2 : 1;
+          ctx.stroke();
+        }
+
+        ctx.restore();
+
+        // Spawn blip when sweep passes mouse
+        if (mouseX !== null && mouseY !== null) {
+          const dx = mouseX - cx, dy = mouseY - cy;
+          if (dx * dx + dy * dy < R * R) {
+            let diff = sweepAngle - Math.atan2(dy, dx);
+            while (diff >  Math.PI) diff -= Math.PI * 2;
+            while (diff < -Math.PI) diff += Math.PI * 2;
+            if (Math.abs(diff) < 0.07) blips.push({ x: mouseX, y: mouseY, life: 1.0 });
+          }
+        }
+
+        // Blips
+        for (let i = blips.length - 1; i >= 0; i--) {
+          const b   = blips[i];
+          const grd = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, 14);
+          grd.addColorStop(0, gc(b.life * 0.9));
+          grd.addColorStop(1, gc(0));
+          ctx.beginPath();
+          ctx.arc(b.x, b.y, 14, 0, Math.PI * 2);
+          ctx.fillStyle = grd;
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(b.x, b.y, 3, 0, Math.PI * 2);
+          ctx.fillStyle = gc(b.life);
+          ctx.fill();
+          b.life -= 0.005;
+          if (b.life <= 0) blips.splice(i, 1);
+        }
+
+        // Centre dot
+        ctx.beginPath();
+        ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+        ctx.fillStyle = '#80BA26';
+        ctx.fill();
+
+        sweepAngle += 0.025;
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+    })();
+
+    // ── Seamless trust marquee ─────────────────────────────────────────────
+    (function initTrustMarquee() {
+      function setup() {
+        const track = document.querySelector('.trust-track');
+        const wrap  = document.querySelector('.trust-marquee-wrap');
+        if (!track || !wrap) return;
+
+        // Remove any previously-cloned items so we can remeasure cleanly
+        [...track.children]
+          .filter(el => el.getAttribute('aria-hidden') === 'true')
+          .forEach(el => el.remove());
+
+        const originals = [...track.children];
+        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+
+        // One seamless "period" = original content width + one trailing gap
+        const setWidth = track.scrollWidth + gap;
+
+        // Clone until the track is at least 3× the wrap width (guarantees
+        // no gap is ever visible at any point during the animation)
+        let guard = 0;
+        while (track.scrollWidth < wrap.offsetWidth * 3 + setWidth && guard++ < 20) {
+          originals.forEach(el => {
+            const clone = el.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            track.appendChild(clone);
+          });
+        }
+
+        // Animate by exactly one period using a pixel value on the track
+        track.style.setProperty('--trust-shift', `-${setWidth}px`);
+      }
+
+      // Run after fonts + layout are stable
+      if (document.readyState === 'complete') {
+        setup();
+      } else {
+        window.addEventListener('load', setup);
+      }
+    })();
+  </script>
+
+</body>
+</html>
