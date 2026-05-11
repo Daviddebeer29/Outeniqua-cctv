@@ -188,14 +188,19 @@
       background: linear-gradient(to right, rgba(0,3,33,0.9) 0%, rgba(0,3,33,0.75) 20%, rgba(0,3,33,0.05) 38%, rgba(0,3,33,0.05) 62%, rgba(0,3,33,0.75) 80%, rgba(0,3,33,0.9) 100%);
       z-index: 1;
     }
+    .hero-sticky-wrap {
+      height: 230vh;
+    }
     .hero {
       background: var(--navy);
-      position: relative;
+      position: sticky;
+      top: 64px;
       overflow: hidden;
-      min-height: calc(100vh - 64px);
+      height: calc(100svh - 64px);
       box-sizing: border-box;
       display: flex;
       align-items: center;
+      z-index: 1;
     }
     .hero::before {
       content: '';
@@ -254,13 +259,12 @@
       letter-spacing: -0.03em;
       text-align: left;
     }
-    .hero h1 span { color: var(--green); }
+    .hero h1 .scroll-word--green { color: var(--green); }
     .hero .scroll-word {
-      opacity: 0.15;
-      transition: opacity 0.08s linear;
+      opacity: 0;
+      transition: opacity 0.06s linear;
       display: inline-block;
     }
-    .hero .scroll-word--green { color: var(--green); }
     .hero-sub {
       font-size: 16px;
       line-height: 1.7;
@@ -2599,6 +2603,7 @@
   </div>
 
   <!-- HERO -->
+  <div class="hero-sticky-wrap">
   <section class="hero">
     <video class="hero-video" autoplay muted loop playsinline>
       <source src="hero-video.mp4" type="video/mp4">
@@ -2607,7 +2612,7 @@
     <div class="hero-inner">
       <div class="hero-left">
         <div class="hero-label fade-up fade-up-1">Trusted Security Partner — Garden Route</div>
-        <h1 class="fade-up fade-up-2"><span class="scroll-word">Redefine</span><br><span class="scroll-word">How</span> <span class="scroll-word">You</span><br><span class="scroll-word scroll-word--green">Protect</span><br><span class="scroll-word">Your</span> <span class="scroll-word">Property</span></h1>
+        <h1><span class="scroll-word">Redefine</span><br><span class="scroll-word">How</span> <span class="scroll-word">You</span><br><span class="scroll-word scroll-word--green">Protect</span><br><span class="scroll-word">Your</span> <span class="scroll-word">Property</span></h1>
       </div>
       <div class="hero-right fade-up fade-up-3">
         <p class="hero-sub">Outeniqua CCTV delivers 24/7 remote surveillance and real-time threat monitoring — connecting your cameras, alarms, and response teams so security managers can detect threats in under 60 seconds, reduce incident costs, and operate with complete confidence.</p>
@@ -2620,6 +2625,7 @@
       </div>
     </div>
   </section>
+  </div><!-- /.hero-sticky-wrap -->
 
   <!-- TRUST BAR -->
   <div class="trust-bar">
@@ -3872,15 +3878,20 @@
     (function initScrollReveal() {
       var words = Array.from(document.querySelectorAll('.hero .scroll-word'));
       if (!words.length) return;
+      var wrap = document.querySelector('.hero-sticky-wrap');
       var hero = document.querySelector('.hero');
       function update() {
-        var scrollY = window.scrollY;
-        var revealEnd = hero.offsetHeight * 0.55;
-        var progress = Math.min(scrollY / revealEnd, 1);
+        // Distance from page top to start of wrapper
+        var wrapTop = wrap.getBoundingClientRect().top + window.scrollY;
+        // How far into the pinned zone we've scrolled
+        var pinDuration = wrap.offsetHeight - hero.offsetHeight;
+        var scrolled = Math.max(0, window.scrollY - wrapTop);
+        var progress = Math.min(scrolled / pinDuration, 1);
         words.forEach(function(word, i) {
+          // Stagger each word's reveal threshold across 0–0.85 of progress
           var threshold = (i / words.length) * 0.8;
-          var t = Math.max(0, Math.min(1, (progress - threshold) / 0.22));
-          word.style.opacity = 0.15 + t * 0.85;
+          var t = Math.max(0, Math.min(1, (progress - threshold) / 0.2));
+          word.style.opacity = t;
         });
       }
       window.addEventListener('scroll', update, { passive: true });
