@@ -1616,9 +1616,80 @@
       position: relative;
       overflow: hidden;
     }
+
+    /* LAMP REVEAL — sweeps across top of contact section on scroll */
+    .lamp-wrap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 520px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .lamp-bar {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      transform: translateX(-50%);
+      background: linear-gradient(to right,
+        transparent 0%,
+        rgba(128,186,38,0.35) 10%,
+        var(--green) 50%,
+        rgba(128,186,38,0.35) 90%,
+        transparent 100%
+      );
+      box-shadow:
+        0 0 10px 2px rgba(128,186,38,0.9),
+        0 0 28px 6px rgba(128,186,38,0.5),
+        0 0 70px 18px rgba(128,186,38,0.2);
+      transition: width 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: width;
+    }
+    .lamp-glow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 340px;
+      height: 300px;
+      background: radial-gradient(ellipse at 50% 0%,
+        rgba(128,186,38,0.55) 0%,
+        rgba(128,186,38,0.22) 32%,
+        rgba(128,186,38,0.05) 60%,
+        transparent 75%
+      );
+      opacity: 0;
+      transition: opacity 0.85s ease 0.18s;
+    }
+    .lamp-cone {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 520px;
+      background: radial-gradient(ellipse 100% 95% at 50% 0%,
+        rgba(128,186,38,0.14) 0%,
+        rgba(128,186,38,0.07) 38%,
+        rgba(128,186,38,0.025) 62%,
+        transparent 80%
+      );
+      transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.04s;
+      will-change: width;
+    }
+    /* Lit state — triggered by IntersectionObserver */
+    .contact-section.lamp-lit .lamp-bar  { width: min(1280px, calc(100% - 4rem)); }
+    .contact-section.lamp-lit .lamp-glow { opacity: 1; }
+    .contact-section.lamp-lit .lamp-cone { width: min(1280px, calc(100% - 4rem)); }
+
     .contact-inner {
       max-width: 1280px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: 1fr 1.1fr;
       gap: 80px;
@@ -2948,6 +3019,11 @@
 
   <!-- CONTACT SECTION -->
   <section class="contact-section" id="contact">
+    <div class="lamp-wrap" aria-hidden="true">
+      <div class="lamp-glow"></div>
+      <div class="lamp-bar"></div>
+      <div class="lamp-cone"></div>
+    </div>
     <div class="contact-inner">
       <div class="contact-left">
         <div class="section-tag green">Get In Touch</div>
@@ -3366,6 +3442,18 @@
         if (current) current.classList.remove('svc-row--hovered');
         current = null;
       });
+    })();
+
+    // ── Lamp reveal on contact section ─────────────────────────────────────
+    (function initLamp() {
+      var el = document.getElementById('contact');
+      if (!el) return;
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) { e.target.classList.add('lamp-lit'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.08 });
+      io.observe(el);
     })();
 
     // ── Particle cursor animation (replaces radar) ─────────────────────────
