@@ -760,14 +760,11 @@
       box-shadow: 0 -2px 10px rgba(128,186,38,0.18), 0 -4px 24px rgba(128,186,38,0.07), inset 0 1px 0 rgba(128,186,38,0.14);
     }
     .platform-radar-wrap {
-      grid-column: 2;
-      grid-row: 1 / 3;
       position: relative;
       overflow: hidden;
       background: rgba(0,3,33,0.55);
       border: 1px solid rgba(128,186,38,0.12);
       border-radius: 10px;
-      min-height: 440px;
     }
     #particle-grid {
       position: absolute;
@@ -784,16 +781,72 @@
     .platform-grid {
       display: grid;
       grid-template-columns: 1fr 1.5fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 20px;
-      min-height: 480px;
+      grid-template-rows: 190px 1fr 1fr 190px;
+      gap: 16px;
     }
     /* Explicit cell placement */
-    .platform-grid > *:nth-child(1) { grid-column: 1; grid-row: 1; }
-    .platform-grid > *:nth-child(2) { grid-column: 2; grid-row: 1 / 3; }
-    .platform-grid > *:nth-child(3) { grid-column: 3; grid-row: 1; }
-    .platform-grid > *:nth-child(4) { grid-column: 1; grid-row: 2; }
-    .platform-grid > *:nth-child(5) { grid-column: 3; grid-row: 2; }
+    .platform-grid > *:nth-child(1) { grid-column: 1 / 4; grid-row: 1; }   /* top image */
+    .platform-grid > *:nth-child(2) { grid-column: 1;     grid-row: 2; }   /* main card */
+    .platform-grid > *:nth-child(3) { grid-column: 2;     grid-row: 2 / 4; } /* animation */
+    .platform-grid > *:nth-child(4) { grid-column: 3;     grid-row: 2; }   /* alarm */
+    .platform-grid > *:nth-child(5) { grid-column: 1;     grid-row: 3; }   /* access */
+    .platform-grid > *:nth-child(6) { grid-column: 3;     grid-row: 3; }   /* sub-card */
+    .platform-grid > *:nth-child(7) { grid-column: 1 / 4; grid-row: 4; }   /* bottom image */
+
+    /* Image strip styles */
+    .platform-insight {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: 2px solid var(--green);
+      box-shadow: 0 -2px 10px rgba(128,186,38,0.18), 0 -4px 24px rgba(128,186,38,0.07), inset 0 1px 0 rgba(128,186,38,0.12);
+      display: block;
+      text-decoration: none;
+      transition: box-shadow 0.4s ease;
+    }
+    .platform-insight:hover {
+      box-shadow: 0 0 60px -15px rgba(128,186,38,0.3), 0 -2px 14px rgba(128,186,38,0.35), 0 -4px 30px rgba(128,186,38,0.15), inset 0 1px 0 rgba(128,186,38,0.3);
+    }
+    .platform-insight img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.45) saturate(0.8);
+      transition: transform 0.6s ease, filter 0.4s ease;
+    }
+    .platform-insight:hover img {
+      transform: scale(1.04);
+      filter: brightness(0.55) saturate(0.9);
+    }
+    .platform-insight-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      background: linear-gradient(to right, rgba(0,3,33,0.7) 0%, rgba(0,3,33,0.2) 60%, transparent 100%);
+      gap: 24px;
+    }
+    .platform-insight-text { max-width: 680px; }
+    .platform-insight h3 {
+      font-size: clamp(15px, 1.4vw, 20px);
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+    .platform-insight-arrow {
+      font-size: 28px;
+      color: var(--green);
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+    .platform-insight:hover .platform-insight-arrow { transform: translateX(6px); }
     .platform-main {
       border: 1px solid rgba(255,255,255,0.07);
       border-top: 2px solid var(--green);
@@ -2545,7 +2598,19 @@
       </div>
       <div class="platform-grid">
 
-        <!-- top-left -->
+        <!-- row 1: top image strip -->
+        <a href="#contact" class="platform-insight">
+          <img src="cctv-offline-2.png" alt="Reducing Operational Risk">
+          <div class="platform-insight-overlay">
+            <div class="platform-insight-text">
+              <div class="section-tag green" style="margin-bottom:8px;">Case Study</div>
+              <h3>Reducing Operational Risk: Why Off-site Monitoring Outperforms On-site Guards</h3>
+            </div>
+            <span class="platform-insight-arrow">→</span>
+          </div>
+        </a>
+
+        <!-- row 2, col 1 -->
         <div class="platform-main" data-card-reveal="left">
           <div class="platform-card-top">
             <h3>Off-site Monitoring</h3>
@@ -2554,7 +2619,7 @@
           <p>Security operators remotely monitor your cameras around the clock — verifying alarms, dispatching response teams, and maintaining your site's security posture at all times without on-site guard costs.</p>
         </div>
 
-        <!-- center — spans both rows -->
+        <!-- rows 2–3, col 2: animation -->
         <div class="platform-radar-wrap">
           <div id="particle-grid"><div id="particle-grid-inner"></div></div>
           <div class="live-badge" style="position:absolute;top:18px;right:20px;z-index:3;white-space:nowrap;">
@@ -2563,7 +2628,7 @@
           </div>
         </div>
 
-        <!-- top-right -->
+        <!-- row 2, col 3 -->
         <div class="platform-card" data-card-reveal="right">
           <div class="platform-card-top">
             <h3>Alarm Response Integration</h3>
@@ -2572,7 +2637,7 @@
           <p>Real-time alarm verification and automated escalation protocols route verified threats to the nearest armed response unit — dramatically cutting response times.</p>
         </div>
 
-        <!-- bottom-left -->
+        <!-- row 3, col 1 -->
         <div class="platform-card" data-card-reveal="left">
           <div class="platform-card-top">
             <h3>Access Control & Gates</h3>
@@ -2581,47 +2646,27 @@
           <p>Integrate CCTV with your access control systems across your entire footprint — remotely manage gates, doors, and entry points with full audit trails.</p>
         </div>
 
-        <!-- bottom-right -->
+        <!-- row 3, col 3 -->
         <div class="platform-sub-card" data-card-reveal="right">
           <p class="platform-sub">The Outeniqua Zero Trust monitoring engine standardises your CCTV feeds, alarms, and access control systems across every site — helping security managers detect threats faster, streamline operations, and unify response protocols across your entire property footprint.</p>
         </div>
 
+        <!-- row 4: bottom image strip -->
+        <a href="#contact" class="platform-insight">
+          <img src="cctv-offline.png" alt="CCTV Security Friction">
+          <div class="platform-insight-overlay">
+            <div class="platform-insight-text">
+              <div class="section-tag green" style="margin-bottom:8px;">Industry Insight</div>
+              <h3>The Workaround Problem: Why CCTV Security Friction Costs Industrial Businesses Millions</h3>
+            </div>
+            <span class="platform-insight-arrow">→</span>
+          </div>
+        </a>
+
       </div>
     </div>
   </section>
 
-  <!-- INSIGHTS SECTION -->
-  <section class="insights-section">
-    <div class="insights-paths-bg">
-      <div class="insights-paths" id="insights-paths-1"></div>
-      <div class="insights-paths" id="insights-paths-2"></div>
-    </div>
-    <div class="insights-inner">
-      <div class="insights-header">
-        <div>
-          <div class="section-tag">Latest • Updates</div>
-          <h2 class="insights-heading" data-reveal>CCTV <span class="green-word">Security</span> Insights & Updates</h2>
-        </div>
-        <a href="#contact" class="btn-outline-green">View all articles →</a>
-      </div>
-      <div class="insights-grid">
-        <div class="insight-card" data-card-reveal="left">
-          <img src="cctv-offline-2.png" alt="Reducing Operational Risk">
-          <div class="insight-body">
-            <h3>Reducing Operational Risk: Why Off-site Monitoring Outperforms On-site Guards</h3>
-            <p>A data-driven analysis comparing the cost, response times, and deterrence effectiveness of professional off-site CCTV monitoring versus traditional on-site security personnel in Garden Route businesses.</p>
-          </div>
-        </div>
-        <div class="insight-card" data-card-reveal="right">
-          <img src="cctv-offline.png" alt="CCTV Offline - The Workaround Problem">
-          <div class="insight-body">
-            <h3>The Workaround Problem: Why CCTV Security Friction Costs Industrial Businesses Millions</h3>
-            <p>When cameras go offline, blind spots form and operators work around broken systems. We explore how integrated monitoring eliminates the workarounds that leave your site exposed.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- SERVICES SECTION -->
   <section class="services-section-wrap" style="position:relative;">
