@@ -1676,10 +1676,26 @@
       transition: width 6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
       will-change: width;
     }
+    .lamp-glow-right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 320px;
+      height: 300px;
+      background: radial-gradient(ellipse at 100% 0%,
+        rgba(128,186,38,0.55) 0%,
+        rgba(128,186,38,0.22) 32%,
+        rgba(128,186,38,0.05) 60%,
+        transparent 75%
+      );
+      opacity: 0;
+      transition: opacity 1.8s ease 4.2s;
+    }
     /* Lit state — triggered by IntersectionObserver */
-    .contact-section.lamp-lit .lamp-bar  { width: 100%; }
-    .contact-section.lamp-lit .lamp-glow { opacity: 1; }
-    .contact-section.lamp-lit .lamp-cone { width: 100%; }
+    .contact-section.lamp-lit .lamp-bar        { width: 100%; }
+    .contact-section.lamp-lit .lamp-glow       { opacity: 1; }
+    .contact-section.lamp-lit .lamp-glow-right { opacity: 1; }
+    .contact-section.lamp-lit .lamp-cone       { width: 100%; }
 
     .contact-inner {
       max-width: 1280px;
@@ -3017,6 +3033,7 @@
   <section class="contact-section" id="contact">
     <div class="lamp-wrap" aria-hidden="true">
       <div class="lamp-glow"></div>
+      <div class="lamp-glow-right"></div>
       <div class="lamp-bar"></div>
       <div class="lamp-cone"></div>
     </div>
