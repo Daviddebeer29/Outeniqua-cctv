@@ -245,6 +245,8 @@
       text-transform: uppercase;
       color: var(--green);
       margin-bottom: 16px;
+      opacity: 0;
+      transition: opacity 0.06s linear;
     }
     .hero h1 {
       font-size: clamp(72px, 8.5vw, 122px);
@@ -2607,7 +2609,7 @@
     <div class="hero-video-overlay"></div>
     <div class="hero-inner">
       <div class="hero-left">
-        <div class="hero-label fade-up fade-up-1">Trusted Security Partner — Garden Route</div>
+        <div class="hero-label">Trusted Security Partner — Garden Route</div>
         <h1><span class="scroll-word">Redefine</span><br><span class="scroll-word">How</span> <span class="scroll-word">You</span><br><span class="scroll-word scroll-word--green">Protect</span><br><span class="scroll-word">Your</span> <span class="scroll-word">Property</span></h1>
       </div>
       <div class="hero-right">
@@ -3873,12 +3875,14 @@
     (function initScrollReveal() {
       var words = Array.from(document.querySelectorAll('.hero .scroll-word'));
       if (!words.length) return;
-      var sub = document.querySelector('.hero-sub');
-      var cta = document.querySelector('.hero-ctas');
+      var label  = document.querySelector('.hero-label');
+      var sub    = document.querySelector('.hero-sub');
+      var cta    = document.querySelector('.hero-ctas');
       var overlay = document.querySelector('.hero-video-overlay');
 
-      // Full sequence: h1 words → paragraph → button
-      var items = words.concat(sub ? [sub] : []).concat(cta ? [cta] : []);
+      // Full sequence: label + h1 words → paragraph → button
+      // Label is index 0, Redefine is index 1 — they appear together at the start
+      var items = (label ? [label] : []).concat(words).concat(sub ? [sub] : []).concat(cta ? [cta] : []);
 
       // Phase split: first 18% = vignette closes in, remaining 82% = content reveals
       var VIG_END  = 0.18;
