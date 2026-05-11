@@ -653,6 +653,26 @@
       border-radius: 12px;
       pointer-events: none;
     }
+    .unlock-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 2px;
+      background: radial-gradient(
+        220px 220px at var(--cx, -999px) var(--cy, -999px),
+        #80ba26 0%,
+        rgba(128,186,38,0.7) 30%,
+        rgba(128,186,38,0.2) 60%,
+        transparent 80%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 4;
+    }
     .unlock-cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -3567,7 +3587,7 @@
           });
         });
       }
-      var sel = ".platform-main, .platform-card, .platform-sub-card, .insight-card, .stat-item, .unlock-card, .unlock-text-card, .why-card, .rcard";
+      var sel = ".platform-main, .platform-card, .platform-sub-card, .insight-card, .stat-item, .unlock-card, .unlock-text-card, .unlock-image, .why-card, .rcard";
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", function () { attachBorderGlow(sel); });
       } else {
