@@ -1621,8 +1621,9 @@
     .lamp-wrap {
       position: absolute;
       top: 0;
-      left: 0;
-      right: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1280px, calc(100% - 4rem));
       height: 520px;
       pointer-events: none;
       z-index: 0;
@@ -1630,15 +1631,12 @@
     .lamp-bar {
       position: absolute;
       top: 0;
-      left: 50%;
+      left: 0;
       width: 0;
       height: 2px;
-      transform: translateX(-50%);
       background: linear-gradient(to right,
-        transparent 0%,
-        rgba(128,186,38,0.35) 10%,
-        var(--green) 50%,
-        rgba(128,186,38,0.35) 90%,
+        var(--green) 0%,
+        rgba(128,186,38,0.55) 75%,
         transparent 100%
       );
       box-shadow:
@@ -1651,11 +1649,10 @@
     .lamp-glow {
       position: absolute;
       top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 340px;
+      left: 0;
+      width: 320px;
       height: 300px;
-      background: radial-gradient(ellipse at 50% 0%,
+      background: radial-gradient(ellipse at 0% 0%,
         rgba(128,186,38,0.55) 0%,
         rgba(128,186,38,0.22) 32%,
         rgba(128,186,38,0.05) 60%,
@@ -1667,11 +1664,10 @@
     .lamp-cone {
       position: absolute;
       top: 0;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 0;
       width: 0;
       height: 520px;
-      background: radial-gradient(ellipse 100% 95% at 50% 0%,
+      background: radial-gradient(ellipse 100% 95% at 0% 0%,
         rgba(128,186,38,0.14) 0%,
         rgba(128,186,38,0.07) 38%,
         rgba(128,186,38,0.025) 62%,
@@ -1681,9 +1677,9 @@
       will-change: width;
     }
     /* Lit state — triggered by IntersectionObserver */
-    .contact-section.lamp-lit .lamp-bar  { width: min(1280px, calc(100% - 4rem)); }
+    .contact-section.lamp-lit .lamp-bar  { width: 100%; }
     .contact-section.lamp-lit .lamp-glow { opacity: 1; }
-    .contact-section.lamp-lit .lamp-cone { width: min(1280px, calc(100% - 4rem)); }
+    .contact-section.lamp-lit .lamp-cone { width: 100%; }
 
     .contact-inner {
       max-width: 1280px;
