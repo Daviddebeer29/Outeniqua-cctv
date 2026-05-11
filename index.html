@@ -2255,17 +2255,21 @@
     /* CARD GLOW BORDERS */
     .platform-main,
     .platform-card,
+    .platform-sub-card,
     .insight-card,
     .stat-item,
-    .unlock-card {
+    .unlock-card,
+    .unlock-text-card {
       position: relative;
       overflow: hidden;
     }
     .platform-main::after,
     .platform-card::after,
+    .platform-sub-card::after,
     .insight-card::after,
     .stat-item::after,
     .unlock-card::after,
+    .unlock-text-card::after,
     .rcard::after {
       content: '';
       position: absolute;
@@ -3563,7 +3567,7 @@
           });
         });
       }
-      var sel = ".platform-main, .platform-card, .insight-card, .stat-item, .unlock-card, .why-card, .rcard";
+      var sel = ".platform-main, .platform-card, .platform-sub-card, .insight-card, .stat-item, .unlock-card, .unlock-text-card, .why-card, .rcard";
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", function () { attachBorderGlow(sel); });
       } else {
