@@ -759,26 +759,15 @@
       padding: 22px 26px;
       box-shadow: 0 -2px 10px rgba(128,186,38,0.18), 0 -4px 24px rgba(128,186,38,0.07), inset 0 1px 0 rgba(128,186,38,0.14);
     }
-    .platform-visual {
+    .platform-radar-wrap {
       grid-column: 2;
       grid-row: 1 / 3;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      min-height: 420px;
-    }
-    .platform-radar-wrap {
-      flex: 1;
       position: relative;
-      min-height: 280px;
-      max-height: 340px;
       overflow: hidden;
       background: rgba(0,3,33,0.55);
       border: 1px solid rgba(128,186,38,0.12);
       border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      min-height: 440px;
     }
     #particle-grid {
       position: absolute;
@@ -794,13 +783,18 @@
     }
     .platform-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
+      grid-template-columns: 1fr 1.5fr 1fr;
+      grid-template-rows: 1fr 1fr;
       gap: 20px;
+      min-height: 480px;
     }
+    /* Explicit cell placement */
+    .platform-grid > *:nth-child(1) { grid-column: 1; grid-row: 1; }
+    .platform-grid > *:nth-child(2) { grid-column: 2; grid-row: 1 / 3; }
+    .platform-grid > *:nth-child(3) { grid-column: 3; grid-row: 1; }
+    .platform-grid > *:nth-child(4) { grid-column: 1; grid-row: 2; }
+    .platform-grid > *:nth-child(5) { grid-column: 3; grid-row: 2; }
     .platform-main {
-      grid-column: 1;
-      grid-row: 1;
       border: 1px solid rgba(255,255,255,0.07);
       border-top: 2px solid var(--green);
       border-radius: 10px;
@@ -854,15 +848,6 @@
     .platform-card:hover {
       transform: scale(1.05);
       box-shadow: 0 0 60px -15px rgba(128,186,38,0.3), 0 -2px 14px rgba(128,186,38,0.35), 0 -4px 30px rgba(128,186,38,0.15), inset 0 1px 0 rgba(128,186,38,0.3);
-    }
-    .platform-bottom-cards {
-      grid-column: 1;
-      grid-row: 2;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      position: relative;
-      z-index: 1;
     }
     .platform-card-top {
       display: flex;
@@ -2245,8 +2230,9 @@
       .why-inner       { gap: 48px; }
       .why-grid        { grid-template-columns: repeat(2, 1fr); }
       .contact-inner   { grid-template-columns: 1fr; gap: 48px; }
-      .platform-grid   { grid-template-columns: 1fr; }
-      .platform-visual { display: none; }
+      .platform-grid   { grid-template-columns: 1fr; grid-template-rows: auto; min-height: unset; }
+      .platform-grid > *:nth-child(n) { grid-column: 1; grid-row: auto; }
+      .platform-radar-wrap { display: none; }
       .unlock-top      { grid-template-columns: 1fr; }
       .unlock-image    { display: none; }
       .reviews-grid    { grid-template-columns: repeat(2, 1fr); }
@@ -2311,8 +2297,14 @@
       .unlock-sub       { font-size: 15px; }
 
       /* === PLATFORM === */
-      .platform-bottom-cards { grid-template-columns: 1fr; gap: 14px; }
-      .platform-visual       { display: none; }
+      .platform-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        min-height: unset;
+        gap: 14px;
+      }
+      .platform-grid > *:nth-child(n) { grid-column: 1; grid-row: auto; }
+      .platform-radar-wrap   { display: none; }
       .platform-main         { padding: 28px 24px; }
       .platform-heading      { font-size: clamp(26px, 8vw, 42px); }
 
@@ -2552,6 +2544,8 @@
         </div>
       </div>
       <div class="platform-grid">
+
+        <!-- top-left -->
         <div class="platform-main" data-card-reveal="left">
           <div class="platform-card-top">
             <h3>Off-site Monitoring</h3>
@@ -2559,34 +2553,39 @@
           </div>
           <p>Security operators remotely monitor your cameras around the clock — verifying alarms, dispatching response teams, and maintaining your site's security posture at all times without on-site guard costs.</p>
         </div>
-        <div class="platform-visual">
-          <div class="platform-sub-card" data-card-reveal="right">
-            <p class="platform-sub">The Outeniqua Zero Trust monitoring engine standardises your CCTV feeds, alarms, and access control systems across every site — helping security managers detect threats faster, streamline operations, and unify response protocols across your entire property footprint.</p>
-          </div>
-          <div class="platform-radar-wrap">
-            <div id="particle-grid"><div id="particle-grid-inner"></div></div>
-            <div class="live-badge" style="position:absolute;top:18px;right:20px;z-index:3;white-space:nowrap;">
-              <span class="live-dot"></span>
-              Live Monitoring Active
-            </div>
+
+        <!-- center — spans both rows -->
+        <div class="platform-radar-wrap">
+          <div id="particle-grid"><div id="particle-grid-inner"></div></div>
+          <div class="live-badge" style="position:absolute;top:18px;right:20px;z-index:3;white-space:nowrap;">
+            <span class="live-dot"></span>
+            Live Monitoring Active
           </div>
         </div>
-        <div class="platform-bottom-cards">
-          <div class="platform-card" data-card-reveal="left">
-            <div class="platform-card-top">
-              <h3>Alarm Response Integration</h3>
-              <div class="card-metric">&lt;60s</div>
-            </div>
-            <p>Real-time alarm verification and automated escalation protocols route verified threats to the nearest armed response unit — dramatically cutting response times.</p>
+
+        <!-- top-right -->
+        <div class="platform-card" data-card-reveal="right">
+          <div class="platform-card-top">
+            <h3>Alarm Response Integration</h3>
+            <div class="card-metric">&lt;60s</div>
           </div>
-          <div class="platform-card" data-card-reveal="left">
-            <div class="platform-card-top">
-              <h3>Access Control & Gates</h3>
-              <div class="card-metric">100%</div>
-            </div>
-            <p>Integrate CCTV with your access control systems across your entire footprint — remotely manage gates, doors, and entry points with full audit trails.</p>
-          </div>
+          <p>Real-time alarm verification and automated escalation protocols route verified threats to the nearest armed response unit — dramatically cutting response times.</p>
         </div>
+
+        <!-- bottom-left -->
+        <div class="platform-card" data-card-reveal="left">
+          <div class="platform-card-top">
+            <h3>Access Control & Gates</h3>
+            <div class="card-metric">100%</div>
+          </div>
+          <p>Integrate CCTV with your access control systems across your entire footprint — remotely manage gates, doors, and entry points with full audit trails.</p>
+        </div>
+
+        <!-- bottom-right -->
+        <div class="platform-sub-card" data-card-reveal="right">
+          <p class="platform-sub">The Outeniqua Zero Trust monitoring engine standardises your CCTV feeds, alarms, and access control systems across every site — helping security managers detect threats faster, streamline operations, and unify response protocols across your entire property footprint.</p>
+        </div>
+
       </div>
     </div>
   </section>
