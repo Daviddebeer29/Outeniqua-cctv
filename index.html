@@ -188,19 +188,14 @@
       background: linear-gradient(to right, rgba(0,3,33,0.9) 0%, rgba(0,3,33,0.75) 20%, rgba(0,3,33,0.05) 38%, rgba(0,3,33,0.05) 62%, rgba(0,3,33,0.75) 80%, rgba(0,3,33,0.9) 100%);
       z-index: 1;
     }
-    .hero-sticky-wrap {
-      height: 230vh;
-    }
     .hero {
       background: var(--navy);
-      position: sticky;
-      top: 64px;
+      position: relative;
       overflow: hidden;
-      height: calc(100svh - 64px);
+      min-height: calc(100vh - 64px);
       box-sizing: border-box;
       display: flex;
       align-items: center;
-      z-index: 1;
     }
     .hero::before {
       content: '';
@@ -2603,7 +2598,6 @@
   </div>
 
   <!-- HERO -->
-  <div class="hero-sticky-wrap">
   <section class="hero">
     <video class="hero-video" autoplay muted loop playsinline>
       <source src="hero-video.mp4" type="video/mp4">
@@ -2625,7 +2619,6 @@
       </div>
     </div>
   </section>
-  </div><!-- /.hero-sticky-wrap -->
 
   <!-- TRUST BAR -->
   <div class="trust-bar">
@@ -3874,28 +3867,71 @@
       });
     })();
 
-    // ── Hero text scroll reveal ─────────────────────────────────────────────
+    // ── Hero text scroll reveal (scroll-locked) ────────────────────────────
     (function initScrollReveal() {
       var words = Array.from(document.querySelectorAll('.hero .scroll-word'));
       if (!words.length) return;
-      var wrap = document.querySelector('.hero-sticky-wrap');
-      var hero = document.querySelector('.hero');
-      function update() {
-        // Distance from page top to start of wrapper
-        var wrapTop = wrap.getBoundingClientRect().top + window.scrollY;
-        // How far into the pinned zone we've scrolled
-        var pinDuration = wrap.offsetHeight - hero.offsetHeight;
-        var scrolled = Math.max(0, window.scrollY - wrapTop);
-        var progress = Math.min(scrolled / pinDuration, 1);
+
+      var TOTAL = 700;   // virtual px to scroll through all words
+      var vScroll = 0;
+      var done = false;
+
+      function paint(progress) {
         words.forEach(function(word, i) {
-          // Stagger each word's reveal threshold across 0–0.85 of progress
-          var threshold = (i / words.length) * 0.8;
-          var t = Math.max(0, Math.min(1, (progress - threshold) / 0.2));
+          var threshold = (i / words.length) * 0.78;
+          var t = Math.max(0, Math.min(1, (progress - threshold) / 0.22));
           word.style.opacity = t;
         });
       }
-      window.addEventListener('scroll', update, { passive: true });
-      update();
+
+      function unlock() {
+        if (done) return;
+        done = true;
+        paint(1);
+        window.removeEventListener('wheel', onWheel);
+        window.removeEventListener('touchmove', onTouchMove);
+        window.removeEventListener('keydown', onKey);
+      }
+
+      function advance(delta) {
+        vScroll = Math.max(0, Math.min(vScroll + delta, TOTAL));
+        paint(vScroll / TOTAL);
+        if (vScroll >= TOTAL) setTimeout(unlock, 80);
+      }
+
+      function onWheel(e) {
+        if (done) return;
+        e.preventDefault();
+        advance(e.deltaY);
+      }
+
+      var touchY = 0;
+      window.addEventListener('touchstart', function(e) {
+        touchY = e.touches[0].clientY;
+      }, { passive: true });
+
+      function onTouchMove(e) {
+        if (done) return;
+        e.preventDefault();
+        var delta = touchY - e.touches[0].clientY;
+        touchY = e.touches[0].clientY;
+        advance(delta * 1.5);
+      }
+
+      function onKey(e) {
+        if (done) return;
+        var map = { ArrowDown: 80, PageDown: 300, ' ': 200, ArrowUp: -80, PageUp: -300 };
+        if (map[e.key] !== undefined) {
+          e.preventDefault();
+          advance(map[e.key]);
+        }
+      }
+
+      window.addEventListener('wheel', onWheel, { passive: false });
+      window.addEventListener('touchmove', onTouchMove, { passive: false });
+      window.addEventListener('keydown', onKey);
+
+      paint(0);
     })();
   </script>
 
