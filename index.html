@@ -746,9 +746,9 @@
       letter-spacing: -0.03em;
     }
     .platform-sub {
-      font-size: 14px;
-      line-height: 1.7;
-      color: rgba(255,255,255,0.55);
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.72);
       margin: 0;
     }
     .platform-sub-card {
@@ -771,17 +771,25 @@
       flex: 1;
       position: relative;
       min-height: 280px;
+      max-height: 340px;
+      overflow: hidden;
+      background: rgba(0,3,33,0.55);
+      border: 1px solid rgba(128,186,38,0.12);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #particle-grid {
+      position: absolute;
+      inset: 0;
       overflow: hidden;
     }
-    .radar-frost {
+    #particle-grid-inner {
       position: absolute;
-      border-radius: 50%;
-      background: rgba(0, 3, 33, 0.18);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(128,186,38,0.08);
-      pointer-events: none;
-      z-index: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
     .platform-grid {
       display: grid;
@@ -807,14 +815,6 @@
     .platform-main:hover {
       transform: scale(1.02);
       box-shadow: 0 0 60px -15px rgba(128,186,38,0.3), 0 -2px 14px rgba(128,186,38,0.35), 0 -4px 30px rgba(128,186,38,0.15), inset 0 1px 0 rgba(128,186,38,0.3);
-    }
-    #platform-radar {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
     }
     .platform-paths-bg {
       position: absolute;
@@ -1026,7 +1026,7 @@
     }
     .insight-card p {
       font-size: 13px;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.65);
       line-height: 1.65;
       margin: 0 0 16px;
     }
@@ -1177,6 +1177,8 @@
     .services-wrap-inner {
       max-width: 1280px;
       margin: 0 auto;
+      padding: 32px 48px;
+      box-sizing: border-box;
     }
     .services-heading-row {
       display: flex;
@@ -1245,7 +1247,7 @@
     }
     .svc-desc {
       font-size: 14px;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.62);
       line-height: 1.6;
       max-width: 560px;
     }
@@ -2165,117 +2167,217 @@
        ═══════════════════════════════════════ */
 
     /* Tablet ≤1024px */
+    /* Hamburger — hidden on desktop */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu panel — hidden by default */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(128,186,38,0.18);
+      z-index: 98;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .mobile-menu-inner {
+      display: flex;
+      flex-direction: column;
+      padding: 16px 1.25rem 24px;
+      gap: 2px;
+    }
+    .mobile-menu-inner a {
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      padding: 13px 16px;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .mobile-menu-inner a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .mob-cta-btn {
+      margin-top: 10px;
+      text-align: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* Tablet ≤1024px */
     @media (max-width: 1024px) {
-      .why-inner       { grid-template-columns: 1fr; gap: 48px; }
-      .why-left        { position: static; }
+      .why-inner       { gap: 48px; }
       .why-grid        { grid-template-columns: repeat(2, 1fr); }
       .contact-inner   { grid-template-columns: 1fr; gap: 48px; }
       .platform-grid   { grid-template-columns: 1fr; }
       .platform-visual { display: none; }
       .unlock-top      { grid-template-columns: 1fr; }
       .unlock-image    { display: none; }
-      .cta-inner       { grid-template-columns: 1fr; }
-      .cta-image       { display: none; }
       .reviews-grid    { grid-template-columns: repeat(2, 1fr); }
       .insights-grid   { grid-template-columns: 1fr; }
     }
 
     /* Mobile ≤640px */
     @media (max-width: 640px) {
-      /* Sections padding */
-      section,
-      .services-section-wrap, .why-section, .contact-section,
-      .reviews-section, .stats-section, .cta-section { padding: 64px 1.25rem; }
+
+      /* Disable scroll-reveal animations — overflow:hidden on sections clips
+         elements at translateX(-110%) so IntersectionObserver never fires */
+      [data-card-reveal],
+      [data-card-reveal="left"],
+      [data-card-reveal="right"] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      .reveal-word {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+
+      /* Announcement bar */
+      .announce-bar-text { font-size: 11px !important; }
+      .announce-bar-link { display: none !important; }
 
       /* Nav */
       .nav-links  { display: none; }
       .nav-badge  { display: none; }
       .nav-inner  { padding: 0 1.25rem; }
+      .hamburger  { display: flex; }
+      .mobile-menu { display: block; }
 
-      /* Hero — stack vertically */
-      .hero-inner       { flex-direction: column; align-items: flex-start; padding: 0 1.25rem; gap: 32px; }
-      .hero-right       { display: none; }
-      .hero-headline    { font-size: clamp(42px, 11vw, 64px); }
-      .hero-cta         { flex-direction: column; gap: 10px; }
+      /* === SECTION + INNER PADDING === */
+      /* Section base */
+      section, .unlock-section, .platform-section, .insights-section,
+      .services-section-wrap, .why-section, .contact-section,
+      .reviews-section, .stats-section { padding: 56px 1.25rem; }
+      /* Zero inner div padding so content isn't double-padded */
+      .unlock-inner, .platform-inner, .insights-inner,
+      .reviews-inner, .stats-inner { padding: 0; }
+      /* Services card mobile padding */
+      .services-wrap-inner { padding: 20px 16px; border-radius: 10px; }
 
-      /* Unlock */
-      .unlock-section   { padding: 64px 1.25rem; }
+      /* === HERO === */
+      .hero { min-height: calc(100svh - 64px); }
+      .hero-inner    { flex-direction: column; align-items: flex-start; padding: 0 1.25rem; gap: 28px; }
+      .hero-right    { display: none; }
+      .hero h1       { font-size: clamp(48px, 13vw, 72px); }
+      .hero-sub      { font-size: 15px; margin-bottom: 28px; }
+      .hero-ctas     { flex-direction: column; gap: 10px; width: 100%; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; text-align: center; }
+
+      /* === UNLOCK === */
       .unlock-top       { grid-template-columns: 1fr; }
       .unlock-image     { display: none; }
       .unlock-text-card { padding: 28px 24px; }
-      .unlock-cards     { grid-template-columns: 1fr; }
+      .unlock-heading   { font-size: clamp(30px, 9vw, 48px); }
+      .unlock-cards     { grid-template-columns: 1fr; gap: 14px; }
+      .unlock-sub       { font-size: 15px; }
 
-      /* Platform */
-      .platform-section       { padding: 64px 1.25rem; }
-      .platform-bottom-cards  { grid-template-columns: 1fr; }
-      .platform-visual        { display: none; }
+      /* === PLATFORM === */
+      .platform-bottom-cards { grid-template-columns: 1fr; gap: 14px; }
+      .platform-visual       { display: none; }
+      .platform-main         { padding: 28px 24px; }
+      .platform-heading      { font-size: clamp(26px, 8vw, 42px); }
 
-      /* Insights */
-      .insights-section { padding: 64px 1.25rem; }
-      .insights-grid    { grid-template-columns: 1fr; }
+      /* === INSIGHTS === */
+      .insights-grid   { grid-template-columns: 1fr; }
+      .insights-header { flex-direction: column; align-items: flex-start; gap: 20px; margin-bottom: 32px; }
+      .insights-heading { font-size: clamp(26px, 8vw, 42px); }
 
-      /* Stats */
-      .stats-section  { padding: 64px 1.25rem; }
-      .stats-grid     { grid-template-columns: 1fr 1fr; }
-      .stats-header   { flex-direction: column; align-items: flex-start; gap: 16px; }
-
-      /* Services */
-      .services-section-wrap  { padding: 64px 1.25rem; }
+      /* === SERVICES === */
+      .services-section-wrap  { overflow-x: hidden; }
       .services-heading-row   { flex-direction: column; align-items: flex-start; gap: 8px; }
-      .svc-row                { grid-template-columns: 48px 1fr; gap: 16px; }
-      .svc-body               { min-width: 0; }
-      .svc-tag, .svc-arrow    { display: none; }
+      .services-main-heading  { font-size: clamp(26px, 8vw, 42px); }
+      .svc-row                { grid-template-columns: 40px 1fr !important; gap: 12px; padding: 16px 0; }
+      .svc-name               { font-size: clamp(16px, 4.5vw, 22px); overflow-wrap: break-word; }
+      .svc-desc               { font-size: 13px; }
+      .svc-body               { min-width: 0; overflow: hidden; }
+      .svc-tag, .svc-arrow    { display: none !important; }
 
-      /* Reviews */
+      /* === STATS === */
+      .stats-section  { padding: 56px 1.25rem 0; }
+      .stats-grid     { grid-template-columns: 1fr; gap: 14px; }
+      .stats-header   { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 36px; }
+      .stats-heading  { font-size: clamp(24px, 7vw, 40px); }
+      .stat-item      { padding: 28px 24px; }
+      .stat-num       { font-size: 48px; }
+
+      /* === REVIEWS === */
       .reviews-grid   { grid-template-columns: 1fr; }
-      .reviews-header { flex-direction: column; align-items: flex-start; gap: 24px; }
+      .reviews-header { flex-direction: column; align-items: flex-start; gap: 20px; margin-bottom: 36px; }
+      .reviews-heading { font-size: clamp(26px, 8vw, 42px); }
 
-      /* Why Choose Us */
-      .why-inner      { grid-template-columns: 1fr; gap: 40px; }
-      .why-left       { position: static; }
-      .why-header     { display: flex; flex-direction: column; gap: 32px; }
-      .why-right-col  { width: 100%; box-sizing: border-box; }
-      .why-grid       { grid-template-columns: 1fr; }
-      .why-stat-row   { gap: 24px; }
-      .why-heading    { font-size: clamp(32px, 8vw, 48px); margin-bottom: 6px; }
-      .why-risk-text  { font-size: clamp(32px, 8vw, 48px); }
-      .why-risk-row   { flex-direction: column; align-items: flex-start; gap: 16px; }
-      .why-stat-num   { font-size: 36px; }
+      /* === WHY CHOOSE US === */
+      .why-header    { display: flex; flex-direction: column; gap: 28px; }
+      .why-right-col { width: 100%; box-sizing: border-box; }
+      .why-grid      { grid-template-columns: 1fr 1fr !important; gap: 10px; }
+      .why-heading   { font-size: clamp(32px, 9vw, 52px); margin-bottom: 4px; }
+      .why-risk-text { font-size: clamp(32px, 9vw, 52px); }
+      .why-risk-row  { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .why-stat-num  { font-size: 38px; }
+      .why-inline-stats { flex-direction: row; }
       .why-inline-stats .why-stat { flex: 1 1 0; min-width: 0; padding: 0 12px 0 0; }
       .why-inline-stats .why-stat + .why-stat { padding: 0 0 0 12px; }
 
-      /* Contact */
-      .contact-form-wrap  { padding: 28px 20px; }
-      .form-row           { grid-template-columns: 1fr; }
+      /* === CONTACT === */
+      .contact-inner     { grid-template-columns: 1fr; gap: 40px; }
+      .contact-form-wrap { padding: 28px 20px; }
+      .contact-heading   { font-size: clamp(28px, 9vw, 48px); }
+      .form-row          { grid-template-columns: 1fr; }
 
-      /* Visual */
-      .visual-section     { height: 340px; }
-      .visual-inner       { flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 1.25rem; }
-      .visual-text-left h2,
-      .visual-text-right h2 { font-size: clamp(30px, 9vw, 52px); }
+      /* === FINAL SECTION === */
+      .final-section-inner { padding: 0 1.25rem; }
+      .final-heading       { font-size: clamp(34px, 10vw, 56px); }
+      .final-section-tag::before, .final-section-tag::after { display: none; }
+      .final-cta-btn       { width: 100%; justify-content: center; }
 
-      /* Final section */
-      .final-section-tag::before,
-      .final-section-tag::after { display: none; }
-
-      /* Awards */
+      /* === AWARDS === */
       .awards-inner { flex-direction: column; align-items: center; gap: 20px; text-align: center; }
 
-      /* CTA */
-      .cta-inner    { grid-template-columns: 1fr; }
-      .cta-image    { display: none; }
-      .cta-heading  { font-size: clamp(28px, 7vw, 48px); }
-
-      /* Footer */
+      /* === FOOTER === */
       .footer-top   { grid-template-columns: 1fr 1fr; }
       .footer-brand { grid-column: 1 / -1; }
     }
 
     /* Small mobile ≤420px */
     @media (max-width: 420px) {
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      .footer-top { grid-template-columns: 1fr; }
-      .why-stat-row { flex-wrap: wrap; }
+      .footer-top  { grid-template-columns: 1fr; }
     }
 
   </style>
@@ -2283,10 +2385,10 @@
 <body>
 
   <!-- ANNOUNCEMENT BAR -->
-  <div style="background:var(--green);padding:8px 0;text-align:center;">
-    <span style="font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--navy);">
-      24/7 SOC Monitoring Now Available for Residential Estates & Industrial Sites —
-      <a href="#" style="color:var(--navy);text-decoration:underline;margin-left:6px;">Learn more →</a>
+  <div style="background:var(--green);padding:8px 1.25rem;text-align:center;">
+    <span class="announce-bar-text" style="font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--navy);">
+      24/7 SOC Monitoring Now Available for Residential Estates &amp; Industrial Sites —
+      <a class="announce-bar-link" href="#" style="color:var(--navy);text-decoration:underline;margin-left:6px;">Learn more →</a>
     </span>
   </div>
 
@@ -2297,6 +2399,9 @@
         <img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV">
       </a>
       <span class="nav-badge">24/7 Monitoring — George, Garden Route</span>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
       <div class="nav-links">
         <a href="#">Platform</a>
         <a href="#">Solutions</a>
@@ -2307,6 +2412,18 @@
       </div>
     </div>
   </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="#" onclick="closeMobileMenu()">Platform</a>
+      <a href="#" onclick="closeMobileMenu()">Solutions</a>
+      <a href="#" onclick="closeMobileMenu()">Industries</a>
+      <a href="#" onclick="closeMobileMenu()">Resources</a>
+      <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+      <a href="#contact" class="btn-primary mob-cta-btn" onclick="closeMobileMenu()">Get Protected →</a>
+    </div>
+  </div>
 
   <!-- COOKIE BANNER -->
   <div class="cookie-banner" id="cookieBanner">
@@ -2446,12 +2563,11 @@
             <p class="platform-sub">The Outeniqua Zero Trust monitoring engine standardises your CCTV feeds, alarms, and access control systems across every site — helping security managers detect threats faster, streamline operations, and unify response protocols across your entire property footprint.</p>
           </div>
           <div class="platform-radar-wrap">
-            <div class="radar-frost"></div>
+            <div id="particle-grid"><div id="particle-grid-inner"></div></div>
             <div class="live-badge" style="position:absolute;top:18px;right:20px;z-index:3;white-space:nowrap;">
               <span class="live-dot"></span>
               Live Monitoring Active
             </div>
-            <canvas id="platform-radar"></canvas>
           </div>
         </div>
         <div class="platform-bottom-cards">
@@ -2513,7 +2629,7 @@
       <div class="services-paths" id="services-paths-1"></div>
       <div class="services-paths" id="services-paths-2"></div>
     </div>
-    <div class="services-wrap-inner" style="position:relative;z-index:1;background:rgba(0,3,33,0.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:16px;padding:32px 48px;width:fit-content;min-width:600px;border:1px solid rgba(255,255,255,0.06);border-top:2px solid var(--green);box-shadow:0 -2px 10px rgba(128,186,38,0.4),0 -4px 24px rgba(128,186,38,0.15),inset 0 1px 0 rgba(128,186,38,0.3);">
+    <div class="services-wrap-inner" style="position:relative;z-index:1;background:rgba(0,3,33,0.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:16px;width:100%;border:1px solid rgba(255,255,255,0.06);border-top:2px solid var(--green);box-shadow:0 -2px 10px rgba(128,186,38,0.4),0 -4px 24px rgba(128,186,38,0.15),inset 0 1px 0 rgba(128,186,38,0.3);">
       <div class="services-heading-row">
         <div>
           <div class="section-tag green">Full Capability</div>
@@ -2701,6 +2817,7 @@
           <div style="flex:1;min-width:0;">
             <div class="section-tag green">Real World • Impact</div>
             <h2 class="stats-heading" data-reveal>Real-World Impact from Leading <span class="green-word">Garden Route</span> Businesses</h2>
+            <p style="font-size:16px;line-height:1.7;color:rgba(255,255,255,0.6);margin:16px 0 0;max-width:520px;">Numbers from 15+ years of protecting commercial and residential properties across the Garden Route — from George to Knysna.</p>
           </div>
           <svg class="cpu-arch-svg" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
@@ -3058,7 +3175,7 @@
             var totalLen = el.getTotalLength();
             if (!totalLen) continue;
             var dashLen = totalLen * 0.35;
-            var maxOpacity = Math.min(0.12 + i * 0.025, 0.85);
+            var maxOpacity = Math.min(0.06 + i * 0.012, 0.42);
             var duration = 22000 + Math.random() * 12000;
             var phase = Math.random() * duration;
 
@@ -3240,132 +3357,128 @@
       });
     })();
 
-    // ── Platform radar ────────────────────────────────────────────────────
-    (function initRadar() {
-      const canvas = document.getElementById('platform-radar');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const container = canvas.parentElement;
-      const frostCircle = container.querySelector('.radar-frost');
-      const G = [128, 186, 38];
-      const gc = (a) => `rgba(${G[0]},${G[1]},${G[2]},${a})`;
+    // ── Particle cursor animation (replaces radar) ─────────────────────────
+    (function initParticles() {
+      const wrap = document.getElementById('particle-grid');
+      const inner = document.getElementById('particle-grid-inner');
+      if (!wrap || !inner) return;
 
-      let mouseX = null, mouseY = null;
-      let sweepAngle = -Math.PI / 2;
-      const blips = [];
+      const ROWS = 15;
+      const CELL = 26; // px per cell
+      const TOTAL = ROWS * ROWS;
+      const CENTER = Math.floor(ROWS / 2);
+      const particles = [];
 
-      function updateSize() {
-        canvas.width  = container.offsetWidth;
-        canvas.height = container.offsetHeight;
-        const W = canvas.width, H = canvas.height;
-        const R = Math.min(W, H) * 0.47;
-        const d = R * 2;
-        const cx = W / 2, cy = H / 2;
-        // Frost circle — exactly matches radar circle
-        frostCircle.style.width  = d + 'px';
-        frostCircle.style.height = d + 'px';
-        frostCircle.style.top    = (cy - R) + 'px';
-        frostCircle.style.left   = (cx - R) + 'px';
+      // Build grid — only set dimensions, CSS handles positioning
+      inner.style.width  = (ROWS * CELL) + 'px';
+      inner.style.height = (ROWS * CELL) + 'px';
+
+      for (var i = 0; i < TOTAL; i++) {
+        var row = Math.floor(i / ROWS);
+        var col = i % ROWS;
+        var dist = Math.sqrt(Math.pow(row - CENTER, 2) + Math.pow(col - CENTER, 2));
+        var scale    = Math.max(0.08, 1.2 - dist * 0.11);
+        var opacity  = Math.max(0.04, 1 - dist * 0.09);
+        var light    = Math.max(20, 62 - dist * 5);
+        var glowPx   = Math.max(1, Math.round(8 - dist * 0.6));
+
+        var p = document.createElement('div');
+        p.style.cssText =
+          'position:absolute;' +
+          'width:5px;height:5px;border-radius:50%;' +
+          'left:' + (col * CELL + CELL / 2 - 2.5) + 'px;' +
+          'top:'  + (row * CELL + CELL / 2 - 2.5) + 'px;' +
+          'transform:scale(' + scale + ');' +
+          'opacity:' + opacity + ';' +
+          'background:hsl(74,70%,' + light + '%);' +
+          'box-shadow:0 0 ' + glowPx + 'px 1px hsl(74,70%,55%);' +
+          'mix-blend-mode:screen;' +
+          'will-change:transform;' +
+          'z-index:' + Math.max(1, Math.round(TOTAL - dist * 5)) + ';';
+        inner.appendChild(p);
+        particles.push({ el: p, dist: dist, scale: scale });
       }
-      updateSize();
-      window.addEventListener('resize', updateSize);
 
-      window.addEventListener('mousemove', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        mouseX = (x >= 0 && x <= canvas.width  && y >= 0 && y <= canvas.height) ? x : null;
-        mouseY = (x >= 0 && x <= canvas.width  && y >= 0 && y <= canvas.height) ? y : null;
+      // State
+      var curX = 0, curY = 0;
+      var staticX = 0, staticY = 0;
+      var isAuto = true, isStaticAnim = false;
+      var lastMove = Date.now(), startT = Date.now();
+      var autoTimer = null, rafId = null;
+
+      function applyPositions(cx, cy) {
+        for (var j = 0; j < particles.length; j++) {
+          (function(p) {
+            var damp     = Math.max(0.3, 1 - p.dist * 0.08);
+            var moveX    = cx * damp;
+            var moveY    = cy * damp;
+            var duration = 120 + p.dist * 20;
+            var delay    = p.dist * 8;
+            setTimeout(function() {
+              p.el.style.transform = 'translate(' + moveX + 'px,' + moveY + 'px) scale(' + p.scale + ')';
+              p.el.style.transition = 'transform ' + duration + 'ms cubic-bezier(0.25,0.46,0.45,0.94)';
+            }, delay);
+          })(particles[j]);
+        }
+      }
+
+      var lastApplied = { x: 0, y: 0 };
+      var THRESHOLD = 0.5;
+
+      function tick() {
+        var t = (Date.now() - startT) * 0.001;
+        var tx, ty;
+
+        if (isAuto) {
+          tx = Math.sin(t * 0.3) * 55 + Math.sin(t * 0.17) * 28;
+          ty = Math.cos(t * 0.2) * 42 + Math.cos(t * 0.23) * 22;
+        } else if (isStaticAnim) {
+          var since = Date.now() - lastMove;
+          if (since > 200) {
+            var str = Math.min((since - 200) / 1000, 1);
+            tx = staticX + Math.sin(t * 1.5) * 18 * str;
+            ty = staticY + Math.cos(t * 1.2) * 14 * str;
+          } else {
+            tx = staticX; ty = staticY;
+          }
+        } else {
+          tx = curX; ty = curY;
+        }
+
+        if (tx !== undefined &&
+            (Math.abs(tx - lastApplied.x) > THRESHOLD || Math.abs(ty - lastApplied.y) > THRESHOLD)) {
+          applyPositions(tx, ty);
+          lastApplied.x = tx; lastApplied.y = ty;
+        }
+
+        rafId = requestAnimationFrame(tick);
+      }
+
+      // Listen on the whole platform section for a wider interactive zone
+      var section = wrap.closest('section') || document.body;
+      section.addEventListener('mousemove', function(e) {
+        var rect = wrap.getBoundingClientRect();
+        var cx   = rect.left + rect.width / 2;
+        var cy   = rect.top  + rect.height / 2;
+
+        curX = (e.clientX - cx) * 0.75;
+        curY = (e.clientY - cy) * 0.75;
+        staticX = curX; staticY = curY;
+        isAuto = false; isStaticAnim = false;
+        lastMove = Date.now();
+
+        if (autoTimer) clearTimeout(autoTimer);
+        autoTimer = setTimeout(function() { isStaticAnim = true; }, 500);
+
+        setTimeout(function() {
+          if (Date.now() - lastMove >= 4000) {
+            isAuto = true; isStaticAnim = false;
+            startT = Date.now();
+          }
+        }, 4000);
       });
 
-      function draw() {
-        const W  = canvas.width, H = canvas.height;
-        const cx = W / 2,       cy = H / 2;
-        const R  = Math.min(W, H) * 0.47;
-
-        ctx.clearRect(0, 0, W, H);
-
-        // Clip everything to the outer radar circle
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(cx, cy, R, 0, Math.PI * 2);
-        ctx.clip();
-
-        // Dark fill inside circle — subdues the path animation behind
-        ctx.fillStyle = 'rgba(0, 3, 33, 0.45)';
-        ctx.fillRect(0, 0, W, H);
-
-        // Concentric rings — bolder
-        [1, 0.66, 0.33].forEach((f) => {
-          ctx.beginPath();
-          ctx.arc(cx, cy, R * f, 0, Math.PI * 2);
-          ctx.strokeStyle = gc(f === 1 ? 0.8 : 0.35);
-          ctx.lineWidth   = f === 1 ? 2.5 : 1.5;
-          ctx.stroke();
-        });
-
-        // Crosshairs
-        ctx.strokeStyle = gc(0.22);
-        ctx.lineWidth   = 1;
-        ctx.beginPath();
-        ctx.moveTo(cx - R, cy); ctx.lineTo(cx + R, cy);
-        ctx.moveTo(cx, cy - R); ctx.lineTo(cx, cy + R);
-        ctx.stroke();
-
-        // Sweep fan — 36 lines fanning back
-        for (let i = 36; i >= 0; i--) {
-          const a     = sweepAngle - i * 0.045;
-          const alpha = ((36 - i) / 36) * 0.7;
-          ctx.beginPath();
-          ctx.moveTo(cx, cy);
-          ctx.lineTo(cx + Math.cos(a) * R, cy + Math.sin(a) * R);
-          ctx.strokeStyle = gc(alpha);
-          ctx.lineWidth   = i === 36 ? 2 : 1;
-          ctx.stroke();
-        }
-
-        ctx.restore();
-
-        // Spawn blip when sweep passes mouse
-        if (mouseX !== null && mouseY !== null) {
-          const dx = mouseX - cx, dy = mouseY - cy;
-          if (dx * dx + dy * dy < R * R) {
-            let diff = sweepAngle - Math.atan2(dy, dx);
-            while (diff >  Math.PI) diff -= Math.PI * 2;
-            while (diff < -Math.PI) diff += Math.PI * 2;
-            if (Math.abs(diff) < 0.07) blips.push({ x: mouseX, y: mouseY, life: 1.0 });
-          }
-        }
-
-        // Blips
-        for (let i = blips.length - 1; i >= 0; i--) {
-          const b   = blips[i];
-          const grd = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, 14);
-          grd.addColorStop(0, gc(b.life * 0.9));
-          grd.addColorStop(1, gc(0));
-          ctx.beginPath();
-          ctx.arc(b.x, b.y, 14, 0, Math.PI * 2);
-          ctx.fillStyle = grd;
-          ctx.fill();
-          ctx.beginPath();
-          ctx.arc(b.x, b.y, 3, 0, Math.PI * 2);
-          ctx.fillStyle = gc(b.life);
-          ctx.fill();
-          b.life -= 0.005;
-          if (b.life <= 0) blips.splice(i, 1);
-        }
-
-        // Centre dot
-        ctx.beginPath();
-        ctx.arc(cx, cy, 3, 0, Math.PI * 2);
-        ctx.fillStyle = '#80BA26';
-        ctx.fill();
-
-        sweepAngle += 0.025;
-        requestAnimationFrame(draw);
-      }
-
-      draw();
+      tick();
     })();
 
     // ── Seamless trust marquee ─────────────────────────────────────────────
@@ -3407,6 +3520,36 @@
       } else {
         window.addEventListener('load', setup);
       }
+    })();
+
+    // Hamburger menu
+    (function() {
+      var btn  = document.getElementById('hamburger');
+      var menu = document.getElementById('mobileMenu');
+      if (!btn || !menu) return;
+
+      function closeMobileMenu() {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+      }
+      window.closeMobileMenu = closeMobileMenu;
+
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        btn.classList.toggle('open');
+        menu.classList.toggle('open');
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+          closeMobileMenu();
+        }
+      });
+
+      // Close on nav link click
+      menu.querySelectorAll('a').forEach(function(a) {
+        a.addEventListener('click', closeMobileMenu);
+      });
     })();
   </script>
 
