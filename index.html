@@ -260,6 +260,7 @@
       transition: opacity 0.06s linear;
       display: inline-block;
     }
+    .hero-sub, .hero-ctas { opacity: 0; transition: opacity 0.12s linear; }
     .hero-sub {
       font-size: 16px;
       line-height: 1.7;
@@ -2608,9 +2609,9 @@
         <div class="hero-label fade-up fade-up-1">Trusted Security Partner — Garden Route</div>
         <h1><span class="scroll-word">Redefine</span><br><span class="scroll-word">How</span> <span class="scroll-word">You</span><br><span class="scroll-word scroll-word--green">Protect</span><br><span class="scroll-word">Your</span> <span class="scroll-word">Property</span></h1>
       </div>
-      <div class="hero-right fade-up fade-up-3">
+      <div class="hero-right">
         <p class="hero-sub">Outeniqua CCTV delivers 24/7 remote surveillance and real-time threat monitoring — connecting your cameras, alarms, and response teams so security managers can detect threats in under 60 seconds, reduce incident costs, and operate with complete confidence.</p>
-        <div class="hero-ctas fade-up fade-up-4">
+        <div class="hero-ctas">
           <a href="#contact" class="btn-primary">
             Explore Our Platform
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -3871,16 +3872,21 @@
     (function initScrollReveal() {
       var words = Array.from(document.querySelectorAll('.hero .scroll-word'));
       if (!words.length) return;
+      var sub = document.querySelector('.hero-sub');
+      var cta = document.querySelector('.hero-ctas');
 
-      var TOTAL = 700;   // virtual px to scroll through all words
+      // Full sequence: h1 words → paragraph → button
+      var items = words.concat(sub ? [sub] : []).concat(cta ? [cta] : []);
+
+      var TOTAL = 950;   // virtual px to reveal all items
       var vScroll = 0;
       var done = false;
 
       function paint(progress) {
-        words.forEach(function(word, i) {
-          var threshold = (i / words.length) * 0.78;
-          var t = Math.max(0, Math.min(1, (progress - threshold) / 0.22));
-          word.style.opacity = t;
+        items.forEach(function(item, i) {
+          var threshold = (i / items.length) * 0.80;
+          var t = Math.max(0, Math.min(1, (progress - threshold) / 0.20));
+          item.style.opacity = t;
         });
       }
 
