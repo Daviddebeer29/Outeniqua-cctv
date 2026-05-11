@@ -1969,6 +1969,14 @@
       letter-spacing: -0.03em;
       margin: 0;
     }
+    /* "At your fingertips." revealed by lamp, not word-reveal */
+    .final-section .final-heading .green-word {
+      opacity: 0;
+      transition: opacity 4.5s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
+    }
+    .final-section.lamp-lit .final-heading .green-word {
+      opacity: 1;
+    }
     .final-sub {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(22px, 2.8vw, 36px);
