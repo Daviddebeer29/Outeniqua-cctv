@@ -1092,11 +1092,11 @@
       z-index: 1;
     }
     .stats-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: minmax(0, 60%) 1fr;
+      align-items: center;
       margin-bottom: 64px;
-      gap: 3rem;
+      gap: 2rem;
     }
     .stats-heading {
       font-size: clamp(36px, 4.5vw, 60px);
@@ -1109,11 +1109,11 @@
     /* CPU Architecture inline decoration */
     .cpu-arch-svg {
       display: block;
-      width: 280px;
-      height: 140px;
-      flex-shrink: 0;
+      width: 360px;
+      height: 180px;
       overflow: visible;
-      align-self: flex-start;
+      justify-self: center;
+      align-self: center;
     }
     @keyframes cpu-travel { from { offset-distance: 0%; } to { offset-distance: 100%; } }
     @keyframes cpu-fade   { 0%,100%{opacity:0} 10%,90%{opacity:1} }
@@ -1125,7 +1125,7 @@
     .cpu-orb-6 { offset-path:path("M 94.8 95 v -36");                     fill:#80BA26; animation:cpu-travel 2.4s linear infinite -1.5s, cpu-fade 2.4s linear infinite -1.5s; }
     .cpu-orb-7 { offset-path:path("M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 14"); fill:#80BA26; animation:cpu-travel 2.4s linear infinite -1.8s, cpu-fade 2.4s linear infinite -1.8s; }
     .cpu-orb-8 { offset-path:path("M 30 30 h 25 q 5 0 5 5 v 6.5 q 0 5 5 5 h 20"); fill:#80BA26; animation:cpu-travel 2.4s linear infinite -2.1s, cpu-fade 2.4s linear infinite -2.1s; }
-    @media (max-width: 1024px) { .cpu-arch-svg { width: 200px; height: 100px; } }
+    @media (max-width: 1024px) { .cpu-arch-svg { width: 240px; height: 120px; } }
     @media (max-width: 640px)  { .cpu-arch-svg { display: none; } }
     .btn-outline-green {
       font-family: 'Barlow Condensed', sans-serif;
@@ -2518,7 +2518,7 @@
       /* === STATS === */
       .stats-section  { padding: 56px 1.25rem 0; }
       .stats-grid     { grid-template-columns: 1fr; gap: 14px; }
-      .stats-header   { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 40px; }
+      .stats-header   { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
       .stats-heading  { font-size: clamp(24px, 7vw, 40px); }
       .stat-item      { padding: 32px 24px; }
       .stat-num       { font-size: 48px; }
