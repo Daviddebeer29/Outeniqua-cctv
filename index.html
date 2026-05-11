@@ -1755,9 +1755,9 @@
     }
     .lamp-glow-right { display: none; }
     /* Lit state — triggered by IntersectionObserver */
-    .contact-section.lamp-lit .lamp-bar  { transform: scaleX(1); }
-    .contact-section.lamp-lit .lamp-glow { opacity: 1; }
-    .contact-section.lamp-lit .lamp-cone { opacity: 1; }
+    .final-section.lamp-lit .lamp-bar  { transform: scaleX(1); }
+    .final-section.lamp-lit .lamp-glow { opacity: 1; }
+    .final-section.lamp-lit .lamp-cone { opacity: 1; }
 
     .contact-inner {
       max-width: 1280px;
@@ -3220,12 +3220,6 @@
 
   <!-- CONTACT SECTION -->
   <section class="contact-section" id="contact">
-    <div class="lamp-wrap" aria-hidden="true">
-      <div class="lamp-glow"></div>
-      <div class="lamp-glow-right"></div>
-      <div class="lamp-bar"></div>
-      <div class="lamp-cone"></div>
-    </div>
     <div class="contact-inner">
       <div class="contact-left">
         <div class="section-tag green">Get In Touch</div>
@@ -3306,6 +3300,12 @@
 
   <!-- FINAL SECTION -->
   <div class="final-section">
+    <div class="lamp-wrap" aria-hidden="true">
+      <div class="lamp-glow"></div>
+      <div class="lamp-glow-right"></div>
+      <div class="lamp-bar"></div>
+      <div class="lamp-cone"></div>
+    </div>
     <img src="control-room.png" alt="Outeniqua CCTV Control Room" class="final-section-bg">
     <div class="final-section-overlay"></div>
     <div class="final-section-inner">
@@ -3646,9 +3646,9 @@
       });
     })();
 
-    // ── Lamp reveal on contact section ─────────────────────────────────────
+    // ── Lamp reveal on final section ────────────────────────────────────────
     (function initLamp() {
-      var el = document.getElementById('contact');
+      var el = document.querySelector('.final-section');
       if (!el) return;
       var io = new IntersectionObserver(function(entries) {
         entries.forEach(function(e) {
