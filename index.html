@@ -187,6 +187,7 @@
       inset: 0;
       background: linear-gradient(to right, rgba(0,3,33,0.9) 0%, rgba(0,3,33,0.75) 20%, rgba(0,3,33,0.05) 38%, rgba(0,3,33,0.05) 62%, rgba(0,3,33,0.75) 80%, rgba(0,3,33,0.9) 100%);
       z-index: 1;
+      opacity: 0;
     }
     .hero {
       background: var(--navy);
@@ -3873,18 +3874,27 @@
       if (!words.length) return;
       var sub = document.querySelector('.hero-sub');
       var cta = document.querySelector('.hero-ctas');
+      var overlay = document.querySelector('.hero-video-overlay');
 
       // Full sequence: h1 words → paragraph → button
       var items = words.concat(sub ? [sub] : []).concat(cta ? [cta] : []);
 
-      var TOTAL = 1900;  // virtual px to reveal all items
-      var vScroll = 0;
-      var done = false;
+      // Phase split: first 18% = vignette closes in, remaining 82% = content reveals
+      var VIG_END  = 0.18;
+      var TOTAL    = 2200; // virtual px for full sequence
+      var vScroll  = 0;
+      var done     = false;
 
       function paint(progress) {
+        // Phase 1 — vignette bleeds in from edges (eyes squinting shut)
+        var vigP = Math.min(1, progress / VIG_END);
+        if (overlay) overlay.style.opacity = vigP;
+
+        // Phase 2 — words, paragraph, button reveal inside the frame
+        var wordP = Math.max(0, (progress - VIG_END) / (1 - VIG_END));
         items.forEach(function(item, i) {
           var threshold = (i / items.length) * 0.80;
-          var t = Math.max(0, Math.min(1, (progress - threshold) / 0.20));
+          var t = Math.max(0, Math.min(1, (wordP - threshold) / 0.20));
           item.style.opacity = t;
         });
       }
@@ -3892,7 +3902,8 @@
       function unlock() {
         if (done) return;
         done = true;
-        paint(1);
+        if (overlay) overlay.style.opacity = 1;
+        items.forEach(function(el) { el.style.opacity = 1; });
         window.removeEventListener('wheel', onWheel);
         window.removeEventListener('touchmove', onTouchMove);
         window.removeEventListener('keydown', onKey);
