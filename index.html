@@ -756,8 +756,15 @@
       border: 1px solid rgba(255,255,255,0.07);
       border-top: 2px solid var(--green);
       border-radius: 10px;
-      padding: 22px 26px;
-      box-shadow: 0 -2px 10px rgba(128,186,38,0.18), 0 -4px 24px rgba(128,186,38,0.07), inset 0 1px 0 rgba(128,186,38,0.14);
+      padding: 28px;
+      box-shadow: 0 -2px 10px rgba(128,186,38,0.22), 0 -6px 32px rgba(128,186,38,0.1), inset 0 1px 0 rgba(128,186,38,0.18);
+      transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+      position: relative;
+      z-index: 1;
+    }
+    .platform-sub-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 60px -15px rgba(128,186,38,0.3), 0 -2px 14px rgba(128,186,38,0.35), 0 -4px 30px rgba(128,186,38,0.15), inset 0 1px 0 rgba(128,186,38,0.3);
     }
     .platform-radar-wrap {
       grid-column: 2;
@@ -2583,6 +2590,10 @@
 
         <!-- bottom-right -->
         <div class="platform-sub-card" data-card-reveal="right">
+          <div class="platform-card-top">
+            <h3>Full-Site Coverage</h3>
+            <div class="card-metric">360°</div>
+          </div>
           <p class="platform-sub">The Outeniqua Zero Trust monitoring engine standardises your CCTV feeds, alarms, and access control systems across every site — helping security managers detect threats faster, streamline operations, and unify response protocols across your entire property footprint.</p>
         </div>
 
