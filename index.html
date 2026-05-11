@@ -1704,68 +1704,60 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 0;
+      width: 100%;
       height: 2px;
       background: linear-gradient(to right,
-        var(--green) 0%,
-        rgba(128,186,38,0.55) 75%,
+        transparent 0%,
+        rgba(128,186,38,0.4) 25%,
+        var(--green) 50%,
+        rgba(128,186,38,0.4) 75%,
         transparent 100%
       );
       box-shadow:
         0 0 10px 2px rgba(128,186,38,0.9),
         0 0 28px 6px rgba(128,186,38,0.5),
         0 0 70px 18px rgba(128,186,38,0.2);
-      transition: width 5s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: width;
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 5s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
     }
     .lamp-glow {
       position: absolute;
       top: 0;
-      left: 0;
-      width: 260px;
-      height: 220px;
-      background: radial-gradient(ellipse at 0% 0%,
-        rgba(128,186,38,0.28) 0%,
-        rgba(128,186,38,0.10) 40%,
+      left: 50%;
+      transform: translateX(-50%);
+      width: 480px;
+      height: 260px;
+      background: radial-gradient(ellipse at 50% 0%,
+        rgba(128,186,38,0.32) 0%,
+        rgba(128,186,38,0.12) 40%,
         transparent 70%
       );
       opacity: 0;
-      transition: opacity 3s ease 0.6s;
+      transition: opacity 2.5s ease 0.3s;
     }
     .lamp-cone {
       position: absolute;
       top: 0;
-      left: 0;
-      width: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
       height: 520px;
-      background: radial-gradient(ellipse 100% 95% at 0% 0%,
+      background: radial-gradient(ellipse 100% 95% at 50% 0%,
         rgba(128,186,38,0.14) 0%,
         rgba(128,186,38,0.07) 38%,
         rgba(128,186,38,0.025) 62%,
         transparent 80%
       );
-      transition: width 6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
-      will-change: width;
-    }
-    .lamp-glow-right {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 260px;
-      height: 220px;
-      background: radial-gradient(ellipse at 100% 0%,
-        rgba(128,186,38,0.28) 0%,
-        rgba(128,186,38,0.10) 40%,
-        transparent 70%
-      );
       opacity: 0;
-      transition: opacity 1.8s ease 4.2s;
+      transition: opacity 3s ease 0.5s;
     }
+    .lamp-glow-right { display: none; }
     /* Lit state — triggered by IntersectionObserver */
-    .contact-section.lamp-lit .lamp-bar        { width: 100%; }
-    .contact-section.lamp-lit .lamp-glow       { opacity: 1; }
-    .contact-section.lamp-lit .lamp-glow-right { opacity: 1; }
-    .contact-section.lamp-lit .lamp-cone       { width: 100%; }
+    .contact-section.lamp-lit .lamp-bar  { transform: scaleX(1); }
+    .contact-section.lamp-lit .lamp-glow { opacity: 1; }
+    .contact-section.lamp-lit .lamp-cone { opacity: 1; }
 
     .contact-inner {
       max-width: 1280px;
