@@ -784,6 +784,7 @@
       position: absolute;
       inset: 0;
       overflow: hidden;
+      isolation: isolate;
     }
     #particle-grid-inner {
       position: absolute;
@@ -3454,15 +3455,26 @@
         rafId = requestAnimationFrame(tick);
       }
 
-      // Listen on the whole platform section for a wider interactive zone
-      var section = wrap.closest('section') || document.body;
-      section.addEventListener('mousemove', function(e) {
-        var rect = wrap.getBoundingClientRect();
-        var cx   = rect.left + rect.width / 2;
-        var cy   = rect.top  + rect.height / 2;
+      // Only respond to cursor when it's inside the particle box
+      var wrapEl = wrap.closest('.platform-radar-wrap') || wrap.parentElement;
 
-        curX = (e.clientX - cx) * 0.75;
-        curY = (e.clientY - cy) * 0.75;
+      wrapEl.addEventListener('mousemove', function(e) {
+        var rect  = wrapEl.getBoundingClientRect();
+        var cx    = rect.left + rect.width  / 2;
+        var cy    = rect.top  + rect.height / 2;
+
+        // Clamp displacement so particles never travel past the box edges.
+        // Max safe travel = half the box minus half the grid, minus one cell buffer.
+        var maxX = Math.max(20, rect.width  / 2 - (ROWS * CELL) / 2 + CELL * 2);
+        var maxY = Math.max(20, rect.height / 2 - (ROWS * CELL) / 2 + CELL * 2);
+        // If the grid is wider than the box just use a conservative fixed cap
+        if (maxX <= 20) maxX = rect.width  * 0.22;
+        if (maxY <= 20) maxY = rect.height * 0.22;
+
+        var rawX = (e.clientX - cx) * 0.75;
+        var rawY = (e.clientY - cy) * 0.75;
+        curX = Math.max(-maxX, Math.min(maxX, rawX));
+        curY = Math.max(-maxY, Math.min(maxY, rawY));
         staticX = curX; staticY = curY;
         isAuto = false; isStaticAnim = false;
         lastMove = Date.now();
@@ -3476,6 +3488,13 @@
             startT = Date.now();
           }
         }, 4000);
+      });
+
+      // When cursor leaves the box, return to auto-oscillation immediately
+      wrapEl.addEventListener('mouseleave', function() {
+        if (autoTimer) clearTimeout(autoTimer);
+        isAuto = true; isStaticAnim = false;
+        startT = Date.now();
       });
 
       tick();
