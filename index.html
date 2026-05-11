@@ -255,6 +255,12 @@
       text-align: left;
     }
     .hero h1 span { color: var(--green); }
+    .hero .scroll-word {
+      opacity: 0.15;
+      transition: opacity 0.08s linear;
+      display: inline-block;
+    }
+    .hero .scroll-word--green { color: var(--green); }
     .hero-sub {
       font-size: 16px;
       line-height: 1.7;
@@ -2601,7 +2607,7 @@
     <div class="hero-inner">
       <div class="hero-left">
         <div class="hero-label fade-up fade-up-1">Trusted Security Partner — Garden Route</div>
-        <h1 class="fade-up fade-up-2">Redefine<br>How You<br><span>Protect</span><br>Your Property</h1>
+        <h1 class="fade-up fade-up-2"><span class="scroll-word">Redefine</span><br><span class="scroll-word">How</span> <span class="scroll-word">You</span><br><span class="scroll-word scroll-word--green">Protect</span><br><span class="scroll-word">Your</span> <span class="scroll-word">Property</span></h1>
       </div>
       <div class="hero-right fade-up fade-up-3">
         <p class="hero-sub">Outeniqua CCTV delivers 24/7 remote surveillance and real-time threat monitoring — connecting your cameras, alarms, and response teams so security managers can detect threats in under 60 seconds, reduce incident costs, and operate with complete confidence.</p>
@@ -3860,6 +3866,25 @@
       menu.querySelectorAll('a').forEach(function(a) {
         a.addEventListener('click', closeMobileMenu);
       });
+    })();
+
+    // ── Hero text scroll reveal ─────────────────────────────────────────────
+    (function initScrollReveal() {
+      var words = Array.from(document.querySelectorAll('.hero .scroll-word'));
+      if (!words.length) return;
+      var hero = document.querySelector('.hero');
+      function update() {
+        var scrollY = window.scrollY;
+        var revealEnd = hero.offsetHeight * 0.55;
+        var progress = Math.min(scrollY / revealEnd, 1);
+        words.forEach(function(word, i) {
+          var threshold = (i / words.length) * 0.8;
+          var t = Math.max(0, Math.min(1, (progress - threshold) / 0.22));
+          word.style.opacity = 0.15 + t * 0.85;
+        });
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
     })();
   </script>
 
