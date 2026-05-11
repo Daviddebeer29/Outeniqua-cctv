@@ -1315,67 +1315,111 @@
       color: var(--muted);
       margin-top: 4px;
     }
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-    .review-card {
-      background: rgba(0,3,33,0.45);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-top: 2px solid var(--green);
-      border-radius: 10px;
-      padding: 32px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+    /* MARQUEE */
+    .marquee-wrap {
       position: relative;
       overflow: hidden;
-      transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
-      box-shadow: 0 -2px 10px rgba(128,186,38,0.18), 0 -4px 24px rgba(128,186,38,0.07), inset 0 1px 0 rgba(128,186,38,0.14);
     }
-    .review-card::after {
+    .marquee-wrap::before,
+    .marquee-wrap::after {
       content: '';
       position: absolute;
-      inset: 0;
-      background: radial-gradient(600px circle at var(--sx,-999px) var(--sy,-999px), rgba(128,186,38,0.1), transparent 40%);
+      top: 0; bottom: 0;
+      width: 140px;
+      z-index: 2;
       pointer-events: none;
-      z-index: 10;
-      border-radius: inherit;
     }
-    .review-card:hover { transform: scale(1.05); box-shadow: 0 0 60px -15px rgba(128,186,38,0.3), 0 -2px 14px rgba(128,186,38,0.35), 0 -4px 30px rgba(128,186,38,0.15), inset 0 1px 0 rgba(128,186,38,0.3); }
-    .review-stars {
-      font-size: 14px;
-      letter-spacing: 2px;
-      color: var(--green);
-    }
-    .review-quote {
-      font-size: 15px;
-      line-height: 1.75;
-      color: rgba(255,255,255,0.55);
-      margin: 0;
-      flex: 1;
-    }
-    .review-author {
+    .marquee-wrap::before { left: 0; background: linear-gradient(to right, #050b2e 20%, transparent); }
+    .marquee-wrap::after  { right: 0; background: linear-gradient(to left, #050b2e 20%, transparent); }
+    .marquee-row {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+      padding: 10px 0;
     }
-    .review-name {
+    .marquee-track {
+      display: flex;
+      gap: 16px;
+      animation: mq-ltr 55s linear infinite;
+      will-change: transform;
+    }
+    .marquee-track.rev { animation: mq-rtl 55s linear infinite; }
+    .marquee-row:hover .marquee-track { animation-play-state: paused; }
+    @keyframes mq-ltr {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes mq-rtl {
+      from { transform: translateX(-50%); }
+      to   { transform: translateX(0); }
+    }
+    .rcard {
+      flex-shrink: 0;
+      width: 296px;
+      background: rgba(0,3,33,0.55);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: 2px solid var(--green);
+      border-radius: 10px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 -2px 8px rgba(128,186,38,0.12), 0 4px 20px rgba(0,0,0,0.25);
+    }
+    .rcard-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .rcard-stars { font-size: 13px; letter-spacing: 1px; color: var(--green); }
+    .rcard-google {
+      width: 20px;
+      height: 20px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z' fill='%234285F4'/%3E%3Cpath d='M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z' fill='%2334A853'/%3E%3Cpath d='M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z' fill='%23FBBC05'/%3E%3Cpath d='M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z' fill='%23EA4335'/%3E%3C/svg%3E") center/contain no-repeat;
+      flex-shrink: 0;
+    }
+    .rcard-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.58);
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .rcard-footer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .rcard-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--green);
+      color: var(--navy);
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 15px;
+      font-weight: 700;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      letter-spacing: 0.5px;
+    }
+    .rcard-info { flex: 1; min-width: 0; }
+    .rcard-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px;
       font-weight: 700;
       color: #fff;
-      letter-spacing: 0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .review-date {
-      font-size: 11px;
-      color: var(--muted);
-    }
+    .rcard-date { font-size: 11px; color: var(--muted); }
 
     /* SERVICES PATHS ANIMATION */
     .services-paths-bg {
@@ -2974,7 +3018,7 @@
     </section>
 
     <!-- REVIEWS SECTION -->
-    <section class="reviews-section" style="position:relative;z-index:1;background:transparent;overflow:visible;">
+    <section class="reviews-section" style="position:relative;z-index:1;">
     <div class="reviews-inner">
       <div class="reviews-header">
         <div>
@@ -2985,45 +3029,161 @@
           <div class="reviews-score">5.0</div>
           <div class="reviews-stars-col">
             <div class="reviews-stars">★★★★★</div>
-            <div class="reviews-count">23 Google Reviews</div>
-          </div>
-        </div>
-      </div>
-      <div class="reviews-grid">
-        <div class="review-card" data-card-reveal="left">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-quote">"Same-day installation — owner phoned within 30 minutes. Totally professional all over and hence not surprised why so many companies in this area use Outeniqua CCTV."</p>
-          <div class="review-author">
-            <div class="review-name">Craig Austin</div>
-            <div class="review-date">Feb 2026</div>
-          </div>
-        </div>
-        <div class="review-card" data-card-reveal="left">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-quote">"If you need a company that goes above and beyond your wildest expectations — THIS IS IT!! Connected and sorted even during the festive season."</p>
-          <div class="review-author">
-            <div class="review-name">Estienne Bruere</div>
-            <div class="review-date">Jan 2026</div>
-          </div>
-        </div>
-        <div class="review-card" data-card-reveal="left">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-quote">"Thanks to Malcolm for helping after hours and being so quick and considerate about my situation. Very good and efficient service."</p>
-          <div class="review-author">
-            <div class="review-name">Luske Theron</div>
-            <div class="review-date">Feb 2026</div>
-          </div>
-        </div>
-        <div class="review-card" data-card-reveal="left">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-quote">"Fast, efficient and professional. Industry knowledge on expert level, accompanied with friendly service."</p>
-          <div class="review-author">
-            <div class="review-name">Werner Loftus</div>
-            <div class="review-date">Jan 2026</div>
+            <div class="reviews-count">26 Google Reviews</div>
           </div>
         </div>
       </div>
     </div>
+    <div class="marquee-wrap">
+      <!-- Row 1: scrolls left -->
+      <div class="marquee-row">
+        <div class="marquee-track" id="mtrack1">
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Gauteng service with Garden Route friendliness</p>
+            <div class="rcard-footer"><div class="rcard-avatar">J</div><div class="rcard-info"><div class="rcard-name">Jacques</div><div class="rcard-date">May 08, 2026</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Op 2 Julie 2023 is ons in ons plaashuis aangeval en my skoonseun is voor ons doodgeskiet. Outeniqua CCTV het onmiddellik ons tegemoed gekom en kameras is geinstalleer rondom ons huis. Malcolm de Beer is 'n ongelooflike mens met integriteit.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">MD</div><div class="rcard-info"><div class="rcard-name">Monica Diedericks</div><div class="rcard-date">Apr 10, 2026</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">From the first day Malcom walked into Astron Sandkraal it was just a great experience. Very professional and very helpful all the time. If I can rate them 20 out of 10 I would do that. Well done Malcom and Gavin, you are amazing in what you do.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">EE</div><div class="rcard-info"><div class="rcard-name">Erika Erasmus</div><div class="rcard-date">Apr 10, 2026</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Excellent service</p>
+            <div class="rcard-footer"><div class="rcard-avatar">IR</div><div class="rcard-info"><div class="rcard-name">Irwin Ross</div><div class="rcard-date">Mar 27, 2026</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Very good and efficient, thanks to Malcolm for helping after hours and being so quick and considerate about my situation.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">LT</div><div class="rcard-info"><div class="rcard-name">Luske Theron</div><div class="rcard-date">Feb 22, 2026</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Wow...there are no words explaining my entire experience from start to finish with Outeniqua CCTV as a company. Ttly blew my mind. The feedback and information is outstanding.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">CA</div><div class="rcard-info"><div class="rcard-name">Craig Austin</div><div class="rcard-date">Feb 16, 2026</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★☆</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">What a pleasant experience to do business with Outeniqua CCTV!!! Malcolm and his team went out of their way to accommodate us at Norgarivier Nursery. Now we can rest assured that there is eyes on site. Thank you Outeniqua CCTV team!!!</p>
+            <div class="rcard-footer"><div class="rcard-avatar">ML</div><div class="rcard-info"><div class="rcard-name">Morne Lochner</div><div class="rcard-date">Feb 06, 2026</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">WOW!! AMAZING SERVICE!! These guys went out of their way to accommodate us and get us connected and sorted during the festive season. I highly recommend them. If you need a company that goes above and beyond your wildest expectations THIS IS IT!!</p>
+            <div class="rcard-footer"><div class="rcard-avatar">EB</div><div class="rcard-info"><div class="rcard-name">Estienne Bruere</div><div class="rcard-date">Jan 30, 2026</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">They went out of their way to help me and were very fast, efficient and professional. I would recommend Outeniqua CCTV to anyone who wants their security needs to be met. Industry knowledge on expert level, accompanied with friendly service.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">WL</div><div class="rcard-info"><div class="rcard-name">Werner Loftus</div><div class="rcard-date">Jan 12, 2026</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Best in what they do</p>
+            <div class="rcard-footer"><div class="rcard-avatar">MC</div><div class="rcard-info"><div class="rcard-name">Mario Cassara</div><div class="rcard-date">Jan 05, 2026</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Thank you Outeniqua CCTV team for installation at our new shop. You guys are awesome!!</p>
+            <div class="rcard-footer"><div class="rcard-avatar">G</div><div class="rcard-info"><div class="rcard-name">GGC</div><div class="rcard-date">Oct 13, 2025</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Malcolm is great and very helpful in getting the best placement round the house.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">PR</div><div class="rcard-info"><div class="rcard-name">Pieter Rheeder</div><div class="rcard-date">Sep 03, 2025</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Exceptional customer service from Malcolm and his team! Malcolm initially came out to provide a quote but then offered to inspect the existing setup to fix the problems. He and his team went out of their way and had the system fully operational within a few hours.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">PS</div><div class="rcard-info"><div class="rcard-name">Peter Swartz</div><div class="rcard-date">Aug 04, 2025</div></div></div>
+          </div>
+        </div>
+      </div>
+      <!-- Row 2: scrolls right -->
+      <div class="marquee-row">
+        <div class="marquee-track rev" id="mtrack2">
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Excellent professional service with a smile.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">TB</div><div class="rcard-info"><div class="rcard-name">Tinus Barnard</div><div class="rcard-date">Jun 11, 2025</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Spoke to Malcolm regarding security cameras. Understands the meaning of service and provided some great advice. Good to know there is someone in George that's on it.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">MH</div><div class="rcard-info"><div class="rcard-name">Mark Henry</div><div class="rcard-date">May 09, 2025</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Very happy with the installation of our CCTV cameras. Great service and good quality products. Good communication throughout and neat work. Very satisfied with the results.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">TS</div><div class="rcard-info"><div class="rcard-name">Trudie Smit</div><div class="rcard-date">Apr 07, 2025</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Best service ever</p>
+            <div class="rcard-footer"><div class="rcard-avatar">JV</div><div class="rcard-info"><div class="rcard-name">Johan van Aswegen</div><div class="rcard-date">Mar 05, 2025</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Great service from Malcolm. The guy is ready to jump through hoops. It's refreshing to find this high standard of service. Thanks meneer</p>
+            <div class="rcard-footer"><div class="rcard-avatar">CS</div><div class="rcard-info"><div class="rcard-name">Chris Strydom</div><div class="rcard-date">Mar 03, 2025</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Rauten has delivered great solutions and great service — always willing to go the extra mile. Great team, thanks!</p>
+            <div class="rcard-footer"><div class="rcard-avatar">ME</div><div class="rcard-info"><div class="rcard-name">Michael Elston</div><div class="rcard-date">Feb 27, 2025</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Good service on installation and good price on monthly monitoring.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">EC</div><div class="rcard-info"><div class="rcard-name">Emile Collins</div><div class="rcard-date">Feb 26, 2025</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">What a great experience dealing with these guys!! On time for the appointments, great pricing and delivered on time as promissed!</p>
+            <div class="rcard-footer"><div class="rcard-avatar">RV</div><div class="rcard-info"><div class="rcard-name">Renier van Greunen</div><div class="rcard-date">Feb 13, 2025</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Very good</p>
+            <div class="rcard-footer"><div class="rcard-avatar">GD</div><div class="rcard-info"><div class="rcard-name">Gavin Du Plessis</div><div class="rcard-date">Nov 01, 2024</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">What a pleasure! Called and 2 hours later arrived at my door ready to assist.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">JP</div><div class="rcard-info"><div class="rcard-name">Jannie Potgieter</div><div class="rcard-date">Aug 13, 2024</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">They returned my missed call and advised me on what to do — extremely helpful. Gave me a lot of much needed information. Please support this company.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">AM</div><div class="rcard-info"><div class="rcard-name">Adri Mc Queen</div><div class="rcard-date">Jul 12, 2024</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">Highly recommended!</p>
+            <div class="rcard-footer"><div class="rcard-avatar">BC</div><div class="rcard-info"><div class="rcard-name">Bianca C</div><div class="rcard-date">Apr 11, 2024</div></div></div>
+          </div>
+          <div class="rcard">
+            <div class="rcard-top"><span class="rcard-stars">★★★★★</span><span class="rcard-google" aria-label="Google review"></span></div>
+            <p class="rcard-text">You have tried the rest, now try the leader's in CCTV installations and monitoring.</p>
+            <div class="rcard-footer"><div class="rcard-avatar">SN</div><div class="rcard-info"><div class="rcard-name">Shaun Naude</div><div class="rcard-date">Dec 15, 2023</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+    (function(){
+      ['mtrack1','mtrack2'].forEach(function(id){
+        var t = document.getElementById(id);
+        if (t) t.insertAdjacentHTML('beforeend', t.innerHTML);
+      });
+    })();
+    </script>
     </section>
   </div><!-- end stats-reviews-wrapper -->
 
@@ -3395,7 +3555,7 @@
         });
       }
 
-      var selectors = ".platform-main, .platform-card, .insight-card, .stat-item, .unlock-card, .review-card, .why-card";
+      var selectors = ".platform-main, .platform-card, .insight-card, .stat-item, .unlock-card, .why-card";
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", function () { attachSpotlight(selectors); });
       } else {
