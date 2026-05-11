@@ -292,6 +292,7 @@
       transition: background 0.2s, transform 0.15s;
     }
     .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .btn-primary.final-cta-btn:hover { background: linear-gradient(110deg, #80BA26 0%, #80BA26 38%, #d4f06a 50%, #80BA26 62%, #80BA26 100%); }
     .btn-secondary {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 16px;
@@ -1891,9 +1892,15 @@
     }
     .form-select option { background: var(--navy); color: #fff; }
     .form-textarea { resize: vertical; min-height: 110px; }
+    @keyframes shimmer2 {
+      0%   { background-position: 200% 0%; }
+      100% { background-position: -200% 0%; }
+    }
     .form-submit {
       width: 100%;
-      background: var(--green);
+      background: linear-gradient(110deg, #80BA26 0%, #80BA26 38%, #d4f06a 50%, #80BA26 62%, #80BA26 100%);
+      background-size: 200% 100%;
+      animation: shimmer2 2.4s infinite linear;
       color: var(--navy);
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 20px;
@@ -1905,9 +1912,9 @@
       border-radius: 8px;
       cursor: pointer;
       margin-top: 8px;
-      transition: background 0.2s, transform 0.15s cubic-bezier(0.22,1,0.36,1);
+      transition: filter 0.2s, transform 0.15s cubic-bezier(0.22,1,0.36,1);
     }
-    .form-submit:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .form-submit:hover { filter: brightness(0.88); transform: translateY(-1px); }
     .form-submit:active { transform: translateY(0); }
 
     /* FINAL SECTION */
@@ -2002,7 +2009,12 @@
       letter-spacing: 0.06em;
       position: relative;
       z-index: 2;
+      background: linear-gradient(110deg, #80BA26 0%, #80BA26 38%, #d4f06a 50%, #80BA26 62%, #80BA26 100%);
+      background-size: 200% 100%;
+      animation: shimmer2 2.4s infinite linear;
+      transition: filter 0.2s, transform 0.15s;
     }
+    .final-cta-btn:hover { background: linear-gradient(110deg, #80BA26 0%, #80BA26 38%, #d4f06a 50%, #80BA26 62%, #80BA26 100%); filter: brightness(0.88); }
     .beam-btn-wrap {
       position: relative;
       width: 700px;
