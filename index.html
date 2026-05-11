@@ -966,9 +966,12 @@
       backdrop-filter: blur(8px);
       cursor: pointer;
       box-shadow: 0 8px 24px rgba(0,0,0,0.45);
-      transition: border-color 0.3s;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
-    .cinematic-switch:hover { border-color: rgba(128,186,38,0.28); }
+    .cinematic-switch:hover {
+      border-color: rgba(128,186,38,0.28);
+      box-shadow: 0 0 0 1px rgba(128,186,38,0.25), 0 0 16px 3px rgba(128,186,38,0.12);
+    }
     .switch-label {
       font-family: 'Barlow', sans-serif;
       font-size: 11px;
