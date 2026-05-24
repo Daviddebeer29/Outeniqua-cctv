@@ -4246,6 +4246,14 @@
       });
     })();
 
+    // ── Mobile section reorder — Services moves to just after Trust Bar ──────
+    (function reorderMobileSections() {
+      if (window.innerWidth > 640) return;
+      var services = document.getElementById('services');
+      var trustBar = document.querySelector('.trust-bar');
+      if (services && trustBar) trustBar.insertAdjacentElement('afterend', services);
+    })();
+
     // ── Hero text scroll reveal (scroll-locked) ────────────────────────────
     (function initScrollReveal() {
       var words = Array.from(document.querySelectorAll('.hero .scroll-word'));
