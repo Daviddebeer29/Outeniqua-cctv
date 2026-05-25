@@ -3,421 +3,343 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Security Solutions — Outeniqua CCTV & Off-site Monitoring | George, Garden Route</title>
+  <title>Solutions — Outeniqua CCTV & Off-site Monitoring</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --green:#80BA26; --green-dark:#6a9d1e; --green-glow:rgba(128,186,38,0.15);
-      --navy:#000321; --navy-mid:#050b2e; --navy-light:#0a1240;
-      --body-ink:#0E182C; --muted:#8893A8; --border:#E5E7EB; --surface:#F6F8F3;
+      --green: #80BA26;
+      --green-dark: #6a9d1e;
+      --navy: #000321;
+      --navy-mid: #050b2e;
+      --body-ink: #0E182C;
+      --muted: #8893A8;
+      --border: #E5E7EB;
+      --surface: #F6F8F3;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; overflow-x: hidden; }
-    body { font-family:'Barlow',sans-serif; font-weight:400; color:var(--body-ink); background:#fff; margin:0; padding:0; overflow-x:hidden; }
-    h1,h2,h3,h4,h5 { font-family:'Barlow Condensed',sans-serif; letter-spacing:-0.01em; }
-
+    body { font-family: 'Barlow', sans-serif; color: var(--body-ink); background: #fff; margin: 0; padding: 0; overflow-x: hidden; }
+    h1, h2, h3, h4 { font-family: 'Barlow Condensed', sans-serif; letter-spacing: -0.01em; }
     body::before {
-      content:'';
-      position:fixed;
-      inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events:none;
-      z-index:9999;
-      opacity:1;
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.35;
     }
-
-    nav { position:sticky; top:0; z-index:100; background:var(--navy); border-bottom:1px solid rgba(128,186,38,0.12); }
-    .nav-inner { max-width:1280px; margin:0 auto; padding:0 2rem; height:64px; display:flex; align-items:center; gap:2rem; }
-    .nav-logo img { height:44px; width:auto; display:block; border-radius:6px; background:white; padding:3px 8px; }
-    .nav-badge { font-family:'Barlow',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--green); background:rgba(128,186,38,0.1); border:1px solid rgba(128,186,38,0.25); padding:3px 10px; border-radius:100px; }
-    .nav-links { display:flex; align-items:center; gap:0.25rem; margin-left:auto; }
-    .nav-links a { font-family:'Barlow',sans-serif; font-size:14px; font-weight:500; color:rgba(255,255,255,0.7); text-decoration:none; padding:8px 16px; border-radius:6px; transition:color 0.2s, background 0.2s; }
-    .nav-links a:hover { color:#fff; background:rgba(255,255,255,0.06); }
-    .nav-links a.active { color:#fff; }
-    .btn-nav { font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; background:var(--green); color:#000321; border:none; padding:8px 24px; border-radius:6px; cursor:pointer; text-decoration:none; transition:background 0.2s, transform 0.15s; white-space:nowrap; }
-    .btn-nav:hover { background:var(--green-dark); transform:translateY(-1px); }
-    .hamburger { display:none; flex-direction:column; justify-content:center; align-items:center; gap:5px; width:40px; height:40px; background:none; border:none; cursor:pointer; padding:4px; margin-left:auto; flex-shrink:0; }
-    .hamburger span { display:block; width:22px; height:2px; background:rgba(255,255,255,0.85); border-radius:2px; transition:transform 0.25s ease, opacity 0.25s ease; }
-    .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
-    .hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
-    .mobile-menu { display:none; position:fixed; top:64px; left:0; right:0; background:var(--navy); border-bottom:1px solid rgba(128,186,38,0.18); z-index:98; pointer-events:none; opacity:0; transform:translateY(-8px); transition:opacity 0.22s ease, transform 0.22s ease; }
-    .mobile-menu.open { opacity:1; transform:translateY(0); pointer-events:auto; }
-    .mobile-menu-inner { display:flex; flex-direction:column; padding:16px 1.25rem 24px; gap:2px; }
-    .mobile-menu-inner a { font-family:'Barlow',sans-serif; font-size:16px; font-weight:500; color:rgba(255,255,255,0.8); text-decoration:none; padding:13px 16px; border-radius:8px; transition:background 0.15s, color 0.15s; }
-    .mobile-menu-inner a:hover { background:rgba(255,255,255,0.06); color:#fff; }
-    .mob-cta-btn { margin-top:10px; text-align:center; justify-content:center; width:100%; display:block; }
-    .btn-primary { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; background:var(--green); color:var(--navy); border:none; padding:16px 32px; border-radius:6px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:background 0.2s, transform 0.15s; }
-    .btn-primary:hover { background:var(--green-dark); transform:translateY(-1px); }
-    .btn-secondary { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; background:transparent; color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.2); padding:16px 32px; border-radius:6px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:border-color 0.2s, color 0.2s, transform 0.15s; }
-    .btn-secondary:hover { border-color:rgba(255,255,255,0.5); color:#fff; transform:translateY(-1px); }
-    .section-tag { font-family:'Barlow',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); background:rgba(128,186,38,0.08); border:1px solid rgba(128,186,38,0.2); padding:4px 12px; border-radius:100px; display:inline-block; margin-bottom:16px; }
-    footer { background:var(--navy); padding:64px 0 0; }
-    .footer-inner { max-width:1280px; margin:0 auto; padding:0 2rem; }
-    .footer-top { display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:3rem; padding-bottom:48px; border-bottom:1px solid rgba(255,255,255,0.06); }
-    .footer-brand img { height:36px; margin-bottom:16px; display:block; border-radius:4px; background:white; padding:2px 6px; }
-    .footer-brand p { font-size:13px; color:rgba(255,255,255,0.35); line-height:1.6; margin:0; }
-    .footer-col h4 { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin:0 0 16px; }
-    .footer-col ul { list-style:none; margin:0; padding:0; }
-    .footer-col ul li { margin-bottom:8px; }
-    .footer-col ul li a { font-size:14px; color:rgba(255,255,255,0.55); text-decoration:none; transition:color 0.2s; }
-    .footer-col ul li a:hover { color:var(--green); }
-    .footer-bottom { display:flex; align-items:center; justify-content:space-between; padding:20px 0; }
-    .footer-copy { font-size:12px; color:rgba(255,255,255,0.2); }
-    .footer-links { display:flex; gap:1.5rem; }
-    .footer-links a { font-size:12px; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s; }
-    .footer-links a:hover { color:rgba(255,255,255,0.5); }
-    .page-hero { background:var(--navy); padding:100px 2rem 80px; text-align:center; position:relative; overflow:hidden; }
-    .page-hero::before { content:''; position:absolute; top:-200px; left:50%; transform:translateX(-50%); width:800px; height:800px; background:radial-gradient(ellipse at center, rgba(128,186,38,0.07) 0%, transparent 70%); pointer-events:none; }
-    .page-hero-tag { font-family:'Barlow',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); margin-bottom:20px; }
-    .page-hero h1 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(48px,7vw,88px); font-weight:800; line-height:0.95; color:#fff; letter-spacing:-0.02em; margin:0 0 24px; }
-    .page-hero h1 span { color:var(--green); }
-    .page-hero p { font-size:clamp(15px,2vw,18px); color:rgba(255,255,255,0.6); line-height:1.7; max-width:640px; margin:0 auto 36px; }
-
-    /* SOLUTIONS PAGE STYLES */
-    .services-section { padding:80px 2rem; background:#fff; }
-    .services-inner { max-width:1280px; margin:0 auto; }
-    .services-header { text-align:center; margin-bottom:64px; }
-    .services-header h2 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(36px,5vw,56px); font-weight:800; color:var(--body-ink); letter-spacing:-0.02em; margin:0 0 16px; }
-    .services-header p { font-size:17px; color:var(--muted); line-height:1.7; max-width:580px; margin:0 auto; }
-    .services-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
-    .service-card { border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:box-shadow 0.25s, transform 0.2s; display:flex; flex-direction:column; }
-    .service-card:hover { box-shadow:0 16px 48px -8px rgba(14,24,44,0.12), 0 4px 16px -4px rgba(128,186,38,0.1); transform:translateY(-3px); }
-    .service-card-body { padding:36px 32px; flex:1; }
-    .service-icon { width:52px; height:52px; background:rgba(128,186,38,0.08); border:1px solid rgba(128,186,38,0.15); border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; }
-    .service-card h3 { font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:700; color:var(--body-ink); margin:0 0 12px; letter-spacing:-0.01em; }
-    .service-card p { font-size:15px; color:var(--muted); line-height:1.75; margin:0 0 20px; }
-    .service-card-footer { padding:20px 32px; border-top:1px solid var(--border); background:var(--surface); }
-    .service-link { font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--green); text-decoration:none; display:inline-flex; align-items:center; gap:6px; transition:gap 0.2s, color 0.2s; }
-    .service-link:hover { gap:10px; color:var(--green-dark); }
-    .service-link svg { transition:transform 0.2s; }
-    .service-link:hover svg { transform:translateX(3px); }
-
-    /* Industries */
-    .industries-section { background:var(--surface); padding:80px 2rem; }
-    .industries-inner { max-width:1280px; margin:0 auto; }
-    .industries-header { text-align:center; margin-bottom:56px; }
-    .industries-header h2 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(32px,4.5vw,52px); font-weight:800; color:var(--body-ink); letter-spacing:-0.02em; margin:0 0 16px; }
-    .industries-header p { font-size:17px; color:var(--muted); line-height:1.7; max-width:540px; margin:0 auto; }
-    .industries-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:1rem; }
-    .industry-item { background:#fff; border:1px solid var(--border); border-radius:12px; padding:24px 16px; text-align:center; transition:border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
-    .industry-item:hover { border-color:rgba(128,186,38,0.4); box-shadow:0 4px 20px rgba(128,186,38,0.08); transform:translateY(-2px); }
-    .industry-icon { font-size:28px; margin-bottom:10px; display:block; }
-    .industry-label { font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; color:var(--body-ink); }
-
-    /* CTA section */
-    .solutions-cta { background:var(--navy); padding:80px 2rem; text-align:center; position:relative; overflow:hidden; }
-    .solutions-cta::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:700px; height:400px; background:radial-gradient(ellipse, rgba(128,186,38,0.07) 0%, transparent 70%); pointer-events:none; }
-    .solutions-cta-inner { position:relative; z-index:1; max-width:600px; margin:0 auto; }
-    .solutions-cta h2 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(32px,5vw,60px); font-weight:800; color:#fff; letter-spacing:-0.02em; margin:0 0 16px; line-height:1; }
-    .solutions-cta h2 span { color:var(--green); }
-    .solutions-cta p { font-size:17px; color:rgba(255,255,255,0.55); line-height:1.7; margin:0 0 36px; }
-    .cta-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
-
-    @media (max-width:900px) {
-      .industries-grid { grid-template-columns:repeat(3,1fr); }
+    nav { position: sticky; top: 0; z-index: 100; background: var(--navy); border-bottom: 1px solid rgba(128,186,38,0.12); }
+    .nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 2rem; height: 64px; display: flex; align-items: center; gap: 2rem; }
+    .nav-logo img { height: 44px; width: auto; display: block; border-radius: 6px; background: white; padding: 3px 8px; }
+    .nav-badge { font-family: 'Barlow', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); background: rgba(128,186,38,0.1); border: 1px solid rgba(128,186,38,0.25); padding: 3px 10px; border-radius: 100px; }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; margin-left: auto; }
+    .nav-links a { font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7); text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: color 0.2s, background 0.2s; }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .nav-links a.active { color: var(--green); }
+    .btn-nav { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; background: var(--green); color: #000321; border: none; padding: 8px 24px; border-radius: 6px; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; white-space: nowrap; }
+    .btn-nav:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: auto; flex-shrink: 0; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,0.85); border-radius: 2px; transition: transform 0.25s ease, opacity 0.25s ease; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; background: var(--navy); border-bottom: 1px solid rgba(128,186,38,0.18); z-index: 98; pointer-events: none; opacity: 0; transform: translateY(-8px); transition: opacity 0.22s ease, transform 0.22s ease; }
+    .mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .mobile-menu-inner { display: flex; flex-direction: column; padding: 16px 1.25rem 24px; gap: 2px; }
+    .mobile-menu-inner a { font-family: 'Barlow', sans-serif; font-size: 16px; font-weight: 500; color: rgba(255,255,255,0.8); text-decoration: none; padding: 13px 16px; border-radius: 8px; transition: background 0.15s, color 0.15s; }
+    .mobile-menu-inner a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .mob-cta-btn { margin-top: 10px; text-align: center; justify-content: center; width: 100%; }
+    .btn-primary { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--green); color: var(--navy); border: none; padding: 16px 32px; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s, transform 0.15s; }
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .btn-secondary { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: transparent; color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.2); padding: 16px 32px; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: border-color 0.2s, color 0.2s, transform 0.15s; }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.5); color: #fff; transform: translateY(-1px); }
+    .tag-pill { font-family: 'Barlow', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); background: rgba(128,186,38,0.08); border: 1px solid rgba(128,186,38,0.2); padding: 4px 12px; border-radius: 100px; display: inline-block; margin-bottom: 16px; }
+    .service-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(128,186,38,0.12); border-radius: 14px; box-shadow: 0 0 0 1px rgba(128,186,38,0.06), 0 4px 24px rgba(0,3,33,0.4); padding: 32px; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 0 0 1px rgba(128,186,38,0.2), 0 12px 40px rgba(0,3,33,0.5); border-color: rgba(128,186,38,0.28); }
+    footer { background: #000; padding: 64px 0 32px; border-top: 1px solid rgba(255,255,255,0.05); }
+    .footer-inner { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+    .footer-top { display: grid; grid-template-columns: 220px repeat(3, 1fr); gap: 3rem; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 32px; }
+    .footer-brand img { height: 36px; margin-bottom: 16px; display: block; border-radius: 4px; background: white; padding: 2px 6px; }
+    .footer-brand p { font-size: 12px; color: rgba(255,255,255,0.3); line-height: 1.7; margin: 0; }
+    .footer-col h4 { font-family: 'Barlow', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin: 0 0 16px; }
+    .footer-col ul { list-style: none; margin: 0; padding: 0; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--green); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.2); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.5); }
+    @media (max-width: 1024px) {
+      .footer-top { grid-template-columns: 1fr 1fr 1fr; gap: 2rem; }
+      .footer-brand { grid-column: 1 / -1; }
     }
-    @media (max-width:768px) {
-      .nav-links { display:none; }
-      .nav-badge { display:none; }
-      .nav-inner { padding:0 1.25rem; }
-      .hamburger { display:flex; }
-      .mobile-menu { display:block; }
-      .footer-top { grid-template-columns:1fr 1fr; gap:1.5rem; }
-      .footer-brand { grid-column:1 / -1; }
-      .footer-bottom { flex-direction:column; align-items:flex-start; gap:12px; }
-      .services-grid { grid-template-columns:1fr; }
-      .industries-grid { grid-template-columns:repeat(3,1fr); }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-badge { display: none; }
+      .nav-inner { padding: 0 1.25rem; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: block; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .footer-brand { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .services-grid { grid-template-columns: 1fr !important; }
+      .industries-grid { grid-template-columns: repeat(2, 1fr) !important; }
     }
-    @media (max-width:640px) {
-      .page-hero { padding:64px 1.25rem 56px; }
-      .footer-top { grid-template-columns:1fr 1fr; }
-      .footer-bottom { flex-direction:column; align-items:flex-start; gap:12px; }
-      .footer-copy { font-size:11px; }
-      .services-section { padding:56px 1.25rem; }
-      .industries-section { padding:56px 1.25rem; }
-      .solutions-cta { padding:56px 1.25rem; }
-      .service-card-body { padding:28px 24px; }
-      .service-card-footer { padding:16px 24px; }
-      .industries-grid { grid-template-columns:repeat(2,1fr); }
+    @media (max-width: 640px) {
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .footer-copy { font-size: 11px; }
+      .industries-grid { grid-template-columns: repeat(2, 1fr) !important; }
     }
+    @media (max-width: 420px) { .footer-top { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
-<!-- ANNOUNCEMENT BAR -->
-<div style="background:var(--green);text-align:center;padding:10px 1rem;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--navy);letter-spacing:0.02em;">
-  24/7 SOC Monitoring Now Available for Residential Estates &amp; Industrial Sites —&nbsp;<a href="contact.html" style="text-decoration:underline;color:var(--navy);">Book Free Inspection</a>
-</div>
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV"></a>
-    <span class="nav-badge">24/7 Monitoring — George, Garden Route</span>
-    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="solutions.html" class="active">Solutions</a>
+  <div style="background:var(--green);text-align:center;padding:10px 1rem;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--navy);letter-spacing:0.02em;">
+    24/7 SOC Monitoring Now Available for Residential Estates &amp; Industrial Sites —&nbsp;<a href="contact.html" style="text-decoration:underline;color:var(--navy);">Book Free Inspection</a>
+  </div>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV"></a>
+      <span class="nav-badge">24/7 Monitoring — George, Garden Route</span>
+      <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      <div class="nav-links">
+        <a href="solutions.html" class="active">Solutions</a>
+        <a href="about.html">About</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn-nav" style="margin-left:12px">Get Protected</a>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="solutions.html">Solutions</a>
       <a href="about.html">About</a>
       <a href="faq.html">FAQ</a>
       <a href="contact.html">Contact</a>
-      <a href="contact.html" class="btn-nav" style="margin-left:12px">Get Protected</a>
+      <a href="contact.html" class="btn-primary mob-cta-btn">Get Protected →</a>
     </div>
   </div>
-</nav>
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-menu-inner">
-    <a href="index.html">Home</a>
-    <a href="solutions.html">Solutions</a>
-    <a href="about.html">About</a>
-    <a href="faq.html">FAQ</a>
-    <a href="contact.html">Contact</a>
-    <a href="contact.html" class="btn-primary mob-cta-btn">Get Protected →</a>
-  </div>
-</div>
 
-<!-- PAGE HERO -->
-<section class="page-hero">
-  <p class="page-hero-tag">Our Services</p>
-  <h1>Complete Security<br><span>Solutions</span></h1>
-  <p>From CCTV installation and 24/7 remote monitoring to electric fencing, access control, and solar backup — we design and deliver comprehensive security ecosystems for the Garden Route.</p>
-</section>
-
-<!-- SERVICES GRID -->
-<section class="services-section">
-  <div class="services-inner">
-    <div class="services-header">
-      <span class="section-tag">What We Offer</span>
-      <h2>Eight Ways We Protect You</h2>
-      <p>Every solution is designed, installed, and supported by our local team in George — one company, total accountability.</p>
+  <!-- HERO -->
+  <section style="background:var(--navy);position:relative;overflow:hidden;padding:96px 0 80px;">
+    <div style="position:absolute;top:-200px;left:-100px;width:900px;height:900px;background:radial-gradient(ellipse at center,rgba(128,186,38,0.10) 0%,transparent 65%);pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-100px;right:-80px;width:600px;height:600px;background:radial-gradient(ellipse at center,rgba(1,65,178,0.06) 0%,transparent 65%);pointer-events:none;"></div>
+    <div style="max-width:1280px;margin:0 auto;padding:0 2rem;position:relative;z-index:2;">
+      <span class="tag-pill">Our Services</span>
+      <h1 style="font-size:clamp(48px,7vw,88px);font-weight:800;line-height:0.95;letter-spacing:-0.02em;color:#fff;margin:0 0 24px;max-width:760px;">Complete Security Solutions</h1>
+      <p style="font-size:17px;line-height:1.7;color:rgba(255,255,255,0.6);max-width:520px;margin:0;">
+        From standalone CCTV installations to fully integrated 24/7 monitored security ecosystems — we design, install, and monitor every system we sell.
+      </p>
     </div>
-    <div class="services-grid">
-
-      <!-- 1: CCTV -->
-      <div class="service-card">
-        <div class="service-card-body">
-          <div class="service-icon">
-            <svg width="26" height="26" fill="none" viewBox="0 0 24 24">
-              <path d="M23 7l-7 5 7 5V7z" stroke="#80BA26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="1" y="5" width="15" height="14" rx="2" stroke="#80BA26" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <h3>CCTV Camera Installation</h3>
-          <p>Professional IP and HD-analogue camera systems for homes, estates, offices, and industrial facilities. We assess your site, design the optimal camera layout, and handle full installation and cabling — ensuring every blind spot is covered and every angle is sharp, day and night.</p>
-        </div>
-        <div class="service-card-footer">
-          <a href="contact.html" class="service-link">Get a Quote <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </div>
-
-      <!-- 2: Monitoring -->
-      <div class="service-card">
-        <div class="service-card-body">
-          <div class="service-icon">
-            <svg width="26" height="26" fill="none" viewBox="0 0 24 24">
-              <rect x="2" y="3" width="20" height="14" rx="2" stroke="#80BA26" stroke-width="1.5"/>
-              <path d="M8 21h8M12 17v4" stroke="#80BA26" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3>24-Hour Off-site Monitoring</h3>
-          <p>Our Security Operations Centre (SOC) watches your cameras around the clock, 365 days a year. Trained operators respond to live events within 60 seconds — verifying threats, dispatching armed response, and alerting you immediately. Far more reliable than motion-triggered emails or self-monitoring apps.</p>
-        </div>
-        <div class="service-card-footer">
-          <a href="contact.html" class="service-link">Get a Quote <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </div>
-
-      <!-- 3: Control Room -->
-      <div class="service-card">
-        <div class="service-card-body">
-          <div class="service-icon">
-            <svg width="26" height="26" fill="none" viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="2" stroke="#80BA26" stroke-width="1.5"/>
-              <path d="M3 9h18M9 21V9" stroke="#80BA26" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3>Control Room Design &amp; Setup</h3>
-          <p>Need an on-site command centre? We design and build custom control rooms for estates, industrial complexes, and large commercial sites. From NVR/DVR rack infrastructure and multi-screen video walls to network switching, UPS power, and operator workstations — fully integrated and ready to run.</p>
-        </div>
-        <div class="service-card-footer">
-          <a href="contact.html" class="service-link">Get a Quote <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </div>
-
-      <!-- 4: Solar -->
-      <div class="service-card">
-        <div class="service-card-body">
-          <div class="service-icon">
-            <svg width="26" height="26" fill="none" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="5" stroke="#80BA26" stroke-width="1.5"/>
-              <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#80BA26" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3>Solar Power for CCTV</h3>
-          <p>Load-shedding is a real threat to security. We install purpose-built solar and battery backup systems for CCTV infrastructure, ensuring your cameras and monitoring remain fully operational during Eskom outages — day or night, regardless of loadshedding stage.</p>
-        </div>
-        <div class="service-card-footer">
-          <a href="contact.html" class="service-link">Get a Quote <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </div>
-
-      <!-- 5: ClearVu Fencing -->
-      <div class="service-card">
-        <div class="service-card-body">
-          <div class="service-icon">
-            <svg width="26" height="26" fill="none" viewBox="0 0 24 24">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#80BA26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M9 22V12h6v10" stroke="#80BA26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <h3>ClearVu High-Security Fencing</h3>
-          <p>ClearVu is the benchmark in anti-climb, anti-cut perimeter fencing. Woven from heavy-gauge steel wire, it is extremely difficult to scale or penetrate while remaining virtually transparent — maintaining visibility and aesthetics. Ideal for estates, schools, and industrial boundaries.</p>
-        </div>
-        <div class="service-card-footer">
-          <a href="contact.html" class="service-link">Get a Quote <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </div>
-
-      <!-- 6: Access Control -->
-      <div class="service-card">
-        <div class="service-card-body">
-          <div class="service-icon">
-            <svg width="26" height="26" fill="none" viewBox="0 0 24 24">
-              <rect x="3" y="11" width="18" height="11" rx="2" stroke="#80BA26" stroke-width="1.5"/>
-              <path d="M7 11V7a5 5 0 0110 0v4" stroke="#80BA26" stroke-width="1.5" stroke-linecap="round"/>
-              <circle cx="12" cy="16" r="1.5" fill="#80BA26"/>
-            </svg>
-          </div>
-          <h3>Access Control</h3>
-          <p>Control who enters your premises with precision. We install keypad, proximity card, biometric fingerprint, and facial recognition access systems — integrated with your CCTV for complete entry logging. Suitable for single doors, multi-gate estates, and complex multi-zone commercial environments.</p>
-        </div>
-        <div class="service-card-footer">
-          <a href="contact.html" class="service-link">Get a Quote <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </div>
-
-      <!-- 7: Boomgates -->
-      <div class="service-card">
-        <div class="service-card-body">
-          <div class="service-icon">
-            <svg width="26" height="26" fill="none" viewBox="0 0 24 24">
-              <path d="M4 12h16M4 6h16M4 18h16" stroke="#80BA26" stroke-width="1.5" stroke-linecap="round"/>
-              <circle cx="20" cy="12" r="2" fill="#80BA26"/>
-            </svg>
-          </div>
-          <h3>Boomgate Systems</h3>
-          <p>Automated boomgates for estate entrances, parking facilities, and commercial driveways. We supply and install heavy-duty, all-weather boom barriers with remote control, keypad, or ANPR (licence plate recognition) activation — integrated with your intercom and access control for seamless vehicle management.</p>
-        </div>
-        <div class="service-card-footer">
-          <a href="contact.html" class="service-link">Get a Quote <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </div>
-
-      <!-- 8: Electric Fencing -->
-      <div class="service-card">
-        <div class="service-card-body">
-          <div class="service-icon">
-            <svg width="26" height="26" fill="none" viewBox="0 0 24 24">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#80BA26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <h3>Electric Fencing</h3>
-          <p>A proven first line of defence for residential and commercial properties. Our electric fence installations comply fully with South African legislation (OHS Act and SANS 10222) and are coupled with monitored energisers — so when a fence is tampered with or breached, our SOC is alerted instantly.</p>
-        </div>
-        <div class="service-card-footer">
-          <a href="contact.html" class="service-link">Get a Quote <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        </div>
-      </div>
-
+    <div style="max-width:1280px;margin:48px auto 0;padding:0 2rem;position:relative;z-index:2;">
+      <div style="height:1px;background:linear-gradient(to right,rgba(128,186,38,0.3),rgba(128,186,38,0.06),transparent);"></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- INDUSTRIES / VERTICALS -->
-<section class="industries-section">
-  <div class="industries-inner">
-    <div class="industries-header">
-      <span class="section-tag">Who We Serve</span>
-      <h2>Security Across Every Sector</h2>
-      <p>We protect properties of all types across George and the Garden Route — from private homes to government facilities.</p>
-    </div>
-    <div class="industries-grid">
-      <div class="industry-item">
-        <span class="industry-icon">🏪</span>
-        <span class="industry-label">Retail</span>
-      </div>
-      <div class="industry-item">
-        <span class="industry-icon">🏭</span>
-        <span class="industry-label">Industrial</span>
-      </div>
-      <div class="industry-item">
-        <span class="industry-icon">🏘️</span>
-        <span class="industry-label">Residential Estates</span>
-      </div>
-      <div class="industry-item">
-        <span class="industry-icon">🏥</span>
-        <span class="industry-label">Healthcare</span>
-      </div>
-      <div class="industry-item">
-        <span class="industry-icon">🏗️</span>
-        <span class="industry-label">Construction</span>
-      </div>
-      <div class="industry-item">
-        <span class="industry-icon">🏛️</span>
-        <span class="industry-label">Government</span>
+  <!-- SERVICES GRID -->
+  <section style="background:var(--navy-mid);padding:96px 0;">
+    <div style="max-width:1280px;margin:0 auto;padding:0 2rem;">
+      <div class="services-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;">
+
+        <div class="service-card">
+          <div style="width:52px;height:52px;background:rgba(128,186,38,0.12);border:1px solid rgba(128,186,38,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+          <h3 style="font-size:22px;font-weight:700;color:#fff;margin:0 0 10px;">CCTV Camera Installation</h3>
+          <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.55);margin:0 0 16px;">Professional installation of HD, 4K, PTZ, and AI-analytics cameras for any site type. We survey, design, and commission — guaranteed first-time right.</p>
+          <a href="contact.html" style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--green);text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Get a Quote →</a>
+        </div>
+
+        <div class="service-card">
+          <div style="width:52px;height:52px;background:rgba(128,186,38,0.12);border:1px solid rgba(128,186,38,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><path d="M1 6s4-2 11-2 11 2 11 2v13s-4-2-11-2-11 2-11 2V6z"/><path d="M12 4v18"/></svg>
+          </div>
+          <h3 style="font-size:22px;font-weight:700;color:#fff;margin:0 0 10px;">24/7 Off-site Monitoring</h3>
+          <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.55);margin:0 0 16px;">Our dedicated SOC monitors your cameras around the clock. Real operators, intelligent alerts, and sub-60-second dispatch to armed response on confirmed threats.</p>
+          <a href="contact.html" style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--green);text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Get a Quote →</a>
+        </div>
+
+        <div class="service-card">
+          <div style="width:52px;height:52px;background:rgba(128,186,38,0.12);border:1px solid rgba(128,186,38,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3 style="font-size:22px;font-weight:700;color:#fff;margin:0 0 10px;">Control Room Design &amp; Setup</h3>
+          <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.55);margin:0 0 16px;">Full design and installation of on-site control rooms — from single-operator stations to multi-screen command centres with Milestone XProtect VMS integration.</p>
+          <a href="contact.html" style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--green);text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Get a Quote →</a>
+        </div>
+
+        <div class="service-card">
+          <div style="width:52px;height:52px;background:rgba(128,186,38,0.12);border:1px solid rgba(128,186,38,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+          </div>
+          <h3 style="font-size:22px;font-weight:700;color:#fff;margin:0 0 10px;">Solar Power for CCTV</h3>
+          <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.55);margin:0 0 16px;">Keep your cameras online during load shedding with dedicated solar and lithium battery backup systems — designed to keep CCTV running for 12–72 hours without grid power.</p>
+          <a href="contact.html" style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--green);text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Get a Quote →</a>
+        </div>
+
+        <div class="service-card">
+          <div style="width:52px;height:52px;background:rgba(128,186,38,0.12);border:1px solid rgba(128,186,38,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+          </div>
+          <h3 style="font-size:22px;font-weight:700;color:#fff;margin:0 0 10px;">ClearVu High-Security Fencing</h3>
+          <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.55);margin:0 0 16px;">Weld mesh perimeter fencing that is virtually unclimbable and anti-cut. Used widely in government and industrial applications — combined with CCTV for maximum perimeter security.</p>
+          <a href="contact.html" style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--green);text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Get a Quote →</a>
+        </div>
+
+        <div class="service-card">
+          <div style="width:52px;height:52px;background:rgba(128,186,38,0.12);border:1px solid rgba(128,186,38,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3 style="font-size:22px;font-weight:700;color:#fff;margin:0 0 10px;">Access Control</h3>
+          <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.55);margin:0 0 16px;">Biometric, card, or PIN-based access control for offices, estates, and industrial facilities. Integrated with CCTV and intercoms for a complete entry management solution.</p>
+          <a href="contact.html" style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--green);text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Get a Quote →</a>
+        </div>
+
+        <div class="service-card">
+          <div style="width:52px;height:52px;background:rgba(128,186,38,0.12);border:1px solid rgba(128,186,38,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><polyline points="5 12 2 12 12 2 22 12 19 12"/><polyline points="5 12 5 20 19 20 19 12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+          </div>
+          <h3 style="font-size:22px;font-weight:700;color:#fff;margin:0 0 10px;">Boomgate Systems</h3>
+          <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.55);margin:0 0 16px;">High-speed automated boomgates for estate entrances, parking facilities, and industrial yards. Integrated with ANPR cameras for licence-plate-controlled vehicle access.</p>
+          <a href="contact.html" style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--green);text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Get a Quote →</a>
+        </div>
+
+        <div class="service-card">
+          <div style="width:52px;height:52px;background:rgba(128,186,38,0.12);border:1px solid rgba(128,186,38,0.2);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3 style="font-size:22px;font-weight:700;color:#fff;margin:0 0 10px;">Electric Fencing</h3>
+          <p style="font-size:14px;line-height:1.75;color:rgba(255,255,255,0.55);margin:0 0 16px;">Energiser installation, top-of-wall electric fencing, and full compliance certification for residential and commercial properties — integrated with alarm panels and CCTV.</p>
+          <a href="contact.html" style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--green);text-decoration:none;letter-spacing:0.04em;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">Get a Quote →</a>
+        </div>
+
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CTA SECTION -->
-<section class="solutions-cta">
-  <div class="solutions-cta-inner">
-    <span class="section-tag" style="color:rgba(255,255,255,0.45);background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);">Free Consultation</span>
-    <h2>Not Sure What<br>You <span>Need?</span></h2>
-    <p>Our security experts will assess your property, identify risks, and recommend the right combination of solutions — all at no cost to you. No pressure, no obligation.</p>
-    <div class="cta-btns">
-      <a href="contact.html" class="btn-primary">Book Free Consultation →</a>
-      <a href="about.html" class="btn-secondary">About Our Team</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV">
-        <p>Professional CCTV &amp; Off-site Monitoring — George, Garden Route, South Africa.</p>
-        <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
-          <a href="tel:0606362700" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ 060 636 2700</a>
-          <a href="tel:+27767673264" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ +27 76 767 3264</a>
-          <span style="font-size:13px;color:rgba(255,255,255,0.3);line-height:1.5;">91 York St, Dormehls Drift<br>George, Western Cape, 6529</span>
+  <!-- INDUSTRIES -->
+  <section style="background:var(--navy);padding:80px 0;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(128,186,38,0.07) 0%,transparent 60%);pointer-events:none;"></div>
+    <div style="max-width:1280px;margin:0 auto;padding:0 2rem;position:relative;z-index:1;">
+      <div style="text-align:center;margin-bottom:48px;">
+        <span class="tag-pill">Who We Serve</span>
+        <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(36px,5vw,56px);font-weight:800;color:#fff;margin:0;letter-spacing:-0.02em;">Built for Every Sector</h2>
+      </div>
+      <div class="industries-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(128,186,38,0.1);border-radius:12px;padding:24px;display:flex;align-items:center;gap:14px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(128,186,38,0.28)'" onmouseout="this.style.borderColor='rgba(128,186,38,0.1)'">
+          <div style="width:40px;height:40px;background:rgba(128,186,38,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:#fff;">Retail</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(128,186,38,0.1);border-radius:12px;padding:24px;display:flex;align-items:center;gap:14px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(128,186,38,0.28)'" onmouseout="this.style.borderColor='rgba(128,186,38,0.1)'">
+          <div style="width:40px;height:40px;background:rgba(128,186,38,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:#fff;">Industrial</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(128,186,38,0.1);border-radius:12px;padding:24px;display:flex;align-items:center;gap:14px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(128,186,38,0.28)'" onmouseout="this.style.borderColor='rgba(128,186,38,0.1)'">
+          <div style="width:40px;height:40px;background:rgba(128,186,38,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:#fff;">Residential Estates</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(128,186,38,0.1);border-radius:12px;padding:24px;display:flex;align-items:center;gap:14px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(128,186,38,0.28)'" onmouseout="this.style.borderColor='rgba(128,186,38,0.1)'">
+          <div style="width:40px;height:40px;background:rgba(128,186,38,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:#fff;">Healthcare</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(128,186,38,0.1);border-radius:12px;padding:24px;display:flex;align-items:center;gap:14px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(128,186,38,0.28)'" onmouseout="this.style.borderColor='rgba(128,186,38,0.1)'">
+          <div style="width:40px;height:40px;background:rgba(128,186,38,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/></svg>
+          </div>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:#fff;">Construction</span>
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(128,186,38,0.1);border-radius:12px;padding:24px;display:flex;align-items:center;gap:14px;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(128,186,38,0.28)'" onmouseout="this.style.borderColor='rgba(128,186,38,0.1)'">
+          <div style="width:40px;height:40px;background:rgba(128,186,38,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#80BA26" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+          </div>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;color:#fff;">Government</span>
         </div>
       </div>
-      <div class="footer-col"><h4>Services</h4><ul><li><a href="solutions.html">CCTV Installation</a></li><li><a href="solutions.html">24/7 Monitoring</a></li><li><a href="solutions.html">Access Control</a></li><li><a href="solutions.html">Electric Fencing</a></li><li><a href="solutions.html">Boomgates</a></li></ul></div>
-      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li><li><a href="#">Careers</a></li></ul></div>
-      <div class="footer-col"><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="privacy.html">POPIA Compliance</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">Cookie Policy</a></li></ul></div>
     </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2016 – 2026 Outeniqua CCTV &amp; Off-site Monitoring | George, Garden Route</span>
-      <div class="footer-links"><a href="privacy.html">Privacy</a><a href="#">Terms</a><a href="#">POPIA</a></div>
-    </div>
-  </div>
-</footer>
+  </section>
 
-<script>
-(function() {
-  var btn = document.getElementById('hamburger');
-  var menu = document.getElementById('mobileMenu');
-  if (!btn || !menu) return;
-  function close() { btn.classList.remove('open'); menu.classList.remove('open'); }
-  btn.addEventListener('click', function(e) { e.stopPropagation(); btn.classList.toggle('open'); menu.classList.toggle('open'); });
-  document.addEventListener('click', function(e) { if (!btn.contains(e.target) && !menu.contains(e.target)) close(); });
-  menu.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', close); });
-})();
-</script>
+  <!-- CTA -->
+  <section style="background:var(--navy-mid);padding:96px 0;position:relative;overflow:hidden;text-align:center;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(128,186,38,0.08) 0%,transparent 60%);pointer-events:none;"></div>
+    <div style="max-width:680px;margin:0 auto;padding:0 2rem;position:relative;z-index:1;">
+      <span class="tag-pill">Unsure Where to Start?</span>
+      <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(38px,5.5vw,60px);font-weight:800;color:#fff;margin:0 0 16px;letter-spacing:-0.02em;">Not Sure What You Need?</h2>
+      <p style="font-size:16px;line-height:1.7;color:rgba(255,255,255,0.6);margin:0 0 36px;">Let us do the thinking. Book a free site inspection and our team will assess your property and recommend the right solution — no jargon, no pressure.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="contact.html" class="btn-primary">Book Free Inspection <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="tel:0606362700" class="btn-secondary">Call Us Now</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV">
+          <p>Professional CCTV &amp; Off-site Monitoring — George, Garden Route, South Africa.</p>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
+            <a href="tel:0606362700" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ 060 636 2700</a>
+            <a href="tel:+27767673264" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ +27 76 767 3264</a>
+            <span style="font-size:13px;color:rgba(255,255,255,0.3);line-height:1.5;">91 York St, Dormehls Drift<br>George, Western Cape, 6529</span>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Services</h4><ul>
+          <li><a href="solutions.html">CCTV Installation</a></li>
+          <li><a href="solutions.html">24/7 Monitoring</a></li>
+          <li><a href="solutions.html">Access Control</a></li>
+          <li><a href="solutions.html">Electric Fencing</a></li>
+          <li><a href="solutions.html">Boomgates</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Company</h4><ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Book Inspection</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Legal</h4><ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="privacy.html">POPIA Compliance</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2016 – 2026 Outeniqua CCTV &amp; Off-site Monitoring | George, Garden Route</span>
+        <div class="footer-links"><a href="privacy.html">Privacy</a><a href="#">Terms</a><a href="privacy.html">POPIA</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function() {
+    var btn = document.getElementById('hamburger');
+    var menu = document.getElementById('mobileMenu');
+    if (!btn || !menu) return;
+    function close() { btn.classList.remove('open'); menu.classList.remove('open'); }
+    btn.addEventListener('click', function(e) { e.stopPropagation(); btn.classList.toggle('open'); menu.classList.toggle('open'); });
+    document.addEventListener('click', function(e) { if (!btn.contains(e.target) && !menu.contains(e.target)) close(); });
+    menu.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', close); });
+  })();
+  </script>
 </body>
 </html>

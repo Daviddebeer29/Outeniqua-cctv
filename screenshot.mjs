@@ -18,7 +18,7 @@ const next = numbers.length ? Math.max(...numbers) + 1 : 1;
 const filename = `screenshot-${next}${label}.png`;
 const filepath = path.join(screenshotDir, filename);
 
-const browser = await puppeteer.launch({ headless: true });
+const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
 const page = await browser.newPage();
 await page.setViewport({ width: 1440, height: 900 });
 await page.goto(url, { waitUntil: 'networkidle2' });
