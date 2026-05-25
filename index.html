@@ -4263,6 +4263,15 @@
       var cta    = document.querySelector('.hero-ctas');
       var overlay = document.querySelector('.hero-video-overlay');
 
+      // On mobile skip the scroll-lock — show everything immediately
+      if (window.innerWidth <= 768) {
+        words.forEach(function(w) { w.style.opacity = 1; });
+        if (label) label.style.opacity = 1;
+        if (sub)   sub.style.opacity   = 1;
+        if (cta)   cta.style.opacity   = 1;
+        return;
+      }
+
       // Full sequence: label + h1 words → paragraph → button
       // Label is index 0, Redefine is index 1 — they appear together at the start
       var items = (label ? [label] : []).concat(words).concat(sub ? [sub] : []).concat(cta ? [cta] : []);
