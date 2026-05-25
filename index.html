@@ -641,6 +641,7 @@
       color: #fff;
       margin: 0 0 24px;
       letter-spacing: -0.02em;
+      text-wrap: balance;
     }
     .unlock-heading span:not(.reveal-word) { color: var(--green); }
     .unlock-sub {
@@ -2597,6 +2598,11 @@
       .footer-top    { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
       .footer-brand  { grid-column: 1 / -1; }
       .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+
+      /* Unlock: scale heading down at tablet so it doesn't break word-per-line */
+      .unlock-top      { grid-template-columns: 1fr; }
+      .unlock-image    { display: none; }
+      .unlock-heading  { font-size: clamp(30px, 5vw, 42px); }
     }
 
     /* Mobile ≤640px */
@@ -2648,10 +2654,10 @@
       /* === UNLOCK === */
       .unlock-top       { grid-template-columns: 1fr; }
       .unlock-image     { display: none; }
-      .unlock-text-card { padding: 28px 16px; }
-      .unlock-heading   { font-size: clamp(20px, 5.5vw, 28px); }
+      .unlock-text-card { padding: 28px 20px; }
+      .unlock-heading   { font-size: clamp(26px, 7vw, 34px); }
       .unlock-cards     { grid-template-columns: 1fr; gap: 16px; }
-      .unlock-sub       { font-size: 15px; }
+      .unlock-sub       { font-size: 15px; max-width: 100%; }
 
       /* === PLATFORM === */
       .platform-grid {
@@ -2851,7 +2857,7 @@
       <div class="unlock-top">
         <div class="unlock-text-card" data-card-reveal="left">
           <div class="section-tag">Full Site Protection</div>
-          <h2 class="unlock-heading" data-reveal data-reveal-deferred>Unlock Operational <span>Awareness</span>, Resilience, and Productivity at Scale</h2>
+          <h2 class="unlock-heading" data-reveal data-reveal-deferred>Unlock Operational <span>Awareness,</span> Resilience, and Productivity at Scale</h2>
           <p class="unlock-sub">From growing retail theft to industrial sabotage — slow response times and blind spots cost businesses millions. Outeniqua CCTV gives you the eyes, the data, and the response speed you need to stay ahead.</p>
         </div>
         <div class="unlock-image" data-card-reveal="right">
