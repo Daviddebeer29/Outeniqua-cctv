@@ -2551,6 +2551,7 @@
     @media (max-width: 1024px) {
       .why-inner       { gap: 48px; }
       .why-grid        { grid-template-columns: repeat(2, 1fr); }
+      .why-header      { grid-template-columns: 1fr; gap: 40px; }
       .contact-inner   { grid-template-columns: 1fr; gap: 48px; }
       .platform-grid   { grid-template-columns: 1fr; grid-template-rows: auto; min-height: unset; }
       .platform-grid > *:nth-child(n) { grid-column: 1; grid-row: auto; }
@@ -2559,6 +2560,43 @@
       .unlock-image    { display: none; }
       .reviews-grid    { grid-template-columns: repeat(2, 1fr); }
       .insights-grid   { grid-template-columns: 1fr; }
+      /* Services: hide tag column at tablet so rows don't overflow */
+      .svc-row         { grid-template-columns: 56px 1fr; gap: 1.5rem; }
+      .svc-tag         { display: none; }
+      /* Footer: start collapsing */
+      .footer-top      { grid-template-columns: 1fr 1fr 1fr; gap: 2rem; }
+      .footer-brand    { grid-column: 1 / -1; }
+    }
+
+    /* Narrow tablet / large mobile ≤768px */
+    @media (max-width: 768px) {
+      /* Nav collapses to hamburger at 768px */
+      .nav-links   { display: none; }
+      .nav-badge   { display: none; }
+      .nav-inner   { padding: 0 1.25rem; }
+      .hamburger   { display: flex; }
+      .mobile-menu { display: block; }
+
+      /* Stats: 4→2 columns */
+      .stats-grid  { grid-template-columns: repeat(2, 1fr); }
+      .stats-header { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+
+      /* Reviews header: stack */
+      .reviews-header  { flex-direction: column; align-items: flex-start; gap: 24px; margin-bottom: 40px; }
+      .reviews-heading { font-size: clamp(32px, 7vw, 56px); }
+
+      /* Insights header: stack */
+      .insights-header  { flex-direction: column; align-items: flex-start; gap: 24px; margin-bottom: 32px; }
+      .insights-heading { font-size: clamp(28px, 6vw, 48px); }
+
+      /* Services: simplify columns */
+      .svc-row    { grid-template-columns: 40px 1fr !important; gap: 16px; }
+      .svc-tag, .svc-arrow { display: none !important; }
+
+      /* Footer: full collapse */
+      .footer-top    { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .footer-brand  { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
     }
 
     /* Mobile ≤640px */
@@ -2583,12 +2621,8 @@
       .announce-bar-text { font-size: 11px !important; }
       .announce-bar-link { display: none !important; }
 
-      /* Nav */
-      .nav-links  { display: none; }
-      .nav-badge  { display: none; }
-      .nav-inner  { padding: 0 1.25rem; }
-      .hamburger  { display: flex; }
-      .mobile-menu { display: block; }
+      /* Cookie banner: keep it within screen bounds on narrow phones */
+      .cookie-banner { left: 12px; right: 12px; bottom: 16px; max-width: calc(100% - 24px); }
 
       /* === SECTION + INNER PADDING === */
       /* Section base */
@@ -2603,18 +2637,19 @@
 
       /* === HERO === */
       .hero { min-height: calc(100svh - 64px); }
-      .hero-inner    { flex-direction: column; align-items: flex-start; padding: 0 1.25rem; gap: 32px; }
-      .hero-right    { display: none; }
+      .hero-inner    { flex-direction: column; align-items: flex-start; padding: 0 1.25rem; gap: 24px; }
+      /* Show hero-right on mobile — stacks below heading, revealed by swipe animation */
+      .hero-right    { max-width: 100%; flex-shrink: 1; }
       .hero h1       { font-size: clamp(48px, 13vw, 72px); }
-      .hero-sub      { font-size: 15px; margin-bottom: 32px; }
-      .hero-ctas     { flex-direction: column; gap: 16px; width: 100%; }
+      .hero-sub      { font-size: 15px; margin-bottom: 24px; }
+      .hero-ctas     { flex-direction: column; gap: 12px; width: 100%; }
       .btn-primary, .btn-secondary { width: 100%; justify-content: center; text-align: center; }
 
       /* === UNLOCK === */
       .unlock-top       { grid-template-columns: 1fr; }
       .unlock-image     { display: none; }
-      .unlock-text-card { padding: 32px 24px; }
-      .unlock-heading   { font-size: clamp(30px, 9vw, 48px); }
+      .unlock-text-card { padding: 28px 16px; }
+      .unlock-heading   { font-size: clamp(20px, 5.5vw, 28px); }
       .unlock-cards     { grid-template-columns: 1fr; gap: 16px; }
       .unlock-sub       { font-size: 15px; }
 
@@ -2647,11 +2682,10 @@
 
       /* === STATS === */
       .stats-section  { padding: 56px 1.25rem 0; }
-      .stats-grid     { grid-template-columns: 1fr; gap: 14px; }
-      .stats-header   { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+      .stats-grid     { grid-template-columns: repeat(2, 1fr); gap: 12px; }
       .stats-heading  { font-size: clamp(24px, 7vw, 40px); }
-      .stat-item      { padding: 32px 24px; }
-      .stat-num       { font-size: 48px; }
+      .stat-item      { padding: 24px 20px; }
+      .stat-num       { font-size: 42px; }
 
       /* === REVIEWS === */
       .reviews-grid   { grid-template-columns: 1fr; }
@@ -2659,9 +2693,8 @@
       .reviews-heading { font-size: clamp(26px, 8vw, 42px); }
 
       /* === WHY CHOOSE US === */
-      .why-header    { display: flex; flex-direction: column; gap: 32px; }
       .why-right-col { width: 100%; box-sizing: border-box; }
-      .why-grid      { grid-template-columns: 1fr 1fr !important; gap: 16px; }
+      .why-grid      { grid-template-columns: 1fr !important; gap: 12px; }
       .why-heading   { font-size: clamp(32px, 9vw, 52px); margin-bottom: 4px; }
       .why-risk-text { font-size: clamp(32px, 9vw, 52px); }
       .why-risk-row  { flex-direction: column; align-items: flex-start; gap: 16px; }
@@ -2669,6 +2702,7 @@
       .why-inline-stats { flex-direction: row; }
       .why-inline-stats .why-stat { flex: 1 1 0; min-width: 0; padding: 0 16px 0 0; }
       .why-inline-stats .why-stat + .why-stat { padding: 0 0 0 16px; }
+      .why-sub { font-size: 15px; }
 
       /* === CONTACT === */
       .contact-inner     { grid-template-columns: 1fr; gap: 40px; }
@@ -2681,13 +2715,17 @@
       .final-heading       { font-size: clamp(34px, 10vw, 56px); }
       .final-section-tag::before, .final-section-tag::after { display: none; }
       .final-cta-btn       { width: 100%; justify-content: center; }
+      /* Shift image anchor right so the Outeniqua sign isn't cropped */
+      .final-section-bg    { object-position: 72% 30%; }
 
       /* === AWARDS === */
       .awards-inner { flex-direction: column; align-items: center; gap: 24px; text-align: center; }
 
       /* === FOOTER === */
-      .footer-top   { grid-template-columns: 1fr 1fr; }
-      .footer-brand { grid-column: 1 / -1; }
+      .footer-top    { grid-template-columns: 1fr 1fr; }
+      .footer-brand  { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .footer-copy   { font-size: 11px; }
     }
 
     /* Small mobile ≤420px */
@@ -4208,6 +4246,14 @@
       });
     })();
 
+    // ── Mobile section reorder — Services moves to just after Trust Bar ──────
+    (function reorderMobileSections() {
+      if (window.innerWidth > 640) return;
+      var services = document.getElementById('services');
+      var trustBar = document.querySelector('.trust-bar');
+      if (services && trustBar) trustBar.insertAdjacentElement('afterend', services);
+    })();
+
     // ── Hero text scroll reveal (scroll-locked) ────────────────────────────
     (function initScrollReveal() {
       var words = Array.from(document.querySelectorAll('.hero .scroll-word'));
@@ -4216,6 +4262,15 @@
       var sub    = document.querySelector('.hero-sub');
       var cta    = document.querySelector('.hero-ctas');
       var overlay = document.querySelector('.hero-video-overlay');
+
+      // On mobile skip the scroll-lock — show everything immediately
+      if (window.innerWidth <= 768) {
+        words.forEach(function(w) { w.style.opacity = 1; });
+        if (label) label.style.opacity = 1;
+        if (sub)   sub.style.opacity   = 1;
+        if (cta)   cta.style.opacity   = 1;
+        return;
+      }
 
       // Full sequence: label + h1 words → paragraph → button
       // Label is index 0, Redefine is index 1 — they appear together at the start
