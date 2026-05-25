@@ -3,372 +3,358 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQ — Outeniqua CCTV & Off-site Monitoring | George, Garden Route</title>
+  <title>FAQ — Outeniqua CCTV & Off-site Monitoring</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --green:#80BA26; --green-dark:#6a9d1e; --green-glow:rgba(128,186,38,0.15);
-      --navy:#000321; --navy-mid:#050b2e; --navy-light:#0a1240;
-      --body-ink:#0E182C; --muted:#8893A8; --border:#E5E7EB; --surface:#F6F8F3;
+      --green: #80BA26;
+      --green-dark: #6a9d1e;
+      --navy: #000321;
+      --navy-mid: #050b2e;
+      --body-ink: #0E182C;
+      --muted: #8893A8;
+      --border: #E5E7EB;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; overflow-x: hidden; }
-    body { font-family:'Barlow',sans-serif; font-weight:400; color:var(--body-ink); background:#fff; margin:0; padding:0; overflow-x:hidden; }
-    h1,h2,h3,h4,h5 { font-family:'Barlow Condensed',sans-serif; letter-spacing:-0.01em; }
-
+    body { font-family: 'Barlow', sans-serif; color: var(--body-ink); background: #fff; margin: 0; padding: 0; overflow-x: hidden; }
+    h1, h2, h3, h4 { font-family: 'Barlow Condensed', sans-serif; letter-spacing: -0.01em; }
     body::before {
-      content:'';
-      position:fixed;
-      inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events:none;
-      z-index:9999;
-      opacity:1;
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.35;
     }
-
-    nav { position:sticky; top:0; z-index:100; background:var(--navy); border-bottom:1px solid rgba(128,186,38,0.12); }
-    .nav-inner { max-width:1280px; margin:0 auto; padding:0 2rem; height:64px; display:flex; align-items:center; gap:2rem; }
-    .nav-logo img { height:44px; width:auto; display:block; border-radius:6px; background:white; padding:3px 8px; }
-    .nav-badge { font-family:'Barlow',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--green); background:rgba(128,186,38,0.1); border:1px solid rgba(128,186,38,0.25); padding:3px 10px; border-radius:100px; }
-    .nav-links { display:flex; align-items:center; gap:0.25rem; margin-left:auto; }
-    .nav-links a { font-family:'Barlow',sans-serif; font-size:14px; font-weight:500; color:rgba(255,255,255,0.7); text-decoration:none; padding:8px 16px; border-radius:6px; transition:color 0.2s, background 0.2s; }
-    .nav-links a:hover { color:#fff; background:rgba(255,255,255,0.06); }
-    .nav-links a.active { color:#fff; }
-    .btn-nav { font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; background:var(--green); color:#000321; border:none; padding:8px 24px; border-radius:6px; cursor:pointer; text-decoration:none; transition:background 0.2s, transform 0.15s; white-space:nowrap; }
-    .btn-nav:hover { background:var(--green-dark); transform:translateY(-1px); }
-    .hamburger { display:none; flex-direction:column; justify-content:center; align-items:center; gap:5px; width:40px; height:40px; background:none; border:none; cursor:pointer; padding:4px; margin-left:auto; flex-shrink:0; }
-    .hamburger span { display:block; width:22px; height:2px; background:rgba(255,255,255,0.85); border-radius:2px; transition:transform 0.25s ease, opacity 0.25s ease; }
-    .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
-    .hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
-    .mobile-menu { display:none; position:fixed; top:64px; left:0; right:0; background:var(--navy); border-bottom:1px solid rgba(128,186,38,0.18); z-index:98; pointer-events:none; opacity:0; transform:translateY(-8px); transition:opacity 0.22s ease, transform 0.22s ease; }
-    .mobile-menu.open { opacity:1; transform:translateY(0); pointer-events:auto; }
-    .mobile-menu-inner { display:flex; flex-direction:column; padding:16px 1.25rem 24px; gap:2px; }
-    .mobile-menu-inner a { font-family:'Barlow',sans-serif; font-size:16px; font-weight:500; color:rgba(255,255,255,0.8); text-decoration:none; padding:13px 16px; border-radius:8px; transition:background 0.15s, color 0.15s; }
-    .mobile-menu-inner a:hover { background:rgba(255,255,255,0.06); color:#fff; }
-    .mob-cta-btn { margin-top:10px; text-align:center; justify-content:center; width:100%; display:block; }
-    .btn-primary { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; background:var(--green); color:var(--navy); border:none; padding:16px 32px; border-radius:6px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:background 0.2s, transform 0.15s; }
-    .btn-primary:hover { background:var(--green-dark); transform:translateY(-1px); }
-    .btn-secondary { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; background:transparent; color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.2); padding:16px 32px; border-radius:6px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:border-color 0.2s, color 0.2s, transform 0.15s; }
-    .btn-secondary:hover { border-color:rgba(255,255,255,0.5); color:#fff; transform:translateY(-1px); }
-    .section-tag { font-family:'Barlow',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); background:rgba(128,186,38,0.08); border:1px solid rgba(128,186,38,0.2); padding:4px 12px; border-radius:100px; display:inline-block; margin-bottom:16px; }
-    footer { background:var(--navy); padding:64px 0 0; }
-    .footer-inner { max-width:1280px; margin:0 auto; padding:0 2rem; }
-    .footer-top { display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:3rem; padding-bottom:48px; border-bottom:1px solid rgba(255,255,255,0.06); }
-    .footer-brand img { height:36px; margin-bottom:16px; display:block; border-radius:4px; background:white; padding:2px 6px; }
-    .footer-brand p { font-size:13px; color:rgba(255,255,255,0.35); line-height:1.6; margin:0; }
-    .footer-col h4 { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin:0 0 16px; }
-    .footer-col ul { list-style:none; margin:0; padding:0; }
-    .footer-col ul li { margin-bottom:8px; }
-    .footer-col ul li a { font-size:14px; color:rgba(255,255,255,0.55); text-decoration:none; transition:color 0.2s; }
-    .footer-col ul li a:hover { color:var(--green); }
-    .footer-bottom { display:flex; align-items:center; justify-content:space-between; padding:20px 0; }
-    .footer-copy { font-size:12px; color:rgba(255,255,255,0.2); }
-    .footer-links { display:flex; gap:1.5rem; }
-    .footer-links a { font-size:12px; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s; }
-    .footer-links a:hover { color:rgba(255,255,255,0.5); }
-    .page-hero { background:var(--navy); padding:100px 2rem 80px; text-align:center; position:relative; overflow:hidden; }
-    .page-hero::before { content:''; position:absolute; top:-200px; left:50%; transform:translateX(-50%); width:800px; height:800px; background:radial-gradient(ellipse at center, rgba(128,186,38,0.07) 0%, transparent 70%); pointer-events:none; }
-    .page-hero-tag { font-family:'Barlow',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); margin-bottom:20px; }
-    .page-hero h1 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(48px,7vw,88px); font-weight:800; line-height:0.95; color:#fff; letter-spacing:-0.02em; margin:0 0 24px; }
-    .page-hero h1 span { color:var(--green); }
-    .page-hero p { font-size:clamp(15px,2vw,18px); color:rgba(255,255,255,0.6); line-height:1.7; max-width:640px; margin:0 auto 36px; }
-
-    /* FAQ PAGE STYLES */
-    .faq-section { padding:80px 2rem; background:var(--navy); position:relative; overflow:hidden; }
-    .faq-section::before { content:''; position:absolute; top:-200px; right:-200px; width:700px; height:700px; background:radial-gradient(ellipse at center, rgba(128,186,38,0.06) 0%, transparent 65%); pointer-events:none; }
-    .faq-inner { max-width:800px; margin:0 auto; position:relative; z-index:1; }
-
-    .faq-category { margin-bottom:56px; }
-    .faq-category-heading { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; color:rgba(255,255,255,0.9); letter-spacing:-0.01em; margin:0 0 24px; padding-bottom:16px; border-bottom:1px solid rgba(128,186,38,0.2); display:flex; align-items:center; gap:10px; }
-    .faq-category-heading::before { content:''; display:block; width:4px; height:22px; background:var(--green); border-radius:2px; flex-shrink:0; }
-
-    details { background:rgba(255,255,255,0.03); border:1px solid rgba(128,186,38,0.1); border-radius:12px; margin-bottom:8px; overflow:hidden; transition:border-color 0.2s; }
-    details:hover { border-color:rgba(128,186,38,0.25); }
-    details[open] { border-color:rgba(128,186,38,0.3); }
-    summary { font-family:'Barlow',sans-serif; font-size:16px; font-weight:600; color:rgba(255,255,255,0.85); padding:20px 24px; cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:16px; user-select:none; -webkit-user-select:none; line-height:1.4; }
-    summary::-webkit-details-marker { display:none; }
-    summary::after { content:''; display:block; width:20px; height:20px; background:rgba(255,255,255,0.06); border-radius:50%; flex-shrink:0; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 4l3 3 3-3' stroke='%238893A8' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:center; transition:transform 0.2s; }
-    details[open] summary::after { transform:rotate(180deg); background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 4l3 3 3-3' stroke='%2380BA26' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-    details[open] summary { color:var(--green); background:rgba(128,186,38,0.04); }
-    .faq-answer { padding:0 24px 20px; font-size:15px; line-height:1.8; color:rgba(255,255,255,0.6); border-top:1px solid rgba(128,186,38,0.1); padding-top:16px; }
-    .faq-answer p { margin:0 0 12px; }
-    .faq-answer p:last-child { margin-bottom:0; }
-    .faq-answer a { color:var(--green); text-decoration:none; font-weight:500; }
-    .faq-answer a:hover { text-decoration:underline; }
-    .faq-answer strong { color:rgba(255,255,255,0.9); font-weight:600; }
-
-    /* Bottom CTA */
-    .faq-cta { background:var(--navy-mid); padding:80px 2rem; text-align:center; position:relative; overflow:hidden; }
-    .faq-cta::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; height:300px; background:radial-gradient(ellipse, rgba(128,186,38,0.07) 0%, transparent 70%); pointer-events:none; }
-    .faq-cta-inner { max-width:540px; margin:0 auto; position:relative; z-index:1; }
-    .faq-cta h2 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(32px,4.5vw,52px); font-weight:800; color:#fff; letter-spacing:-0.02em; margin:0 0 16px; line-height:1; }
-    .faq-cta h2 span { color:var(--green); }
-    .faq-cta p { font-size:17px; color:rgba(255,255,255,0.55); line-height:1.7; margin:0 0 32px; }
-    .faq-cta-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
-    .faq-cta .btn-primary { color:var(--navy); }
-    .faq-cta .btn-outline { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; background:transparent; color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.2); padding:16px 32px; border-radius:6px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:border-color 0.2s, color 0.2s, transform 0.15s; }
-    .faq-cta .btn-outline:hover { border-color:rgba(255,255,255,0.5); color:#fff; transform:translateY(-1px); }
-
-    @media (max-width:768px) {
-      .nav-links { display:none; }
-      .nav-badge { display:none; }
-      .nav-inner { padding:0 1.25rem; }
-      .hamburger { display:flex; }
-      .mobile-menu { display:block; }
-      .footer-top { grid-template-columns:1fr 1fr; gap:1.5rem; }
-      .footer-brand { grid-column:1 / -1; }
-      .footer-bottom { flex-direction:column; align-items:flex-start; gap:12px; }
+    nav { position: sticky; top: 0; z-index: 100; background: var(--navy); border-bottom: 1px solid rgba(128,186,38,0.12); }
+    .nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 2rem; height: 64px; display: flex; align-items: center; gap: 2rem; }
+    .nav-logo img { height: 44px; width: auto; display: block; border-radius: 6px; background: white; padding: 3px 8px; }
+    .nav-badge { font-family: 'Barlow', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); background: rgba(128,186,38,0.1); border: 1px solid rgba(128,186,38,0.25); padding: 3px 10px; border-radius: 100px; }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; margin-left: auto; }
+    .nav-links a { font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7); text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: color 0.2s, background 0.2s; }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .nav-links a.active { color: var(--green); }
+    .btn-nav { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; background: var(--green); color: #000321; border: none; padding: 8px 24px; border-radius: 6px; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; white-space: nowrap; }
+    .btn-nav:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: auto; flex-shrink: 0; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,0.85); border-radius: 2px; transition: transform 0.25s ease, opacity 0.25s ease; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; background: var(--navy); border-bottom: 1px solid rgba(128,186,38,0.18); z-index: 98; pointer-events: none; opacity: 0; transform: translateY(-8px); transition: opacity 0.22s ease, transform 0.22s ease; }
+    .mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .mobile-menu-inner { display: flex; flex-direction: column; padding: 16px 1.25rem 24px; gap: 2px; }
+    .mobile-menu-inner a { font-family: 'Barlow', sans-serif; font-size: 16px; font-weight: 500; color: rgba(255,255,255,0.8); text-decoration: none; padding: 13px 16px; border-radius: 8px; transition: background 0.15s, color 0.15s; }
+    .mobile-menu-inner a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .mob-cta-btn { margin-top: 10px; text-align: center; justify-content: center; width: 100%; }
+    .btn-primary { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--green); color: var(--navy); border: none; padding: 16px 32px; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s, transform 0.15s; }
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .btn-secondary { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: transparent; color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.2); padding: 16px 32px; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: border-color 0.2s, color 0.2s, transform 0.15s; }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.5); color: #fff; transform: translateY(-1px); }
+    .tag-pill { font-family: 'Barlow', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); background: rgba(128,186,38,0.08); border: 1px solid rgba(128,186,38,0.2); padding: 4px 12px; border-radius: 100px; display: inline-block; margin-bottom: 16px; }
+    .faq-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(128,186,38,0.10); border-radius: 12px; overflow: hidden; margin-bottom: 8px; transition: border-color 0.2s; }
+    .faq-item.open { border-left: 3px solid var(--green); border-color: rgba(128,186,38,0.28); }
+    .faq-trigger { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; background: none; border: none; cursor: pointer; text-align: left; gap: 16px; }
+    .faq-trigger:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+    .faq-question { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 700; color: #fff; line-height: 1.3; }
+    .faq-chevron { width: 20px; height: 20px; flex-shrink: 0; color: var(--green); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
+    .faq-body-inner { padding: 0 24px 22px; font-size: 15px; line-height: 1.75; color: rgba(255,255,255,0.7); }
+    .faq-category-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); margin: 40px 0 14px; padding-left: 4px; }
+    .faq-category-label:first-child { margin-top: 0; }
+    footer { background: #000; padding: 64px 0 32px; border-top: 1px solid rgba(255,255,255,0.05); }
+    .footer-inner { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+    .footer-top { display: grid; grid-template-columns: 220px repeat(3, 1fr); gap: 3rem; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 32px; }
+    .footer-brand img { height: 36px; margin-bottom: 16px; display: block; border-radius: 4px; background: white; padding: 2px 6px; }
+    .footer-brand p { font-size: 12px; color: rgba(255,255,255,0.3); line-height: 1.7; margin: 0; }
+    .footer-col h4 { font-family: 'Barlow', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin: 0 0 16px; }
+    .footer-col ul { list-style: none; margin: 0; padding: 0; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--green); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.2); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.5); }
+    @media (max-width: 1024px) { .footer-top { grid-template-columns: 1fr 1fr 1fr; gap: 2rem; } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 768px) {
+      .nav-links { display: none; } .nav-badge { display: none; } .nav-inner { padding: 0 1.25rem; } .hamburger { display: flex; } .mobile-menu { display: block; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 1.5rem; } .footer-brand { grid-column: 1 / -1; } .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .faq-question { font-size: 17px; }
     }
-    @media (max-width:640px) {
-      .page-hero { padding:64px 1.25rem 56px; }
-      .footer-top { grid-template-columns:1fr 1fr; }
-      .footer-bottom { flex-direction:column; align-items:flex-start; gap:12px; }
-      .footer-copy { font-size:11px; }
-      .faq-section { padding:56px 1.25rem; }
-      .faq-cta { padding:56px 1.25rem; }
-      summary { padding:16px 18px; font-size:15px; }
-      .faq-answer { padding:0 18px 18px; padding-top:14px; }
-    }
+    @media (max-width: 640px) { .footer-top { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; } .footer-copy { font-size: 11px; } }
+    @media (max-width: 420px) { .footer-top { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
-<!-- ANNOUNCEMENT BAR -->
-<div style="background:var(--green);text-align:center;padding:10px 1rem;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--navy);letter-spacing:0.02em;">
-  24/7 SOC Monitoring Now Available for Residential Estates &amp; Industrial Sites —&nbsp;<a href="contact.html" style="text-decoration:underline;color:var(--navy);">Book Free Inspection</a>
-</div>
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV"></a>
-    <span class="nav-badge">24/7 Monitoring — George, Garden Route</span>
-    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
+  <div style="background:var(--green);text-align:center;padding:10px 1rem;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--navy);letter-spacing:0.02em;">
+    24/7 SOC Monitoring Now Available for Residential Estates &amp; Industrial Sites —&nbsp;<a href="contact.html" style="text-decoration:underline;color:var(--navy);">Book Free Inspection</a>
+  </div>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV"></a>
+      <span class="nav-badge">24/7 Monitoring — George, Garden Route</span>
+      <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      <div class="nav-links">
+        <a href="solutions.html">Solutions</a>
+        <a href="about.html">About</a>
+        <a href="faq.html" class="active">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn-nav" style="margin-left:12px">Get Protected</a>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
       <a href="solutions.html">Solutions</a>
       <a href="about.html">About</a>
-      <a href="faq.html" class="active">FAQ</a>
+      <a href="faq.html">FAQ</a>
       <a href="contact.html">Contact</a>
-      <a href="contact.html" class="btn-nav" style="margin-left:12px">Get Protected</a>
+      <a href="contact.html" class="btn-primary mob-cta-btn">Get Protected →</a>
     </div>
   </div>
-</nav>
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-menu-inner">
-    <a href="index.html">Home</a>
-    <a href="solutions.html">Solutions</a>
-    <a href="about.html">About</a>
-    <a href="faq.html">FAQ</a>
-    <a href="contact.html">Contact</a>
-    <a href="contact.html" class="btn-primary mob-cta-btn">Get Protected →</a>
-  </div>
-</div>
 
-<!-- PAGE HERO -->
-<section class="page-hero">
-  <p class="page-hero-tag">FAQ</p>
-  <h1>Common Questions<br><span>Answered</span></h1>
-  <p>Everything you need to know about our CCTV installation, off-site monitoring, pricing, and technical capabilities — answered clearly and honestly.</p>
-</section>
-
-<!-- FAQ ACCORDION -->
-<section class="faq-section">
-  <div class="faq-inner">
-
-    <!-- CATEGORY 1: Getting Started -->
-    <div class="faq-category">
-      <h2 class="faq-category-heading">Getting Started</h2>
-
-      <details>
-        <summary>What areas do you cover?</summary>
-        <div class="faq-answer">
-          <p>We are based in George and primarily serve the Garden Route region, including George, Wilderness, Sedgefield, Knysna, Mossel Bay, Hartenbos, and surrounding towns and farms. If you're unsure whether your property falls within our service area, <a href="contact.html">contact us</a> and we'll let you know.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>How do I get a quote?</summary>
-        <div class="faq-answer">
-          <p>The easiest way is to <a href="contact.html">fill in our contact form</a> or call us directly on <a href="tel:0606362700">060 636 2700</a>. We'll gather some basic information about your property and security requirements, then arrange a free site visit to assess your needs and provide a detailed, written quote — with no obligation to proceed.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>Do you do same-day inspections?</summary>
-        <div class="faq-answer">
-          <p>In many cases, yes. We aim to offer same-day or next-business-day site inspections for properties in the George area, subject to our technicians' availability. For urgent security needs or ongoing incidents, please call us directly on <a href="tel:0606362700">060 636 2700</a> so we can prioritise your enquiry.</p>
-        </div>
-      </details>
-
+  <!-- HERO -->
+  <section style="background:var(--navy);position:relative;overflow:hidden;padding:96px 0 80px;text-align:center;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(128,186,38,0.09) 0%,transparent 60%);pointer-events:none;"></div>
+    <div style="max-width:760px;margin:0 auto;padding:0 2rem;position:relative;z-index:2;">
+      <span class="tag-pill">FAQ</span>
+      <h1 style="font-size:clamp(48px,7vw,80px);font-weight:800;line-height:0.95;letter-spacing:-0.02em;color:#fff;margin:0 0 24px;">Common Questions Answered</h1>
+      <p style="font-size:17px;line-height:1.7;color:rgba(255,255,255,0.6);margin:0;">Everything you need to know about CCTV installation, off-site monitoring, and how Outeniqua CCTV works. Can't find your answer? Call us directly.</p>
     </div>
-
-    <!-- CATEGORY 2: Monitoring -->
-    <div class="faq-category">
-      <h2 class="faq-category-heading">Monitoring</h2>
-
-      <details>
-        <summary>What is off-site monitoring?</summary>
-        <div class="faq-answer">
-          <p>Off-site (or remote) monitoring means your CCTV cameras stream live video to our <strong>Security Operations Centre (SOC)</strong> in George, where trained operators watch your property around the clock. Unlike recordings that you review after the fact, live monitoring allows us to detect and respond to threats <em>as they happen</em> — before damage or loss occurs.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>How does the 24/7 SOC work?</summary>
-        <div class="faq-answer">
-          <p>Our SOC operates 24 hours a day, 365 days a year. Operators monitor multiple camera feeds simultaneously using advanced video management software with AI-assisted motion detection and analytics. When an anomaly is detected — whether motion in a restricted area, a fence breach, or an alarm trigger — the operator assesses the live feed and takes immediate action.</p>
-          <p>Action may include: contacting you directly, dispatching an armed response team, alerting SAPS, or activating site lighting and audio deterrents depending on the agreed response protocol for your property.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>What happens when an alarm triggers?</summary>
-        <div class="faq-answer">
-          <p>When an alarm or motion event triggers, a SOC operator immediately pulls up the live camera feed for your property to visually verify the event — this eliminates false alarm callouts and wasted response team deployments. If the threat is confirmed:</p>
-          <p><strong>1.</strong> You are contacted immediately via phone or WhatsApp.<br>
-          <strong>2.</strong> An armed response team is dispatched (via our response partners).<br>
-          <strong>3.</strong> SAPS may be notified if required.<br>
-          <strong>4.</strong> A full incident report is logged and sent to you.</p>
-          <p>Our average on-screen operator response time is <strong>60 seconds</strong> from trigger to active assessment.</p>
-        </div>
-      </details>
-
+    <div style="max-width:1280px;margin:48px auto 0;padding:0 2rem;position:relative;z-index:2;">
+      <div style="height:1px;background:linear-gradient(to right,transparent,rgba(128,186,38,0.2),rgba(128,186,38,0.3),rgba(128,186,38,0.2),transparent);"></div>
     </div>
+  </section>
 
-    <!-- CATEGORY 3: Installation -->
-    <div class="faq-category">
-      <h2 class="faq-category-heading">Installation</h2>
+  <!-- ACCORDION -->
+  <section style="background:var(--navy-mid);padding:80px 0 96px;">
+    <div style="max-width:800px;margin:0 auto;padding:0 2rem;">
 
-      <details>
-        <summary>How long does installation take?</summary>
-        <div class="faq-answer">
-          <p>Installation time depends on the size and complexity of your property. A standard residential installation of 4–8 cameras typically takes <strong>one full day</strong>. Larger commercial or estate installations may take 2–5 days. We provide a detailed installation timeline as part of your quote, and we work neatly and efficiently to minimise disruption to your property.</p>
-        </div>
-      </details>
+      <div class="faq-category-label">Getting Started</div>
 
-      <details>
-        <summary>Do you supply the equipment, or do I need to buy my own?</summary>
-        <div class="faq-answer">
-          <p>We supply all equipment as part of our service. We source professional-grade cameras, NVRs/DVRs, cabling, power units, and mounting hardware — we do not install client-supplied consumer equipment, as we cannot guarantee its performance or compatibility. All equipment comes with a manufacturer warranty and our own installation guarantee.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>What camera brands do you use?</summary>
-        <div class="faq-answer">
-          <p>We work with leading professional security brands including <strong>Hikvision</strong>, <strong>Dahua</strong>, and <strong>Uniview</strong> — all industry-standard brands used by commercial and government security installations worldwide. We select the appropriate camera specification (resolution, IR range, weatherproofing, lens type) based on your site's specific requirements rather than a one-size-fits-all approach.</p>
-        </div>
-      </details>
-
-    </div>
-
-    <!-- CATEGORY 4: Pricing & Contracts -->
-    <div class="faq-category">
-      <h2 class="faq-category-heading">Pricing &amp; Contracts</h2>
-
-      <details>
-        <summary>What does monitoring cost monthly?</summary>
-        <div class="faq-answer">
-          <p>Monthly monitoring fees depend on the number of cameras, the type of monitoring required (standard motion-triggered vs. proactive operator monitoring), and your property's specific response protocol. We provide a transparent, itemised quote after your site inspection. There are no hidden fees — what you see on the quote is what you pay.</p>
-          <p>Contact us for a free consultation and quote: <a href="contact.html">Book a site inspection →</a></p>
-        </div>
-      </details>
-
-      <details>
-        <summary>Are there long-term contracts?</summary>
-        <div class="faq-answer">
-          <p>We offer both month-to-month and fixed-term monitoring agreements. Fixed-term contracts (12 or 24 months) typically come with reduced monthly rates. We believe in earning your loyalty through excellent service — not locking you in with punitive exit clauses. All contract terms are clearly explained before you sign anything.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>What's included in the installation quote?</summary>
-        <div class="faq-answer">
-          <p>Your written quote will clearly itemise: all camera hardware, NVR/DVR recorder, cabling and conduit, power supply units, mounting brackets, labour (installation and commissioning), remote access configuration, and a handover walkthrough with your team. No surprises after the fact.</p>
-        </div>
-      </details>
-
-    </div>
-
-    <!-- CATEGORY 5: Technical -->
-    <div class="faq-category">
-      <h2 class="faq-category-heading">Technical</h2>
-
-      <details>
-        <summary>Can I view my cameras remotely on my phone?</summary>
-        <div class="faq-answer">
-          <p>Yes. All our installations include remote viewing setup via a dedicated mobile app (such as iVMS-4500 or Hik-Connect for Hikvision systems). You can view live and recorded footage from anywhere in the world on your smartphone or tablet, provided you have a data or Wi-Fi connection. We configure this during installation and provide a walkthrough so you're comfortable using it.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>What happens to my cameras during load-shedding?</summary>
-        <div class="faq-answer">
-          <p>By default, cameras and NVRs will lose power during load-shedding unless backup power is in place. We strongly recommend — and can supply and install — <strong>UPS (Uninterruptible Power Supply)</strong> units and/or <strong>solar battery backup</strong> systems specifically designed for CCTV infrastructure. This keeps your cameras and recorder running through Eskom outages. Ask us about our solar backup solutions when you enquire.</p>
-        </div>
-      </details>
-
-      <details>
-        <summary>Do you offer solar backup for CCTV?</summary>
-        <div class="faq-answer">
-          <p>Absolutely. We offer purpose-built solar and lithium battery backup systems for CCTV installations — ensuring uninterrupted operation regardless of load-shedding stage. Our solar solutions are sized specifically for your camera count and consumption, and can be added to both new installations and existing systems. <a href="contact.html">Contact us</a> to discuss your requirements.</p>
-        </div>
-      </details>
-
-    </div>
-
-  </div>
-</section>
-
-<!-- BOTTOM CTA -->
-<section class="faq-cta">
-  <div class="faq-cta-inner">
-    <span class="section-tag">Still Have Questions?</span>
-    <h2>Talk to Us — We're <span>Local</span></h2>
-    <p>Our team in George is available Monday to Friday 08:00–17:00, with emergency response available 24/7. We're happy to answer any question, big or small.</p>
-    <div class="faq-cta-btns">
-      <a href="contact.html" class="btn-primary">Contact Us →</a>
-      <a href="tel:0606362700" class="btn-outline">✆ 060 636 2700</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV">
-        <p>Professional CCTV &amp; Off-site Monitoring — George, Garden Route, South Africa.</p>
-        <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
-          <a href="tel:0606362700" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ 060 636 2700</a>
-          <a href="tel:+27767673264" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ +27 76 767 3264</a>
-          <span style="font-size:13px;color:rgba(255,255,255,0.3);line-height:1.5;">91 York St, Dormehls Drift<br>George, Western Cape, 6529</span>
-        </div>
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">How does the free site inspection work?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">One of our technicians visits your property at a time that suits you. We walk the site, identify blind spots, assess cable routing, and recommend the most cost-effective system for your needs. You receive a fully itemised written quote — at zero cost and zero obligation.</div></div>
       </div>
-      <div class="footer-col"><h4>Services</h4><ul><li><a href="solutions.html">CCTV Installation</a></li><li><a href="solutions.html">24/7 Monitoring</a></li><li><a href="solutions.html">Access Control</a></li><li><a href="solutions.html">Electric Fencing</a></li><li><a href="solutions.html">Boomgates</a></li></ul></div>
-      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li><li><a href="#">Careers</a></li></ul></div>
-      <div class="footer-col"><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="privacy.html">POPIA Compliance</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">Cookie Policy</a></li></ul></div>
-    </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2016 – 2026 Outeniqua CCTV &amp; Off-site Monitoring | George, Garden Route</span>
-      <div class="footer-links"><a href="privacy.html">Privacy</a><a href="#">Terms</a><a href="#">POPIA</a></div>
-    </div>
-  </div>
-</footer>
 
-<script>
-(function() {
-  var btn = document.getElementById('hamburger');
-  var menu = document.getElementById('mobileMenu');
-  if (!btn || !menu) return;
-  function close() { btn.classList.remove('open'); menu.classList.remove('open'); }
-  btn.addEventListener('click', function(e) { e.stopPropagation(); btn.classList.toggle('open'); menu.classList.toggle('open'); });
-  document.addEventListener('click', function(e) { if (!btn.contains(e.target) && !menu.contains(e.target)) close(); });
-  menu.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', close); });
-})();
-</script>
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">How quickly can you install after we agree on a quote?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">For most residential installations we can have a crew on-site within 1–3 business days of quote acceptance. Larger commercial or industrial projects are scheduled based on complexity, but we always commit to a firm date before we ask you to sign anything.</div></div>
+      </div>
+
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">Do you service areas outside of George?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">Yes. Our installation teams cover the full Garden Route — George, Mossel Bay, Knysna, Wilderness, Oudtshoorn, and surrounding areas. Our off-site monitoring SOC operates nationwide, so we can monitor any site in South Africa regardless of location.</div></div>
+      </div>
+
+      <div class="faq-category-label" style="margin-top:40px;">Monitoring</div>
+
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">What exactly happens when an alarm is triggered?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">Our SOC operator receives the alert, pulls up live and recorded footage, and makes a human judgement call within seconds. If it's a confirmed intrusion they immediately notify your designated contacts and dispatch armed response simultaneously. False alarms are verified before any action is taken to prevent unnecessary callouts.</div></div>
+      </div>
+
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">Can I still view my cameras myself while you monitor them?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">Absolutely. You get full access to live and recorded footage via a mobile app and web browser. Your viewing access doesn't interfere with our monitoring at all — we watch independently on our side. Most clients check in regularly via the app on their phones.</div></div>
+      </div>
+
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">What happens to my cameras during load shedding?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">Standard systems use a UPS (battery backup) that keeps cameras and NVR running for 4–8 hours during an outage. We also offer dedicated solar and lithium battery solutions for 12–72 hour runtime. Our SOC stays operational 24/7 with generator and UPS backup, so monitoring is never interrupted on our side.</div></div>
+      </div>
+
+      <div class="faq-category-label" style="margin-top:40px;">Installation</div>
+
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">How many cameras do I need for my property?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">This depends entirely on your property layout and threat model. A typical residential home needs 4–8 cameras to cover all entry points and blind spots. A retail store or warehouse could need 8–20+. Our site inspection determines the exact number — we never oversell cameras you don't need.</div></div>
+      </div>
+
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">Do you install wireless or wired cameras?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">For permanent installations we always recommend PoE (Power over Ethernet) wired cameras — more reliable, better image quality, and no Wi-Fi dependence. For locations where cabling isn't practical we use 4G cellular cameras. We never recommend consumer Wi-Fi cameras for security purposes.</div></div>
+      </div>
+
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">How long does installation take?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">A standard 8-camera residential installation takes 4–6 hours. A commercial system with 16–24 cameras typically takes 1–2 days. We clean up after ourselves and won't leave your property until the system is fully tested and you've been shown how to use the app.</div></div>
+      </div>
+
+      <div class="faq-category-label" style="margin-top:40px;">Pricing &amp; Contracts</div>
+
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">How much does a CCTV system cost?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">Every installation is priced individually. A basic 4-camera residential system typically starts from R8,000–R12,000 fully installed. Monitoring fees depend on the number of cameras and response package. We provide itemised quotes with no hidden fees — what you see is what you pay.</div></div>
+      </div>
+
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">Are there long-term contracts for monitoring?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">Our monitoring agreements are typically 12-month contracts, with month-to-month available at a slight premium. We believe in earning your business every month rather than locking you in — our renewal rate speaks for itself. Hardware and installation are billed separately and are yours to keep regardless.</div></div>
+      </div>
+
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">Do you offer any guarantees or warranties?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">All hardware carries the manufacturer's warranty (typically 2–3 years). Our workmanship carries a 12-month labour warranty — if anything we installed fails due to our workmanship, we fix it at no charge. Hikvision equipment is covered under their South African warranty programme.</div></div>
+      </div>
+
+      <div class="faq-category-label" style="margin-top:40px;">Technical</div>
+
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">What camera brands do you install?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">We primarily install Hikvision and Dahua — the two most reliable and widely supported brands for commercial and residential CCTV. Both offer excellent AI analytics, mobile app access, and long-term spare parts availability. We are a certified Hikvision installer with direct warranty support.</div></div>
+      </div>
+
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">How long is footage stored?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">Storage duration depends on the number of cameras, resolution, and NVR hard drive size. A typical system stores 30 days of continuous HD footage. We can configure systems for 7, 14, 30, or 60-day retention depending on your requirements. For POPIA compliance, we typically recommend 30-day retention for business premises.</div></div>
+      </div>
+
+      <div class="faq-item" data-faq>
+        <button class="faq-trigger" aria-expanded="false">
+          <span class="faq-question">Can you integrate CCTV with my existing alarm system?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-body"><div class="faq-body-inner">Yes, in most cases. We integrate with most major alarm panels via dry contact triggers or IP integration. When your alarm zone is triggered, the relevant CCTV camera automatically jumps to full screen in our SOC and saves a pre-alarm buffer clip. This gives our operators immediate context on every alarm event.</div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--navy);padding:80px 0;position:relative;overflow:hidden;text-align:center;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(128,186,38,0.08) 0%,transparent 60%);pointer-events:none;"></div>
+    <div style="max-width:640px;margin:0 auto;padding:0 2rem;position:relative;z-index:1;">
+      <span class="tag-pill">Still Have Questions?</span>
+      <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(38px,5.5vw,58px);font-weight:800;color:#fff;margin:0 0 16px;letter-spacing:-0.02em;">Talk to a Real Person</h2>
+      <p style="font-size:16px;line-height:1.7;color:rgba(255,255,255,0.6);margin:0 0 32px;">Our team is available Monday to Friday 08:00–17:00 and Saturdays 08:00–13:00. No bots, no call queues.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:20px;">
+        <a href="contact.html" class="btn-primary">Send a Message <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="tel:0606362700" class="btn-secondary">Call 060 636 2700</a>
+      </div>
+      <p style="font-size:13px;color:rgba(255,255,255,0.3);">Or WhatsApp us on <a href="https://wa.me/27767673264" style="color:var(--green);text-decoration:none;">+27 76 767 3264</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV">
+          <p>Professional CCTV &amp; Off-site Monitoring — George, Garden Route, South Africa.</p>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
+            <a href="tel:0606362700" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ 060 636 2700</a>
+            <a href="tel:+27767673264" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ +27 76 767 3264</a>
+            <span style="font-size:13px;color:rgba(255,255,255,0.3);line-height:1.5;">91 York St, Dormehls Drift<br>George, Western Cape, 6529</span>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Services</h4><ul>
+          <li><a href="solutions.html">CCTV Installation</a></li>
+          <li><a href="solutions.html">24/7 Monitoring</a></li>
+          <li><a href="solutions.html">Access Control</a></li>
+          <li><a href="solutions.html">Electric Fencing</a></li>
+          <li><a href="solutions.html">Boomgates</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Company</h4><ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Book Inspection</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Legal</h4><ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="privacy.html">POPIA Compliance</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2016 – 2026 Outeniqua CCTV &amp; Off-site Monitoring | George, Garden Route</span>
+        <div class="footer-links"><a href="privacy.html">Privacy</a><a href="#">Terms</a><a href="privacy.html">POPIA</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function() {
+    var btn = document.getElementById('hamburger');
+    var menu = document.getElementById('mobileMenu');
+    if (btn && menu) {
+      function closeMenu() { btn.classList.remove('open'); menu.classList.remove('open'); }
+      btn.addEventListener('click', function(e) { e.stopPropagation(); btn.classList.toggle('open'); menu.classList.toggle('open'); });
+      document.addEventListener('click', function(e) { if (!btn.contains(e.target) && !menu.contains(e.target)) closeMenu(); });
+      menu.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', closeMenu); });
+    }
+    document.querySelectorAll('[data-faq]').forEach(function(item) {
+      var trigger = item.querySelector('.faq-trigger');
+      var body = item.querySelector('.faq-body');
+      trigger.addEventListener('click', function() {
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('[data-faq].open').forEach(function(o) {
+          o.classList.remove('open');
+          o.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
+          o.querySelector('.faq-body').style.maxHeight = '0';
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          trigger.setAttribute('aria-expanded', 'true');
+          body.style.maxHeight = body.scrollHeight + 'px';
+        }
+      });
+    });
+  })();
+  </script>
 </body>
 </html>

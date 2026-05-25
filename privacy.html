@@ -3,331 +3,289 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy & POPIA — Outeniqua CCTV & Off-site Monitoring | George</title>
+  <title>Privacy Policy — Outeniqua CCTV & Off-site Monitoring</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --green:#80BA26; --green-dark:#6a9d1e; --green-glow:rgba(128,186,38,0.15);
-      --navy:#000321; --navy-mid:#050b2e; --navy-light:#0a1240;
-      --body-ink:#0E182C; --muted:#8893A8; --border:#E5E7EB; --surface:#F6F8F3;
+      --green: #80BA26;
+      --green-dark: #6a9d1e;
+      --navy: #000321;
+      --navy-mid: #050b2e;
+      --body-ink: #0E182C;
+      --muted: #8893A8;
+      --border: #E5E7EB;
+      --surface: #F6F8F3;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; overflow-x: hidden; }
-    body { font-family:'Barlow',sans-serif; font-weight:400; color:var(--body-ink); background:#fff; margin:0; padding:0; overflow-x:hidden; }
-    h1,h2,h3,h4,h5 { font-family:'Barlow Condensed',sans-serif; letter-spacing:-0.01em; }
-
+    body { font-family: 'Barlow', sans-serif; color: var(--body-ink); background: #fff; margin: 0; padding: 0; overflow-x: hidden; }
+    h1, h2, h3, h4 { font-family: 'Barlow Condensed', sans-serif; letter-spacing: -0.01em; }
     body::before {
-      content:'';
-      position:fixed;
-      inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events:none;
-      z-index:9999;
-      opacity:1;
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.35;
     }
+    nav { position: sticky; top: 0; z-index: 100; background: var(--navy); border-bottom: 1px solid rgba(128,186,38,0.12); }
+    .nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 2rem; height: 64px; display: flex; align-items: center; gap: 2rem; }
+    .nav-logo img { height: 44px; width: auto; display: block; border-radius: 6px; background: white; padding: 3px 8px; }
+    .nav-badge { font-family: 'Barlow', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); background: rgba(128,186,38,0.1); border: 1px solid rgba(128,186,38,0.25); padding: 3px 10px; border-radius: 100px; }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; margin-left: auto; }
+    .nav-links a { font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7); text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: color 0.2s, background 0.2s; }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.06); }
+    .btn-nav { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; background: var(--green); color: #000321; border: none; padding: 8px 24px; border-radius: 6px; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; white-space: nowrap; }
+    .btn-nav:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 4px; margin-left: auto; flex-shrink: 0; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,0.85); border-radius: 2px; transition: transform 0.25s ease, opacity 0.25s ease; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; background: var(--navy); border-bottom: 1px solid rgba(128,186,38,0.18); z-index: 98; pointer-events: none; opacity: 0; transform: translateY(-8px); transition: opacity 0.22s ease, transform 0.22s ease; }
+    .mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .mobile-menu-inner { display: flex; flex-direction: column; padding: 16px 1.25rem 24px; gap: 2px; }
+    .mobile-menu-inner a { font-family: 'Barlow', sans-serif; font-size: 16px; font-weight: 500; color: rgba(255,255,255,0.8); text-decoration: none; padding: 13px 16px; border-radius: 8px; transition: background 0.15s, color 0.15s; }
+    .mobile-menu-inner a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .mob-cta-btn { margin-top: 10px; text-align: center; justify-content: center; width: 100%; }
+    .btn-primary { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--green); color: var(--navy); border: none; padding: 16px 32px; border-radius: 6px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s, transform 0.15s; }
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .tag-pill { font-family: 'Barlow', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); background: rgba(128,186,38,0.08); border: 1px solid rgba(128,186,38,0.2); padding: 4px 12px; border-radius: 100px; display: inline-block; margin-bottom: 16px; }
 
-    nav { position:sticky; top:0; z-index:100; background:var(--navy); border-bottom:1px solid rgba(128,186,38,0.12); }
-    .nav-inner { max-width:1280px; margin:0 auto; padding:0 2rem; height:64px; display:flex; align-items:center; gap:2rem; }
-    .nav-logo img { height:44px; width:auto; display:block; border-radius:6px; background:white; padding:3px 8px; }
-    .nav-badge { font-family:'Barlow',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--green); background:rgba(128,186,38,0.1); border:1px solid rgba(128,186,38,0.25); padding:3px 10px; border-radius:100px; }
-    .nav-links { display:flex; align-items:center; gap:0.25rem; margin-left:auto; }
-    .nav-links a { font-family:'Barlow',sans-serif; font-size:14px; font-weight:500; color:rgba(255,255,255,0.7); text-decoration:none; padding:8px 16px; border-radius:6px; transition:color 0.2s, background 0.2s; }
-    .nav-links a:hover { color:#fff; background:rgba(255,255,255,0.06); }
-    .nav-links a.active { color:#fff; }
-    .btn-nav { font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; background:var(--green); color:#000321; border:none; padding:8px 24px; border-radius:6px; cursor:pointer; text-decoration:none; transition:background 0.2s, transform 0.15s; white-space:nowrap; }
-    .btn-nav:hover { background:var(--green-dark); transform:translateY(-1px); }
-    .hamburger { display:none; flex-direction:column; justify-content:center; align-items:center; gap:5px; width:40px; height:40px; background:none; border:none; cursor:pointer; padding:4px; margin-left:auto; flex-shrink:0; }
-    .hamburger span { display:block; width:22px; height:2px; background:rgba(255,255,255,0.85); border-radius:2px; transition:transform 0.25s ease, opacity 0.25s ease; }
-    .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
-    .hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
-    .mobile-menu { display:none; position:fixed; top:64px; left:0; right:0; background:var(--navy); border-bottom:1px solid rgba(128,186,38,0.18); z-index:98; pointer-events:none; opacity:0; transform:translateY(-8px); transition:opacity 0.22s ease, transform 0.22s ease; }
-    .mobile-menu.open { opacity:1; transform:translateY(0); pointer-events:auto; }
-    .mobile-menu-inner { display:flex; flex-direction:column; padding:16px 1.25rem 24px; gap:2px; }
-    .mobile-menu-inner a { font-family:'Barlow',sans-serif; font-size:16px; font-weight:500; color:rgba(255,255,255,0.8); text-decoration:none; padding:13px 16px; border-radius:8px; transition:background 0.15s, color 0.15s; }
-    .mobile-menu-inner a:hover { background:rgba(255,255,255,0.06); color:#fff; }
-    .mob-cta-btn { margin-top:10px; text-align:center; justify-content:center; width:100%; display:block; }
-    .btn-primary { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; background:var(--green); color:var(--navy); border:none; padding:16px 32px; border-radius:6px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:background 0.2s, transform 0.15s; }
-    .btn-primary:hover { background:var(--green-dark); transform:translateY(-1px); }
-    .btn-secondary { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; background:transparent; color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.2); padding:16px 32px; border-radius:6px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:border-color 0.2s, color 0.2s, transform 0.15s; }
-    .btn-secondary:hover { border-color:rgba(255,255,255,0.5); color:#fff; transform:translateY(-1px); }
-    .section-tag { font-family:'Barlow',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); background:rgba(128,186,38,0.08); border:1px solid rgba(128,186,38,0.2); padding:4px 12px; border-radius:100px; display:inline-block; margin-bottom:16px; }
-    footer { background:var(--navy); padding:64px 0 0; }
-    .footer-inner { max-width:1280px; margin:0 auto; padding:0 2rem; }
-    .footer-top { display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:3rem; padding-bottom:48px; border-bottom:1px solid rgba(255,255,255,0.06); }
-    .footer-brand img { height:36px; margin-bottom:16px; display:block; border-radius:4px; background:white; padding:2px 6px; }
-    .footer-brand p { font-size:13px; color:rgba(255,255,255,0.35); line-height:1.6; margin:0; }
-    .footer-col h4 { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin:0 0 16px; }
-    .footer-col ul { list-style:none; margin:0; padding:0; }
-    .footer-col ul li { margin-bottom:8px; }
-    .footer-col ul li a { font-size:14px; color:rgba(255,255,255,0.55); text-decoration:none; transition:color 0.2s; }
-    .footer-col ul li a:hover { color:var(--green); }
-    .footer-bottom { display:flex; align-items:center; justify-content:space-between; padding:20px 0; }
-    .footer-copy { font-size:12px; color:rgba(255,255,255,0.2); }
-    .footer-links { display:flex; gap:1.5rem; }
-    .footer-links a { font-size:12px; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s; }
-    .footer-links a:hover { color:rgba(255,255,255,0.5); }
-    /* Compact page hero for legal pages */
-    .page-hero { background:var(--navy); padding:72px 2rem 60px; text-align:center; position:relative; overflow:hidden; }
-    .page-hero::before { content:''; position:absolute; top:-200px; left:50%; transform:translateX(-50%); width:800px; height:800px; background:radial-gradient(ellipse at center, rgba(128,186,38,0.07) 0%, transparent 70%); pointer-events:none; }
-    .page-hero-tag { font-family:'Barlow',sans-serif; font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--green); margin-bottom:20px; }
-    .page-hero h1 { font-family:'Barlow Condensed',sans-serif; font-size:clamp(40px,6vw,72px); font-weight:800; line-height:0.95; color:#fff; letter-spacing:-0.02em; margin:0 0 20px; }
-    .page-hero h1 span { color:var(--green); }
-    .page-hero .hero-meta { font-size:13px; color:rgba(255,255,255,0.35); letter-spacing:0.04em; }
+    /* ARTICLE CONTENT */
+    .prose h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 700; color: var(--body-ink); margin: 48px 0 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); letter-spacing: -0.01em; }
+    .prose h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; color: var(--body-ink); margin: 28px 0 8px; }
+    .prose p { font-size: 15px; line-height: 1.8; color: #374151; margin: 0 0 16px; }
+    .prose ul { padding-left: 20px; margin: 0 0 16px; }
+    .prose ul li { font-size: 15px; line-height: 1.8; color: #374151; margin-bottom: 6px; }
+    .prose a { color: var(--green); text-decoration: none; }
+    .prose a:hover { text-decoration: underline; }
+    .info-box { background: rgba(128,186,38,0.06); border-left: 3px solid var(--green); border-radius: 0 8px 8px 0; padding: 20px 24px; margin: 32px 0; }
+    .info-box p { margin: 0; font-size: 14px; line-height: 1.7; color: #374151; }
+    .info-box strong { color: var(--body-ink); }
 
-    /* PRIVACY / ARTICLE STYLES */
-    .privacy-section { padding:72px 2rem 96px; background:#fff; }
-    .privacy-article { max-width:800px; margin:0 auto; }
-
-    .privacy-article h2 {
-      font-family:'Barlow Condensed',sans-serif;
-      font-size:clamp(24px,3vw,32px);
-      font-weight:700;
-      color:var(--body-ink);
-      letter-spacing:-0.01em;
-      margin:56px 0 16px;
-      padding-top:56px;
-      border-top:1px solid var(--border);
-      line-height:1.1;
+    footer { background: #000; padding: 64px 0 32px; border-top: 1px solid rgba(255,255,255,0.05); }
+    .footer-inner { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+    .footer-top { display: grid; grid-template-columns: 220px repeat(3, 1fr); gap: 3rem; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 32px; }
+    .footer-brand img { height: 36px; margin-bottom: 16px; display: block; border-radius: 4px; background: white; padding: 2px 6px; }
+    .footer-brand p { font-size: 12px; color: rgba(255,255,255,0.3); line-height: 1.7; margin: 0; }
+    .footer-col h4 { font-family: 'Barlow', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin: 0 0 16px; }
+    .footer-col ul { list-style: none; margin: 0; padding: 0; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--green); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.2); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.5); }
+    @media (max-width: 1024px) { .footer-top { grid-template-columns: 1fr 1fr 1fr; gap: 2rem; } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 768px) {
+      .nav-links { display: none; } .nav-badge { display: none; } .nav-inner { padding: 0 1.25rem; } .hamburger { display: flex; } .mobile-menu { display: block; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 1.5rem; } .footer-brand { grid-column: 1 / -1; } .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
     }
-    .privacy-article h2:first-child { margin-top:0; padding-top:0; border-top:none; }
-    .privacy-article p {
-      font-size:16px;
-      line-height:1.85;
-      color:#3a4560;
-      margin:0 0 16px;
-    }
-    .privacy-article p:last-child { margin-bottom:0; }
-    .privacy-article ul {
-      margin:0 0 16px 0;
-      padding:0 0 0 20px;
-    }
-    .privacy-article ul li {
-      font-size:16px;
-      line-height:1.85;
-      color:#3a4560;
-      margin-bottom:8px;
-    }
-    .privacy-article strong { color:var(--body-ink); font-weight:600; }
-    .privacy-article a { color:var(--green); text-decoration:none; font-weight:500; }
-    .privacy-article a:hover { text-decoration:underline; }
-
-    .privacy-highlight {
-      background:var(--surface);
-      border-left:3px solid var(--green);
-      border-radius:0 8px 8px 0;
-      padding:20px 24px;
-      margin:24px 0;
-    }
-    .privacy-highlight p { margin:0; color:var(--body-ink); font-weight:500; }
-
-    .privacy-contact-box {
-      background:var(--navy);
-      border-radius:12px;
-      padding:36px 40px;
-      margin-top:24px;
-    }
-    .privacy-contact-box h3 { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; color:#fff; margin:0 0 16px; }
-    .privacy-contact-box p { font-size:15px; color:rgba(255,255,255,0.55); line-height:1.7; margin:0 0 8px; }
-    .privacy-contact-box a { color:var(--green); text-decoration:none; }
-    .privacy-contact-box a:hover { text-decoration:underline; }
-
-    @media (max-width:768px) {
-      .nav-links { display:none; }
-      .nav-badge { display:none; }
-      .nav-inner { padding:0 1.25rem; }
-      .hamburger { display:flex; }
-      .mobile-menu { display:block; }
-      .footer-top { grid-template-columns:1fr 1fr; gap:1.5rem; }
-      .footer-brand { grid-column:1 / -1; }
-      .footer-bottom { flex-direction:column; align-items:flex-start; gap:12px; }
-    }
-    @media (max-width:640px) {
-      .page-hero { padding:56px 1.25rem 48px; }
-      .footer-top { grid-template-columns:1fr 1fr; }
-      .footer-bottom { flex-direction:column; align-items:flex-start; gap:12px; }
-      .footer-copy { font-size:11px; }
-      .privacy-section { padding:48px 1.25rem 72px; }
-      .privacy-article h2 { font-size:22px; margin-top:40px; padding-top:40px; }
-      .privacy-contact-box { padding:24px 20px; }
-    }
+    @media (max-width: 640px) { .footer-top { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; } .footer-copy { font-size: 11px; } }
+    @media (max-width: 420px) { .footer-top { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
-<!-- ANNOUNCEMENT BAR -->
-<div style="background:var(--green);text-align:center;padding:10px 1rem;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--navy);letter-spacing:0.02em;">
-  24/7 SOC Monitoring Now Available for Residential Estates &amp; Industrial Sites —&nbsp;<a href="contact.html" style="text-decoration:underline;color:var(--navy);">Book Free Inspection</a>
-</div>
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV"></a>
-    <span class="nav-badge">24/7 Monitoring — George, Garden Route</span>
-    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
+  <div style="background:var(--green);text-align:center;padding:10px 1rem;font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--navy);letter-spacing:0.02em;">
+    24/7 SOC Monitoring Now Available for Residential Estates &amp; Industrial Sites —&nbsp;<a href="contact.html" style="text-decoration:underline;color:var(--navy);">Book Free Inspection</a>
+  </div>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV"></a>
+      <span class="nav-badge">24/7 Monitoring — George, Garden Route</span>
+      <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      <div class="nav-links">
+        <a href="solutions.html">Solutions</a>
+        <a href="about.html">About</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn-nav" style="margin-left:12px">Get Protected</a>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
       <a href="solutions.html">Solutions</a>
       <a href="about.html">About</a>
       <a href="faq.html">FAQ</a>
       <a href="contact.html">Contact</a>
-      <a href="contact.html" class="btn-nav" style="margin-left:12px">Get Protected</a>
+      <a href="contact.html" class="btn-primary mob-cta-btn">Get Protected →</a>
     </div>
   </div>
-</nav>
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-menu-inner">
-    <a href="index.html">Home</a>
-    <a href="solutions.html">Solutions</a>
-    <a href="about.html">About</a>
-    <a href="faq.html">FAQ</a>
-    <a href="contact.html">Contact</a>
-    <a href="contact.html" class="btn-primary mob-cta-btn">Get Protected →</a>
-  </div>
-</div>
 
-<!-- PAGE HERO -->
-<section class="page-hero">
-  <p class="page-hero-tag">Legal</p>
-  <h1>Privacy Policy<br><span>&amp; POPIA</span></h1>
-  <p class="hero-meta">Last updated: May 2026</p>
-</section>
-
-<!-- PRIVACY ARTICLE -->
-<section class="privacy-section">
-  <div class="privacy-article">
-
-    <h2>1. Introduction</h2>
-    <p>Outeniqua CCTV &amp; Off-site Monitoring ("we", "our", or "the Company") is a private security company registered and operating in George, Western Cape, South Africa. We are committed to protecting the privacy and personal information of our clients, website visitors, and all individuals whose information comes into our possession in the course of our operations.</p>
-    <p>This Privacy Policy sets out how we collect, use, store, share, and protect personal information in accordance with the <strong>Protection of Personal Information Act, No. 4 of 2013 (POPIA)</strong>, which came into full effect on 1 July 2021.</p>
-    <p>By using our services, visiting our website, or providing us with your personal information, you acknowledge that you have read and understood this Privacy Policy.</p>
-
-    <h2>2. Information We Collect</h2>
-    <p>In the course of providing our security services, we may collect the following categories of personal information:</p>
-    <ul>
-      <li><strong>Identity information:</strong> Full name, identity number (where required for security clearance purposes).</li>
-      <li><strong>Contact details:</strong> Telephone numbers, WhatsApp numbers, email addresses, and physical addresses.</li>
-      <li><strong>Property information:</strong> Site layout, access details, and security specifications relating to your property.</li>
-      <li><strong>CCTV footage:</strong> Video recordings captured by camera systems we install and/or monitor on your behalf.</li>
-      <li><strong>Communication records:</strong> Records of phone calls, emails, and WhatsApp messages for service delivery and quality assurance purposes.</li>
-      <li><strong>Billing information:</strong> Banking details and payment records for invoicing and debit order purposes.</li>
-      <li><strong>Website usage data:</strong> IP addresses, browser type, pages visited, and referring URLs collected via standard web server logs and analytics tools.</li>
-    </ul>
-    <p>We collect personal information only for lawful, specific, and clearly defined purposes. We do not collect information that is excessive or irrelevant to the provision of our services.</p>
-
-    <h2>3. How We Use Your Information</h2>
-    <p>We use the personal information we collect for the following purposes:</p>
-    <ul>
-      <li><strong>Service delivery:</strong> To install, configure, and maintain your CCTV and security systems.</li>
-      <li><strong>Off-site monitoring:</strong> To operate our 24/7 Security Operations Centre (SOC) and monitor your property on your behalf.</li>
-      <li><strong>Incident response:</strong> To contact you, emergency contacts, or response partners in the event of a security incident.</li>
-      <li><strong>Billing and administration:</strong> To generate invoices, process payments, and maintain accounting records.</li>
-      <li><strong>Client communication:</strong> To provide service updates, respond to enquiries, and send relevant operational information.</li>
-      <li><strong>Legal compliance:</strong> To comply with applicable South African legislation, including POPIA, the Private Security Industry Regulation Act (PSIRA), and the Occupational Health and Safety Act.</li>
-      <li><strong>Service improvement:</strong> To analyse service performance and improve our systems and operations.</li>
-    </ul>
-
-    <div class="privacy-highlight">
-      <p>We will never use your personal information for unsolicited marketing purposes without your explicit consent, and we will never sell your personal information to any third party.</p>
+  <!-- HERO (compact) -->
+  <section style="background:var(--navy);position:relative;overflow:hidden;padding:72px 0 56px;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(128,186,38,0.07) 0%,transparent 60%);pointer-events:none;"></div>
+    <div style="max-width:1280px;margin:0 auto;padding:0 2rem;position:relative;z-index:2;">
+      <span class="tag-pill">Legal</span>
+      <h1 style="font-size:clamp(36px,5.5vw,64px);font-weight:800;line-height:1.0;letter-spacing:-0.02em;color:#fff;margin:0 0 16px;max-width:680px;">Privacy Policy &amp; POPIA Compliance</h1>
+      <span style="display:inline-block;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:4px 12px;border-radius:100px;">Last updated May 2026</span>
     </div>
+  </section>
 
-    <h2>4. CCTV Footage</h2>
-    <p>CCTV footage recorded on systems we install on your property is your property. Where we provide off-site monitoring, footage is streamed to and stored on our secure systems for monitoring purposes only.</p>
-    <p><strong>Standard retention period:</strong> CCTV footage recorded on client NVR/DVR systems is typically retained for <strong>30 days</strong> on a rolling basis before being overwritten, unless a longer retention period is specifically requested or required for an ongoing investigation.</p>
-    <p>Footage stored in our SOC systems for monitoring purposes is retained for <strong>7 days</strong> as a standard unless flagged as evidence for an incident. Incident footage is retained for a minimum of <strong>90 days</strong> or until the matter is resolved, whichever is longer.</p>
-    <p><strong>Access to footage:</strong> You may request access to footage of your property at any time. Requests from third parties (including law enforcement) will be handled strictly in accordance with applicable legislation. We will not provide footage to any party without your consent, except where required by court order or by SAPS in the course of a criminal investigation.</p>
-    <p><strong>CCTV placement notices:</strong> Where we install cameras in shared or semi-public areas (such as estate entrances or common areas), we ensure that appropriate CCTV notification signage is displayed in compliance with POPIA and the relevant codes of practice.</p>
+  <!-- CONTENT -->
+  <section style="background:#fff;padding:72px 0 96px;">
+    <div style="max-width:800px;margin:0 auto;padding:0 2rem;" class="prose">
 
-    <h2>5. Data Sharing</h2>
-    <p>We may share your personal information in the following limited circumstances:</p>
-    <ul>
-      <li><strong>Armed response partners:</strong> Operational information necessary for dispatch and response to security incidents at your property.</li>
-      <li><strong>Law enforcement:</strong> Where required by law, court order, or to protect the safety of individuals.</li>
-      <li><strong>Service providers:</strong> Third-party suppliers and contractors who assist us in delivering our services (e.g., equipment suppliers, IT support), subject to confidentiality agreements.</li>
-      <li><strong>Emergency contacts:</strong> Individuals you have designated to be contacted in the event of a security incident at your property.</li>
-    </ul>
-    <p>We do not share personal information with any other parties without your prior written consent. All third parties who receive personal information from us are required to comply with POPIA and to maintain appropriate data security measures.</p>
+      <p>Outeniqua CCTV &amp; Off-site Monitoring ("Outeniqua CCTV", "we", "us", or "our") is committed to protecting your personal information in accordance with the Protection of Personal Information Act 4 of 2013 (POPIA) and all applicable South African privacy legislation. This Privacy Policy explains how we collect, use, process, and protect your personal information.</p>
 
-    <h2>6. Data Security</h2>
-    <p>We implement and maintain appropriate technical and organisational measures to protect personal information against unauthorised access, loss, disclosure, alteration, or destruction. These measures include:</p>
-    <ul>
-      <li>Encrypted storage and transmission of sensitive data.</li>
-      <li>Access controls limiting data access to authorised personnel only.</li>
-      <li>Regular security assessments of our IT infrastructure.</li>
-      <li>Physical security measures at our office and SOC facility.</li>
-      <li>Staff training on data privacy and security obligations.</li>
-    </ul>
-    <p>In the event of a security compromise or data breach affecting your personal information, we will notify you and the Information Regulator within the timeframes required by POPIA.</p>
+      <h2>1. Who We Are</h2>
+      <p>Outeniqua CCTV &amp; Off-site Monitoring is a private security services company registered and operating in George, Western Cape, South Africa. We provide CCTV installation, off-site monitoring, access control, electric fencing, and related security services.</p>
+      <p>Registered address: 91 York Street, Dormehls Drift, George, Western Cape, 6529.</p>
 
-    <h2>7. Your Rights Under POPIA</h2>
-    <p>As a data subject under POPIA, you have the following rights with respect to your personal information held by us:</p>
-    <ul>
-      <li><strong>Right of access:</strong> You may request a copy of the personal information we hold about you.</li>
-      <li><strong>Right to correction:</strong> You may request that we correct inaccurate or incomplete personal information.</li>
-      <li><strong>Right to deletion:</strong> You may request that we delete your personal information, subject to our legal obligations to retain certain records.</li>
-      <li><strong>Right to object:</strong> You may object to the processing of your personal information in certain circumstances.</li>
-      <li><strong>Right to lodge a complaint:</strong> You have the right to lodge a complaint with the <strong>Information Regulator of South Africa</strong> if you believe your privacy rights have been violated.</li>
-    </ul>
-    <p>To exercise any of these rights, please contact our Information Officer using the details in Section 8 below. We will respond to all requests within 30 days of receipt.</p>
-    <p>The Information Regulator of South Africa can be contacted at: <strong>inforeg@justice.gov.za</strong> or by visiting <strong>www.inforegulator.org.za</strong>.</p>
+      <h2>2. Information We Collect</h2>
+      <p>We may collect the following categories of personal information:</p>
+      <ul>
+        <li><strong>Identity information:</strong> full name, ID number (where required for PSIRA compliance), and business registration details for commercial clients.</li>
+        <li><strong>Contact information:</strong> telephone numbers, email addresses, and physical addresses.</li>
+        <li><strong>Property information:</strong> site addresses, property layouts, and security vulnerability assessments.</li>
+        <li><strong>CCTV footage:</strong> video recordings captured by cameras we install and/or monitor on your behalf. This is processed under a separate CCTV-specific processing agreement.</li>
+        <li><strong>Payment information:</strong> billing details and transaction records (we do not store card details; payments are processed via secure third-party payment processors).</li>
+        <li><strong>Communication records:</strong> emails, WhatsApp messages, and call logs where relevant to service delivery or dispute resolution.</li>
+        <li><strong>Website usage data:</strong> anonymous usage analytics via cookies (see Section 9).</li>
+      </ul>
 
-    <h2>8. Contact the Information Officer</h2>
-    <p>For any privacy-related enquiries, requests to access or correct your personal information, or to lodge a complaint, please contact our designated Information Officer:</p>
+      <h2>3. How We Use Your Information</h2>
+      <p>We process your personal information for the following lawful purposes:</p>
+      <ul>
+        <li>To provide, manage, and maintain security services you have contracted us for.</li>
+        <li>To respond to enquiries, quotation requests, and support tickets.</li>
+        <li>To process payments and maintain financial records as required by law.</li>
+        <li>To comply with PSIRA registration requirements and South African security industry regulations.</li>
+        <li>To send service-related communications (maintenance notices, contract renewals, urgent alerts).</li>
+        <li>To improve our services and website based on anonymous usage analytics.</li>
+        <li>To protect the safety and security of our clients, staff, and third parties.</li>
+      </ul>
+      <p>We do not use your personal information for unsolicited marketing without your prior consent.</p>
 
-    <div class="privacy-contact-box">
-      <h3>Information Officer</h3>
-      <p><strong style="color:#fff;">Malcolm De Beer</strong><br>Founder &amp; Director — Outeniqua CCTV &amp; Off-site Monitoring</p>
-      <p>91 York Street, Dormehls Drift<br>George, Western Cape, 6529<br>South Africa</p>
-      <p style="margin-top:12px;"><a href="tel:0606362700">060 636 2700</a></p>
-      <p><a href="tel:+27767673264">+27 76 767 3264</a></p>
-    </div>
+      <h2>4. CCTV Footage — Special Provisions</h2>
+      <p>CCTV footage captured at client premises is processed under specific provisions:</p>
+      <ul>
+        <li>Footage is captured solely for the purpose of security monitoring, incident investigation, and evidence preservation.</li>
+        <li>All footage is stored securely with access restricted to authorised SOC operators and relevant client personnel.</li>
+        <li>Footage is typically retained for 30 days before overwriting, unless a specific incident requires preservation for longer.</li>
+        <li>Footage will only be shared with law enforcement, insurance companies, or legal representatives when legally required or with client consent.</li>
+        <li>Visible CCTV notices are required at all monitored premises as required by POPIA and the PSIRA Act.</li>
+      </ul>
 
-    <h2>9. Cookies and Website Analytics</h2>
-    <p>Our website may use cookies and similar tracking technologies to improve user experience and gather anonymous usage statistics. Cookies do not collect personally identifiable information without your consent. You may disable cookies in your browser settings at any time; however, this may affect the functionality of certain parts of our website.</p>
-    <p>We do not use third-party advertising cookies or sell website usage data to any advertising platforms.</p>
+      <h2>5. Sharing Your Information</h2>
+      <p>We do not sell, rent, or trade your personal information. We may share your information with:</p>
+      <ul>
+        <li><strong>Armed response companies:</strong> limited contact and location details shared when responding to a confirmed alarm activation.</li>
+        <li><strong>PSIRA:</strong> registration and compliance information as required by the Private Security Industry Regulation Authority.</li>
+        <li><strong>Service providers:</strong> trusted third parties who assist in operating our business (e.g., cloud storage providers, VMS software vendors) under data processing agreements.</li>
+        <li><strong>Law enforcement:</strong> when legally compelled by court order or statutory authority.</li>
+      </ul>
 
-    <h2>10. Changes to This Policy</h2>
-    <p>We may update this Privacy Policy from time to time to reflect changes in our operations, services, or legal obligations. The most current version will always be available on our website. Material changes will be communicated to existing clients via email or WhatsApp notification. Continued use of our services after the effective date of an updated policy constitutes acceptance of the updated terms.</p>
-    <p>This policy was last reviewed and updated in <strong>May 2026</strong>.</p>
+      <h2>6. Data Security</h2>
+      <p>We implement appropriate technical and organisational measures to protect your personal information against unauthorised access, loss, alteration, or disclosure. These measures include:</p>
+      <ul>
+        <li>Encrypted storage for all client data and CCTV recordings.</li>
+        <li>Role-based access controls — only authorised staff can access client information.</li>
+        <li>Regular security audits of our SOC infrastructure and data systems.</li>
+        <li>Staff training on data protection and privacy obligations.</li>
+      </ul>
+      <p>In the event of a data breach that poses a risk to your rights and freedoms, we will notify the Information Regulator and affected data subjects as required by POPIA within the statutory timeframe.</p>
 
-  </div>
-</section>
+      <h2>7. Your Rights Under POPIA</h2>
+      <p>As a data subject you have the following rights under POPIA:</p>
+      <ul>
+        <li><strong>Right of access:</strong> you may request a copy of the personal information we hold about you.</li>
+        <li><strong>Right to correction:</strong> you may request that inaccurate or incomplete information be corrected.</li>
+        <li><strong>Right to deletion:</strong> you may request deletion of your personal information where we no longer have a legal basis to retain it.</li>
+        <li><strong>Right to object:</strong> you may object to the processing of your personal information for direct marketing purposes.</li>
+        <li><strong>Right to complain:</strong> you have the right to lodge a complaint with the Information Regulator of South Africa.</li>
+      </ul>
+      <p>To exercise any of these rights, please contact our Information Officer using the details below.</p>
 
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV">
-        <p>Professional CCTV &amp; Off-site Monitoring — George, Garden Route, South Africa.</p>
-        <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
-          <a href="tel:0606362700" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ 060 636 2700</a>
-          <a href="tel:+27767673264" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ +27 76 767 3264</a>
-          <span style="font-size:13px;color:rgba(255,255,255,0.3);line-height:1.5;">91 York St, Dormehls Drift<br>George, Western Cape, 6529</span>
-        </div>
+      <h2>8. Information Officer</h2>
+
+      <div class="info-box">
+        <p><strong>Information Officer — Outeniqua CCTV &amp; Off-site Monitoring</strong><br>
+        Physical address: 91 York Street, Dormehls Drift, George, Western Cape, 6529<br>
+        Telephone: <a href="tel:0606362700">060 636 2700</a><br>
+        Email: <a href="mailto:info@outeniquacctv.co.za">info@outeniquacctv.co.za</a><br><br>
+        Information Regulator of South Africa: <a href="https://inforegulator.org.za" target="_blank" rel="noopener">inforegulator.org.za</a></p>
       </div>
-      <div class="footer-col"><h4>Services</h4><ul><li><a href="solutions.html">CCTV Installation</a></li><li><a href="solutions.html">24/7 Monitoring</a></li><li><a href="solutions.html">Access Control</a></li><li><a href="solutions.html">Electric Fencing</a></li><li><a href="solutions.html">Boomgates</a></li></ul></div>
-      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li><li><a href="#">Careers</a></li></ul></div>
-      <div class="footer-col"><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="privacy.html">POPIA Compliance</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">Cookie Policy</a></li></ul></div>
-    </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2016 – 2026 Outeniqua CCTV &amp; Off-site Monitoring | George, Garden Route</span>
-      <div class="footer-links"><a href="privacy.html">Privacy</a><a href="#">Terms</a><a href="#">POPIA</a></div>
-    </div>
-  </div>
-</footer>
 
-<script>
-(function() {
-  var btn = document.getElementById('hamburger');
-  var menu = document.getElementById('mobileMenu');
-  if (!btn || !menu) return;
-  function close() { btn.classList.remove('open'); menu.classList.remove('open'); }
-  btn.addEventListener('click', function(e) { e.stopPropagation(); btn.classList.toggle('open'); menu.classList.toggle('open'); });
-  document.addEventListener('click', function(e) { if (!btn.contains(e.target) && !menu.contains(e.target)) close(); });
-  menu.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', close); });
-})();
-</script>
+      <h2>9. Cookies &amp; Website Analytics</h2>
+      <p>Our website uses cookies to understand how visitors interact with our content. We use anonymous, aggregated analytics data only — no personal profiles are built from website visits. You may decline non-essential cookies via your browser settings without affecting your ability to use our services.</p>
+
+      <h2>10. Third-Party Links</h2>
+      <p>Our website may contain links to third-party websites. We are not responsible for the privacy practices of those websites and recommend you review their privacy policies independently.</p>
+
+      <h2>11. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time to reflect changes in legislation or our operational practices. The current version is always available on this page. Where changes are material, we will notify active clients directly.</p>
+
+      <h2>12. Contact Us</h2>
+      <p>If you have any questions about this Privacy Policy, how we handle your personal information, or wish to exercise any of your rights, please contact us at:</p>
+      <ul>
+        <li>Telephone: <a href="tel:0606362700">060 636 2700</a> or <a href="tel:+27767673264">+27 76 767 3264</a></li>
+        <li>Email: <a href="mailto:info@outeniquacctv.co.za">info@outeniquacctv.co.za</a></li>
+        <li>Address: 91 York Street, Dormehls Drift, George, Western Cape, 6529</li>
+      </ul>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV">
+          <p>Professional CCTV &amp; Off-site Monitoring — George, Garden Route, South Africa.</p>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
+            <a href="tel:0606362700" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ 060 636 2700</a>
+            <a href="tel:+27767673264" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#80BA26'" onmouseout="this.style.color='rgba(255,255,255,0.45)'">✆ +27 76 767 3264</a>
+            <span style="font-size:13px;color:rgba(255,255,255,0.3);line-height:1.5;">91 York St, Dormehls Drift<br>George, Western Cape, 6529</span>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Services</h4><ul>
+          <li><a href="solutions.html">CCTV Installation</a></li>
+          <li><a href="solutions.html">24/7 Monitoring</a></li>
+          <li><a href="solutions.html">Access Control</a></li>
+          <li><a href="solutions.html">Electric Fencing</a></li>
+          <li><a href="solutions.html">Boomgates</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Company</h4><ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="contact.html">Book Inspection</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Legal</h4><ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="privacy.html">POPIA Compliance</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2016 – 2026 Outeniqua CCTV &amp; Off-site Monitoring | George, Garden Route</span>
+        <div class="footer-links"><a href="privacy.html">Privacy</a><a href="#">Terms</a><a href="privacy.html">POPIA</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function() {
+    var btn = document.getElementById('hamburger');
+    var menu = document.getElementById('mobileMenu');
+    if (!btn || !menu) return;
+    function close() { btn.classList.remove('open'); menu.classList.remove('open'); }
+    btn.addEventListener('click', function(e) { e.stopPropagation(); btn.classList.toggle('open'); menu.classList.toggle('open'); });
+    document.addEventListener('click', function(e) { if (!btn.contains(e.target) && !menu.contains(e.target)) close(); });
+    menu.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', close); });
+  })();
+  </script>
 </body>
 </html>
