@@ -1,12 +1,23 @@
 # CLAUDE.md — Frontend Website Rules
 
+## ⚠️ CRITICAL — READ BEFORE TOUCHING ANYTHING
+
+**This is the ONE official version of the Outeniqua CCTV website.**
+- Git tag: `production-v1`
+- Live URL: https://outeniqua-cctv-six.vercel.app
+- Hero video: `videos/hero-video-hd-opt.mp4` (SEO-optimised, NOT hero-video.mp4 or hero-video-hd.mp4)
+- Design: Dark premium, navy background, real local photos in `images/`
+
+**There is a second Vercel project (`outeniqua-cctv.vercel.app`) showing a completely different "WizColor" design — that is NOT this site and should be ignored or deleted.**
+
+**Never push to GitHub without confirming you are working from this folder (`Outeniqua CCTV VS CODE`). Any other source will overwrite the wrong version live.**
+
 ## Always Do First
 - **Invoke the `frontend-design` skill** before writing any frontend code, every session, no exceptions.
 
 ## Reference Images
 - If a reference image is provided: match layout, spacing, typography, and color exactly. Swap in placeholder content (images via `https://placehold.co/`, generic copy). Do not improve or add to the design.
 - If no reference image: design from scratch with high craft (see guardrails below).
-- Screenshot your output, compare against reference, fix mismatches, re-screenshot. Do at least 2 comparison rounds. Stop only when no visible differences remain or user says so.
 
 ## Local Server
 - **Always serve on localhost** — never screenshot a `file:///` URL.
@@ -15,6 +26,9 @@
 - If the server is already running, do not start a second instance.
 
 ## Screenshot Workflow
+- **Always ask the user before taking a screenshot.** Do not take screenshots automatically.
+- Only take a screenshot when it is truly necessary — e.g. the user explicitly requests one, or a visual change cannot be verified any other way.
+- Do not take multiple screenshots in a row to debug positioning or cropping. If a screenshot is needed, take one and use it.
 - Puppeteer is installed in the project's `node_modules/puppeteer/`. Chrome cache is at `C:/Users/bboyt/.cache/puppeteer/`.
 - **Always screenshot from localhost:** `node screenshot.mjs http://localhost:3000`
 - Screenshots are saved automatically to `./temporary screenshots/screenshot-N.png` (auto-incremented, never overwritten).
@@ -40,15 +54,4 @@
 - **Shadows:** Never use flat `shadow-md`. Use layered, color-tinted shadows with low opacity.
 - **Typography:** Never use the same font for headings and body. Pair a display/serif with a clean sans. Apply tight tracking (`-0.03em`) on large headings, generous line-height (`1.7`) on body.
 - **Gradients:** Layer multiple radial gradients. Add grain/texture via SVG noise filter for depth.
-- **Animations:** Only animate `transform` and `opacity`. Never `transition-all`. Use spring-style easing.
-- **Interactive states:** Every clickable element needs hover, focus-visible, and active states. No exceptions.
-- **Images:** Add a gradient overlay (`bg-gradient-to-t from-black/60`) and a color treatment layer with `mix-blend-multiply`.
-- **Spacing:** Use intentional, consistent spacing tokens — not random Tailwind steps.
-- **Depth:** Surfaces should have a layering system (base → elevated → floating), not all sit at the same z-plane.
-
-## Hard Rules
-- Do not add sections, features, or content not in the reference
-- Do not "improve" a reference design — match it
-- Do not stop after one screenshot pass
-- Do not use `transition-all`
-- Do not use default Tailwind blue/indigo as primary color
+- **Animations:** Only animate `transform` and `opacity`. Nev
