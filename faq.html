@@ -589,8 +589,11 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .nav-links a:not(.btn-nav):not(.active) { display: none; }
+      .nav-links { display: none; }
       .nav-badge { display: none; }
+      .nav-inner { padding: 0 1.25rem; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: block; }
       .hero { padding: 48px 1.25rem 40px; }
       .faq-section { padding: 32px 1.25rem 60px; }
       .faq-trigger { grid-template-columns: 40px 1fr 28px; }
@@ -618,6 +621,60 @@
       transition: top 0.2s;
     }
     .skip-to-content:focus { top: 0; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(128,186,38,0.18);
+      z-index: 98;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    .mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .mobile-menu-inner { display: flex; flex-direction: column; padding: 16px 1.25rem 24px; gap: 2px; }
+    .mobile-menu-inner a {
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      padding: 13px 16px;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .mobile-menu-inner a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .mob-cta-btn { margin-top: 10px; text-align: center; justify-content: center; width: 100%; }
   </style>
 </head>
 <body>
@@ -636,6 +693,9 @@
         <img src="brand_assets/logo-hq.png" alt="Outeniqua CCTV">
       </a>
       <span class="nav-badge">24/7 Monitoring — George, Garden Route</span>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="solutions.html">Solutions</a>
@@ -646,6 +706,17 @@
       </div>
     </div>
   </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="index.html" onclick="closeMobileMenu()">Home</a>
+      <a href="solutions.html" onclick="closeMobileMenu()">Solutions</a>
+      <a href="contact.html" onclick="closeMobileMenu()">Contact</a>
+      <a href="about.html" onclick="closeMobileMenu()">About</a>
+      <a href="faq.html" onclick="closeMobileMenu()" style="color:var(--green)">FAQ</a>
+      <a href="contact.html" class="btn-primary mob-cta-btn" onclick="closeMobileMenu()">Get Protected →</a>
+    </div>
+  </div>
 
   <!-- HERO -->
   <div class="hero">
@@ -1040,6 +1111,18 @@
   <footer style="background:var(--navy);border-top:1px solid rgba(255,255,255,0.06);padding:20px 2rem;text-align:center;position:relative;z-index:1;">
     <p style="font-size:12px;color:rgba(255,255,255,0.25);margin:0;">© 2016 – 2026 Outeniqua CCTV & Off-site Monitoring | Reg. No. K2021433006 | George, Western Cape &nbsp;·&nbsp; <a href="index.html" style="color:rgba(255,255,255,0.35);text-decoration:none;">Home</a> &nbsp;·&nbsp; <a href="contact.html" style="color:rgba(255,255,255,0.35);text-decoration:none;">Contact</a> &nbsp;·&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.35);text-decoration:none;">Privacy</a> &nbsp;·&nbsp; Last updated May 2026</p>
   </footer>
+  <script>
+    (function() {
+      var btn  = document.getElementById('hamburger');
+      var menu = document.getElementById('mobileMenu');
+      if (!btn || !menu) return;
+      function closeMobileMenu() { btn.classList.remove('open'); menu.classList.remove('open'); }
+      window.closeMobileMenu = closeMobileMenu;
+      btn.addEventListener('click', function(e) { e.stopPropagation(); btn.classList.toggle('open'); menu.classList.toggle('open'); });
+      document.addEventListener('click', function(e) { if (!btn.contains(e.target) && !menu.contains(e.target)) closeMobileMenu(); });
+      menu.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', closeMobileMenu); });
+    })();
+  </script>
 </body>
 </html>
 
