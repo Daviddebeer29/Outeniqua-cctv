@@ -2990,7 +2990,7 @@
       /* === UNLOCK === */
       .unlock-top       { grid-template-columns: 1fr; }
       .unlock-image     { display: none; }
-      .unlock-text-card { padding: 32px 24px; }
+      .unlock-text-card { padding: 32px 24px; width: 100%; }
       .unlock-heading   { font-size: clamp(30px, 9vw, 48px); }
       .unlock-cards     { grid-template-columns: 1fr; gap: 16px; }
       .unlock-sub       { font-size: 15px; }
@@ -3053,7 +3053,7 @@
       /* === WHY CHOOSE US === */
       .why-header    { display: flex; flex-direction: column; gap: 32px; }
       .why-right-col { width: 100%; box-sizing: border-box; }
-      .why-grid      { grid-template-columns: 1fr 1fr !important; gap: 16px; }
+      .why-grid      { grid-template-columns: 1fr !important; gap: 16px; }
       .why-heading   { font-size: clamp(32px, 9vw, 52px); margin-bottom: 4px; }
       .why-risk-text { font-size: clamp(32px, 9vw, 52px); }
       .why-risk-row  { flex-direction: column; align-items: flex-start; gap: 16px; }
@@ -3083,6 +3083,19 @@
       /* === FOOTER === */
       .footer-top   { grid-template-columns: 1fr 1fr; }
       .footer-brand { grid-column: 1 / -1; }
+
+      /* === SECTION ORDER — services surfaces first on mobile === */
+      main { display: flex; flex-direction: column; }
+      main > * { width: 100%; }
+      .hero                  { order: 1; }
+      .services-section-wrap { order: 2; }
+      .trust-bar             { order: 3; }
+      .unlock-section        { order: 4; }
+      .platform-section      { order: 5; }
+      .why-section           { order: 6; }
+      .contact-section       { order: 7; }
+      .storefront-strip      { order: 8; }
+      footer                 { order: 9; }
     }
 
     /* Small mobile ≤420px */
@@ -3164,8 +3177,10 @@
     </div>
   </div>
 
+  <main id="main">
+
   <!-- HERO -->
-  <section id="main" class="hero">
+  <section class="hero">
     <video class="hero-video" autoplay muted loop playsinline preload="auto" aria-describedby="hero-video-transcript">
       <source src="videos/hero-video-hd-opt.mp4" type="video/mp4">
       <source src="videos/hero-video-hd.webm" type="video/webm">
@@ -4160,6 +4175,8 @@
       </div>
     </div>
   </footer>
+
+  </main>
 
   <script>
     (function () {

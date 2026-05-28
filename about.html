@@ -776,6 +776,14 @@
       transition: top 0.2s;
     }
     .skip-to-content:focus { top: 0; }
+
+    @media (max-width: 640px) {
+      .nav-badge { display: none; }
+      .nav-links a:not(.btn-nav):not(.active) { display: none; }
+      .about-top { grid-template-columns: 1fr; gap: 32px; }
+      .about-right { margin-top: 0; }
+      .about-photo-wrap { min-height: 280px; max-height: 380px; }
+    }
   </style>
 </head>
 <body>
