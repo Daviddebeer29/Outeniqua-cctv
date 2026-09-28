@@ -530,6 +530,50 @@
     }
 
     /* TRUST BAR */
+    /* BRANDS STRIP */
+    .brands-strip {
+      background: #030820;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 8px 2rem 36px;
+    }
+    .brands-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center; gap: 18px;
+    }
+    .brands-label {
+      font-family: 'Barlow', sans-serif;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); margin: 0; text-align: center;
+    }
+    .brands-row {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;
+    }
+    .brand-card {
+      position: relative;
+      background: #fff;
+      border-radius: 12px;
+      width: 240px; height: 96px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 18px 28px;
+      box-shadow: 0 10px 30px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
+      transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
+    }
+    .brand-card:hover { transform: translateY(-3px); }
+    .brand-card img { max-width: 100%; max-height: 54px; width: auto; height: auto; display: block; }
+    .brand-tag {
+      position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+      background: var(--green); color: #000321;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+    }
+    @media (max-width: 600px) {
+      .brands-strip { padding: 8px 1.25rem 36px; }
+      .brands-row { gap: 12px; flex-wrap: nowrap; }
+      .brand-card { width: 40vw; height: 76px; padding: 14px 16px; }
+      .brand-card img { max-height: 40px; }
+    }
     .trust-bar {
       background: #030820;
       border-top: 1px solid rgba(255,255,255,0.05);
@@ -3257,6 +3301,22 @@
       </div>
     </div>
   </div>
+
+  <!-- BRANDS STRIP -->
+  <section class="brands-strip" aria-label="Brands we install">
+    <div class="brands-inner">
+      <p class="brands-label">Brands we supply, install &amp; support</p>
+      <div class="brands-row">
+        <div class="brand-card">
+          <img src="images/brands/dahua.svg" alt="Dahua Technology" width="200" height="60" loading="lazy">
+          <span class="brand-tag">Diamond Dealer</span>
+        </div>
+        <div class="brand-card">
+          <img src="images/brands/hikvision.svg" alt="Hikvision" width="200" height="30" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- UNLOCK SECTION -->
   <section class="unlock-section">
