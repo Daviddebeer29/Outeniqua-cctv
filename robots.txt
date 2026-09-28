@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://outeniquacctv.co.za/sitemap.xml
