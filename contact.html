@@ -756,25 +756,30 @@
           View on Google Maps &amp; Leave a Review ↗
         </a>
       </div>
-      <div class="contact-form-wrap">
+      <form class="contact-form-wrap" id="enquiry-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+        <input type="hidden" name="access_key" value="509b1a14-5303-4def-ac02-8c2f1d772979">
+        <input type="hidden" name="subject" value="New website enquiry — Outeniqua CCTV">
+        <input type="hidden" name="from_name" value="Outeniqua CCTV Website">
+        <input type="hidden" name="page" value="Contact page">
+        <input type="checkbox" name="botcheck" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
         <h3 class="contact-form-title">Book a <span class="green-word">Free</span> Site Inspection</h3>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Full Name</label>
-            <input class="form-input" type="text" placeholder="Your name">
+            <label class="form-label" for="enq-name">Full Name</label>
+            <input class="form-input" id="enq-name" name="name" type="text" placeholder="Your name" autocomplete="name" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Phone / WhatsApp</label>
-            <input class="form-input" type="tel" placeholder="060 000 0000">
+            <label class="form-label" for="enq-phone">Phone / WhatsApp</label>
+            <input class="form-input" id="enq-phone" name="phone" type="tel" placeholder="060 000 0000" autocomplete="tel" required>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Email Address</label>
-          <input class="form-input" type="email" placeholder="you@example.com">
+          <label class="form-label" for="enq-email">Email Address</label>
+          <input class="form-input" id="enq-email" name="email" type="email" placeholder="you@example.com" autocomplete="email">
         </div>
         <div class="form-group">
-          <label class="form-label">Service Required</label>
-          <select class="form-select" id="service-select">
+          <label class="form-label" for="service-select">Service Required</label>
+          <select class="form-select" id="service-select" name="service">
             <option value="" disabled selected>Select a service…</option>
             <option value="cctv">CCTV Camera Installation</option>
             <option value="monitoring">24-Hour Off-site Monitoring</option>
@@ -788,11 +793,12 @@
           </select>
         </div>
         <div class="form-group form-group--grow">
-          <label class="form-label">Message (optional)</label>
-          <textarea class="form-textarea" placeholder="Tell us about your site or any specific requirements…"></textarea>
+          <label class="form-label" for="enq-message">Message (optional)</label>
+          <textarea class="form-textarea" id="enq-message" name="message" placeholder="Tell us about your site or any specific requirements…"></textarea>
         </div>
-        <button class="form-submit" id="form-submit-btn">Request Free Inspection →</button>
-      </div>
+        <button class="form-submit" id="form-submit-btn" type="submit">Request Free Inspection →</button>
+        <p id="form-status" role="status" aria-live="polite" style="display:none;margin:14px 0 0;font-size:14px;line-height:1.5;color:#ff8a7a;"></p>
+      </form>
     </div>
   </section>
 
@@ -919,11 +925,62 @@
       clearTimeout(window._modalTimer);
     }
 
-    document.getElementById('form-submit-btn').addEventListener('click', function(e) {
-      e.preventDefault();
-      playSuccessChime();
-      showSuccessModal();
-    });
+    (function() {
+      var form   = document.getElementById('enquiry-form');
+      var btn    = document.getElementById('form-submit-btn');
+      var status = document.getElementById('form-status');
+      var btnLabel = btn.textContent;
+
+      function showError(msg) {
+        status.textContent = msg;
+        status.style.display = 'block';
+      }
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        status.style.display = 'none';
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        var data = new FormData(form);
+        // Send the readable service name, not the internal value
+        var sel = document.getElementById('service-select');
+        if (sel && sel.selectedIndex > 0) {
+          data.set('service', sel.options[sel.selectedIndex].text);
+        } else {
+          data.set('service', 'Not specified');
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: data
+        })
+        .then(function(res) { return res.json().then(function(json) { return { ok: res.ok, json: json }; }); })
+        .then(function(r) {
+          if (r.ok && r.json.success) {
+            form.reset();
+            playSuccessChime();
+            showSuccessModal();
+          } else {
+            throw new Error(r.json && r.json.message ? r.json.message : 'Send failed');
+          }
+        })
+        .catch(function() {
+          showError('Sorry, your message could not be sent. Please try again, or call us on 060 636 2700.');
+        })
+        .then(function() {
+          btn.disabled = false;
+          btn.textContent = btnLabel;
+        });
+      });
+    })();
 
     document.getElementById('success-modal').addEventListener('click', function(e) {
       if (e.target === this) closeSuccessModal();
