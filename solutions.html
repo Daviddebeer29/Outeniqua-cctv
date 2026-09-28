@@ -466,6 +466,114 @@
     }
     .sol-intro-inner { max-width: 1280px; margin: 0 auto; }
 
+    /* WIZCOLOR 2.0 SPOTLIGHT (inside 01 CCTV) */
+    .wiz-block {
+      margin-top: 88px;
+      padding-top: 72px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: grid;
+      grid-template-columns: 46fr 54fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .wiz-heading {
+      font-size: clamp(30px, 3.2vw, 44px);
+      font-weight: 800; color: #fff;
+      line-height: 1.02; letter-spacing: -0.02em;
+      margin: 18px 0 20px;
+    }
+    .wiz-heading span { color: var(--green); }
+    .wiz-lead {
+      font-size: 16px; line-height: 1.78;
+      color: rgba(255,255,255,0.55); margin: 0 0 32px;
+    }
+    .wiz-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      margin-bottom: 12px;
+    }
+    .wiz-stat {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; padding: 16px 14px;
+    }
+    .wiz-stat-num {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 34px; font-weight: 800; line-height: 1;
+      color: var(--green); letter-spacing: -0.01em;
+    }
+    .wiz-stat-label {
+      display: block; margin-top: 6px;
+      font-size: 12.5px; line-height: 1.4; color: rgba(255,255,255,0.6);
+    }
+    .wiz-source { font-size: 11px; color: rgba(255,255,255,0.3); margin: 0 0 28px; }
+    .wiz-types { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+    .wiz-type {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: linear-gradient(160deg, rgba(128,186,38,0.08), rgba(128,186,38,0.02));
+      border: 1px solid rgba(128,186,38,0.2);
+      border-radius: 12px; padding: 16px;
+    }
+    .wiz-type svg { flex-shrink: 0; color: var(--green); }
+    .wiz-type h3 {
+      font-size: 19px; font-weight: 700; color: #fff; margin: 0 0 4px;
+      letter-spacing: 0.01em;
+    }
+    .wiz-type p { font-size: 13.5px; line-height: 1.5; color: rgba(255,255,255,0.58); margin: 0; }
+    .wiz-more { font-size: 13.5px; color: rgba(255,255,255,0.45); margin: 0; line-height: 1.6; }
+    .wiz-more strong { color: rgba(255,255,255,0.75); font-weight: 600; }
+
+    .wiz-compare {
+      position: relative; border-radius: 16px; overflow: hidden;
+      aspect-ratio: 16/9;
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: 0 0 0 1px rgba(128,186,38,0.12), 0 32px 80px rgba(0,0,0,0.5);
+      --pos: 50%;
+      user-select: none; -webkit-user-select: none;
+      touch-action: pan-y;
+    }
+    .wiz-compare img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; display: block; pointer-events: none;
+    }
+    .wiz-compare .wiz-after { clip-path: inset(0 0 0 var(--pos)); }
+    .wiz-divider {
+      position: absolute; top: 0; bottom: 0; left: var(--pos);
+      width: 2px; margin-left: -1px; background: #fff;
+      box-shadow: 0 0 12px rgba(0,0,0,0.5); pointer-events: none;
+    }
+    .wiz-knob {
+      position: absolute; top: 50%; left: 50%;
+      width: 44px; height: 44px; margin: -22px 0 0 -22px;
+      border-radius: 50%; background: var(--green); color: #000321;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+    }
+    .wiz-label {
+      position: absolute; top: 14px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 5px 10px; border-radius: 6px; pointer-events: none;
+    }
+    .wiz-label.left { left: 14px; background: rgba(0,0,0,0.6); color: rgba(255,255,255,0.8); }
+    .wiz-label.right { right: 14px; background: var(--green); color: #000321; }
+    .wiz-range {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      opacity: 0; cursor: ew-resize; margin: 0;
+    }
+    .wiz-range:focus-visible + .wiz-divider .wiz-knob { outline: 3px solid #fff; outline-offset: 3px; }
+    .wiz-caption { font-size: 12.5px; color: rgba(255,255,255,0.35); margin: 12px 0 0; text-align: center; }
+
+    @media (max-width: 900px) {
+      .wiz-block { grid-template-columns: 1fr; gap: 40px; margin-top: 64px; padding-top: 56px; }
+      .wiz-visual { order: -1; }
+    }
+    @media (max-width: 600px) {
+      .wiz-types { grid-template-columns: 1fr; }
+      .wiz-stat-num { font-size: 28px; }
+      .wiz-stat { padding: 14px 10px; }
+    }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .sol-grid, .sol-grid.reverse {
@@ -646,7 +754,7 @@
           </div>
           <div class="sol-features">
             <div class="sol-feature"><div class="sol-feature-dot"></div>High resolution 4K &amp; 8MP sensors</div>
-            <div class="sol-feature"><div class="sol-feature-dot"></div>Night vision &amp; low-light performance</div>
+            <div class="sol-feature"><div class="sol-feature-dot"></div>WizColor 2.0 full-colour night vision</div>
             <div class="sol-feature"><div class="sol-feature-dot"></div>AI analytics: motion, human &amp; vehicle detection</div>
             <div class="sol-feature"><div class="sol-feature-dot"></div>PTZ (Pan/Tilt/Zoom) &amp; fixed lens options</div>
             <div class="sol-feature"><div class="sol-feature-dot"></div>Thermal imaging through smoke &amp; fog</div>
@@ -661,6 +769,48 @@
         </div>
         <div class="sol-photo-wrap">
           <img src="images/sol-extra3.webp" alt="Dahua CCTV Camera Range — PTZ, Dome, Thermal &amp; Bullet Cameras">
+        </div>
+      </div>
+      <!-- WizColor 2.0 spotlight -->
+      <div class="wiz-block" id="wizcolor">
+        <div class="wiz-text">
+          <span class="sol-tag">Dahua WizColor 2.0</span>
+          <h3 class="wiz-heading">See your property in <span>full colour</span> — even at midnight</h3>
+          <p class="wiz-lead">Traditional night vision switches to a grainy black-and-white picture after dark. Dahua's WizColor 2.0 cameras pair an extra-wide F1.0 lens with a large sensor and on-board AI processing, so you keep real colour at night: the colour of a jacket, a car or a bakkie, the details that matter when you need to identify someone. No bright floodlights, and no light pollution for the neighbours.</p>
+          <div class="wiz-stats">
+            <div class="wiz-stat"><span class="wiz-stat-num">2.5×</span><span class="wiz-stat-label">more light captured (F1.0 vs F1.6 lens)</span></div>
+            <div class="wiz-stat"><span class="wiz-stat-num">+50%</span><span class="wiz-stat-label">more detail restored at night</span></div>
+            <div class="wiz-stat"><span class="wiz-stat-num">−80%</span><span class="wiz-stat-label">less motion blur on moving targets</span></div>
+          </div>
+          <p class="wiz-source">Performance figures published by Dahua Technology.</p>
+          <div class="wiz-types">
+            <div class="wiz-type">
+              <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h26"/><path d="M7 9v3a10 10 0 0 0 20 0V9"/><circle cx="17" cy="14" r="4"/><circle cx="17" cy="14" r="1.2" fill="currentColor"/></svg>
+              <div>
+                <h3>WizColor Dome</h3>
+                <p>Compact and discreet. Ideal for entrances, patios, shops, offices and anywhere a low-profile camera suits the space.</p>
+              </div>
+            </div>
+            <div class="wiz-type">
+              <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="7" y="10" width="20" height="10" rx="3"/><path d="M27 12.5h2.5v5H27"/><path d="M11 20v5"/><path d="M6 25h10"/><circle cx="12" cy="15" r="2.2"/></svg>
+              <div>
+                <h3>WizColor Bullet</h3>
+                <p>A visible deterrent built for the outdoors. Covers driveways, perimeters, yards and parking areas with longer reach.</p>
+              </div>
+            </div>
+          </div>
+          <p class="wiz-more">Also available in <strong>4K</strong>, <strong>pan-tilt</strong>, <strong>vari-focal</strong>, <strong>HDCVI</strong> (for existing coax cabling) and <strong>4G battery-powered</strong> models. We'll recommend the right mix for your site.</p>
+        </div>
+        <div class="wiz-visual">
+          <div class="wiz-compare" aria-label="Comparison: traditional night vision versus WizColor full-colour night view">
+            <img src="images/wizcolor-ir.webp" alt="The same driveway at night in grainy black and white, as seen by a traditional infrared camera" loading="lazy" width="1344" height="752">
+            <img class="wiz-after" src="images/wizcolor-night.webp" alt="A driveway and garden at night shown in full, natural colour by a WizColor camera" loading="lazy" width="1344" height="752">
+            <span class="wiz-label left">Traditional night vision</span>
+            <span class="wiz-label right">WizColor 2.0</span>
+            <input class="wiz-range" type="range" min="0" max="100" value="50" aria-label="Drag to compare traditional night vision with WizColor">
+            <div class="wiz-divider"><div class="wiz-knob"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></div></div>
+          </div>
+          <p class="wiz-caption">Drag the slider to compare. Illustrative example.</p>
         </div>
       </div>
     </div>
@@ -1005,6 +1155,17 @@
       btn.addEventListener('click', function(e) { e.stopPropagation(); btn.classList.toggle('open'); menu.classList.toggle('open'); });
       document.addEventListener('click', function(e) { if (!btn.contains(e.target) && !menu.contains(e.target)) closeMobileMenu(); });
       menu.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', closeMobileMenu); });
+    })();
+  </script>
+  <script>
+    // WizColor before/after slider
+    (function() {
+      var box = document.querySelector('.wiz-compare');
+      if (!box) return;
+      var range = box.querySelector('.wiz-range');
+      function set(v) { box.style.setProperty('--pos', v + '%'); }
+      range.addEventListener('input', function() { set(range.value); });
+      set(range.value);
     })();
   </script>
 </body>
