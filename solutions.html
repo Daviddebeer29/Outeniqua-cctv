@@ -477,10 +477,10 @@
       align-items: center;
     }
     .wiz-heading {
-      font-size: clamp(30px, 3.2vw, 44px);
+      font-size: clamp(36px, 4vw, 58px);
       font-weight: 800; color: #fff;
-      line-height: 1.02; letter-spacing: -0.02em;
-      margin: 18px 0 20px;
+      line-height: 1.0; letter-spacing: -0.02em;
+      margin: 18px 0 24px;
     }
     .wiz-heading span { color: var(--green); }
     .wiz-lead {
@@ -655,6 +655,38 @@
     .dss-visual { padding: 0 3%; }
     @media (max-width: 600px) {
       .dss-screen { border-width: 6px; border-bottom-width: 9px; }
+      .dss-body { grid-template-columns: 1fr; }
+      .dss-side { display: none; }
+    }
+
+    /* bigger laptop in section 04 */
+    #alarms .sol-grid { grid-template-columns: 44fr 56fr; gap: 56px; }
+    .dss-visual { padding: 0; }
+    .dss-bar { font-size: 14px; padding: 10px 14px; gap: 10px; }
+    .dss-bar .dot { width: 9px; height: 9px; }
+    .dss-body { grid-template-columns: 60fr 40fr; gap: 8px; padding: 8px; }
+    .dss-grid { gap: 8px; }
+    .dss-cam span { font-size: 12px; left: 7px; bottom: 7px; padding: 2px 7px; }
+    .dss-panel { padding: 9px 11px; font-size: 13px; line-height: 1.35; }
+    .dss-panel h4 { font-size: 13px; margin-bottom: 6px; }
+    .dss-ev { gap: 7px; padding: 5px 0; }
+    .dss-ev i { width: 8px; height: 8px; margin-top: 5px; }
+    .dss-ev small { font-size: 11px; }
+    .dss-zones { gap: 5px; }
+    .dss-zones b { font-size: 11px; padding: 5px 0; }
+    .dss-caption { font-size: 13px; }
+    @media (max-width: 1100px) {
+      .dss-bar { font-size: 12px; }
+      .dss-panel { font-size: 11px; } .dss-panel h4 { font-size: 11px; }
+      .dss-ev small { font-size: 9.5px; } .dss-zones b { font-size: 9.5px; }
+      .dss-cam span { font-size: 10px; }
+    }
+    @media (max-width: 900px) {
+      #alarms .sol-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .dss-bar { font-size: 11px; padding: 7px 10px; }
+      .dss-cam span { font-size: 9.5px; white-space: nowrap; left: 5px; bottom: 5px; padding: 1px 5px; }
       .dss-body { grid-template-columns: 1fr; }
       .dss-side { display: none; }
     }
